@@ -4,7 +4,7 @@
 ABC International Airport (ABC) is a prime candidate for implementing the Model Context Protocol (MCP) to enhance its "smart airport" initiatives, which already include advanced technologies like biometrics, self-service kiosks, and AI-powered operations. MCP can act as the unifying layer for these diverse systems, allowing AI to leverage them more effectively for improved passenger experience, operational efficiency, and security.
 Here's how MCP could be applied at ABC International Airport:
 
-1. Enhanced Passenger Experience with AI-Native Assistance:
+### 1. Enhanced Passenger Experience with AI-Native Assistance:
 
 Tools:
 - flight_status_check(flight_number: str, date: str): An AI assistant can use this tool to provide real-time updates on flight delays, gate changes, or boarding times.
@@ -19,7 +19,7 @@ Resources:
 - food_options://{terminal_id}/{cuisine_type}: Dynamic list of dining options filtered by terminal, cuisine, or dietary restrictions, including current opening hours and estimated wait times.
 - train_schedule://ABC_express_to_tokyo: Real-time train schedules and platform information for airport access.
 
-2. Optimized Airport Operations and Management:
+### 2. Optimized Airport Operations and Management:
 
 Tools:
 - assign_gate(flight_id: str, new_gate: str): Allows an AI-powered operations system to dynamically re-assign gates based on real-time factors like delays, maintenance, or passenger flow, potentially minimizing taxi times.
@@ -35,7 +35,7 @@ Resources:
 - weather_forecast://ABC_airport/next_24h: Real-time and predictive weather data impacting flight operations.
 - staff_availability://{department_id}: Anonymous data on available staff in different airport departments for efficient resource allocation.
 
-3. Enhanced Security and Safety:
+### 3. Enhanced Security and Safety:
 
 Tools:
 - lock_door(door_id: str): In an emergency, an AI system can trigger lockdown protocols for specific areas.
@@ -47,7 +47,7 @@ Resources:
 - access_logs://{area_id}/last_hour: Logs of access control systems to monitor unauthorized entries.
 - sensor_data://{sensor_type}/realtime: Readings from smoke detectors, chemical sensors, or structural health monitors.
 
-4. Predictive Maintenance and Infrastructure Management:
+### 4. Predictive Maintenance and Infrastructure Management:
 
 Tools:
 - schedule_maintenance(equipment_id: str, type: str, date: str): AI can predict equipment failures (e.g., HVAC, baggage systems, escalators) and use this tool to schedule preventative maintenance.
