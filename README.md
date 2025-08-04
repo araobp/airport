@@ -11,8 +11,8 @@ Here's how MCP could be applied at ABC International Airport:
 
 Tools:
 - flight_status_check(flight_number: str, date: str): An AI assistant can use this tool to provide real-time updates on flight delays, gate changes, or boarding times.
-Maps_to_gate(gate_number: str): Integrates with ABC's indoor navigation systems to guide passengers using an AI chatbot or digital signage.
-find_amenity(type: str, terminal: str): Helps passengers locate restrooms, restaurants, lounges, or duty-free shops, potentially even booking reservations (e.g., book_restaurant_table(restaurant_id: str, time: str, guests: int)).
+- Maps_to_gate(gate_number: str): Integrates with ABC's indoor navigation systems to guide passengers using an AI chatbot or digital signage.
+- find_amenity(type: str, terminal: str): Helps passengers locate restrooms, restaurants, lounges, or duty-free shops, potentially even booking reservations (e.g., book_restaurant_table(restaurant_id: str, time: str, guests: int)).
 - translate_phrase(text: str, target_language: str): Provides on-the-spot translation for non-Japanese speaking passengers interacting with airport staff or signage.
 - report_lost_item(description: str, location: str): Allows passengers to quickly report lost luggage or personal items via an AI interface.
 
