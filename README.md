@@ -8,7 +8,7 @@
       <img src="docs/airport.jpg" width=600>
     </td>
     <td>
-      <img src="docs/Airport Services.jpg" width=600>
+      <img src="docs/Airport Services.jpg" width=400>
     </td>
   </tr>
 </table>
