@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://d0gpwnkq5rhna"]
+
+[ext_resource type="Script" uid="uid://dw3cd0a1c4j5v" path="res://system_controller.gd" id="1_eyiwp"]
+[ext_resource type="PackedScene" uid="uid://olwpoxba07gh" path="res://Gate.tscn" id="2_hh24k"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_8uh7m"]
+sky_material = SubResource("ProceduralSkyMaterial_37kl0")
+
+[sub_resource type="Environment" id="Environment_6uqi0"]
+background_mode = 2
+sky = SubResource("Sky_8uh7m")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eyiwp"]
+albedo_color = Color(0.220388, 0.223285, 0.163385, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hh24k"]
+material = SubResource("StandardMaterial3D_eyiwp")
+
+[node name="System" type="Node3D"]
+script = ExtResource("1_eyiwp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6uqi0")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.238703, 0, 0.971093, 0, 1, 0, -0.971093, 0, -0.238703, 2.1317, 1.07149, -0.708623)
+
+[node name="MockGate" parent="." instance=ExtResource("2_hh24k")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_hh24k")
