@@ -15,6 +15,10 @@
   </tr>
 </table>
 
+## What I really developed at work five years ago
+
+<img src="./docs/prototype.jpg" width=400>
+
 ## Implementation
 
 This project is a work-in-progress implementation of the following specification.
