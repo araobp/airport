@@ -1,5 +1,7 @@
 # Airport
 
+**Note:** The `gemini_api_key_env.txt` file, which contains the `GEMINI_API_KEY`, should be placed in the `airport` directory. This file is ignored by the root `.gitignore` file, so it will not be committed to the repository.
+
 (Work in progress)
 
 <table>
