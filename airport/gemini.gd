@@ -1,7 +1,8 @@
 extends Node
 
 # Gemini 2.5 Flash Model endpoint
-var GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
+const MODEL = "gemini-2.5-flash"
+var GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": MODEL})
 
 # Gemini API Key
 var GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
@@ -9,7 +10,6 @@ var GEMINI_API_KEY = ""
 
 var SYSTEM_INSTRUCTION
 var HTTP_REQUEST
-var CALLABLE_INSTANCE
 
 # Get an environment variable in the file
 func _get_environment_variable(filePath):
@@ -18,16 +18,13 @@ func _get_environment_variable(filePath):
 	content = content.strip_edges()
 	return content
 
-func _init(http_request, callable_instance, gemini_api_key=null, system_instruction="") -> void:
+func _init(http_request, gemini_api_key=null, system_instruction="") -> void:
 
 	GEMINI_API_KEY = _get_environment_variable(GEMINI_API_KEY_FILE_PATH)
-	# print(GEMINI_API_KEY)
-
 	HTTP_REQUEST = http_request
-	CALLABLE_INSTANCE = callable_instance		
 	SYSTEM_INSTRUCTION = system_instruction
 	
-func chat(query, function_declarations=null):
+func chat(query, mcp_server=null):
 	
 	const headers = [
 		"Content-Type: application/json",
@@ -49,7 +46,9 @@ func chat(query, function_declarations=null):
 		"contents": contents
 	}
 	
-	if function_declarations:
+	if mcp_server:
+		var function_declarations = mcp_server.list_tools()
+		
 		payload["tools"] = [
 			{
 				"functionDeclarations": function_declarations
@@ -59,8 +58,6 @@ func chat(query, function_declarations=null):
 	var response_text = null
 
 	while true:
-		
-		# print(payload)
 		
 		var err = HTTP_REQUEST.request(
 			GEMINI_API + "?key=" + GEMINI_API_KEY,
@@ -92,9 +89,9 @@ func chat(query, function_declarations=null):
 				var functionCall = part["functionCall"]
 				var func_name = functionCall["name"]
 				var args = functionCall["args"]
-				# print(func_name, args)	
+				print(func_name, args)	
 				
-				var callable = Callable(CALLABLE_INSTANCE, func_name)
+				var callable = Callable(mcp_server, func_name)
 				var result = await callable.call(args)
 				
 				var functionResponsePart = {

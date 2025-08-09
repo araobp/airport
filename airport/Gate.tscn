@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://olwpoxba07gh"]
+[gd_scene load_steps=11 format=3 uid="uid://olwpoxba07gh"]
 
 [ext_resource type="PackedScene" uid="uid://4mh1b3ahjfq5" path="res://mock_gate.glb" id="1_15vrf"]
-[ext_resource type="Script" uid="uid://c1uxmqsav62j1" path="res://mock_gate.gd" id="2_5lukw"]
-[ext_resource type="Script" uid="uid://ckt3u6bgelatx" path="res://animation_tree.gd" id="3_4oabi"]
+[ext_resource type="Script" uid="uid://uv3go4h5wmof" path="res://gate.gd" id="2_5lukw"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1g733"]
 animation = &"Open"
@@ -17,8 +16,6 @@ animation = &"Open"
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_s3oi5"]
-reset = false
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i1jse"]
 switch_mode = 2
@@ -37,16 +34,19 @@ states/Start/position = Vector2(209.812, 19.75)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_6ekym"), "Idle", "Open", SubResource("AnimationNodeStateMachineTransition_s3oi5"), "Open", "Close", SubResource("AnimationNodeStateMachineTransition_i1jse"), "Close", "Idle", SubResource("AnimationNodeStateMachineTransition_7butm")]
 graph_offset = Vector2(-77.07, 39.5497)
 
-[node name="mock_gate" instance=ExtResource("1_15vrf")]
+[node name="Gate" instance=ExtResource("1_15vrf")]
 script = ExtResource("2_5lukw")
 
 [node name="Cube" parent="." index="0"]
-transform = Transform3D(0.03, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0.92)
+transform = Transform3D(0.03, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="Cube_001" parent="." index="1"]
-transform = Transform3D(0.03, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, -0.92)
+transform = Transform3D(0.03, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
 tree_root = SubResource("AnimationNodeStateMachine_igcwn")
 anim_player = NodePath("../AnimationPlayer")
-script = ExtResource("3_4oabi")
+
+[node name="Camera3D" type="Camera3D" parent="." index="5"]
+transform = Transform3D(0.0713059, 0, 0.997454, 0, 1, 0, -0.997454, 0, 0.0713059, 1.80069, 0.715092, 0)
+visible = false
