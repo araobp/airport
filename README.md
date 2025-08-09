@@ -15,6 +15,14 @@
   </tr>
 </table>
 
+## What I really developed at work five years ago
+
+I developed an AI Drive Recorder App for Android smartphones. One day, I was told that if I put it in my chest pocket, it could be applied to other uses, so I actually experimented with it. It felt like an AI drive recorder that a person wears. I strongly felt the potential of this app. 
+
+Currently, with the evolution of smart glasses and AI agent technology, it seems the value of this type of app will dramatically increase.
+
+<img src="./docs/prototype.jpg" width=400>
+
 ## Implementation
 
 This project is a work-in-progress implementation of the following specification.
