@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://wq0fuefo3y1d"]
-
-[ext_resource type="Script" uid="uid://c8j7bh56xtcyx" path="res://fff.gd" id="1_noarx"]
-[ext_resource type="PackedScene" uid="uid://j6aitojmjgq5" path="res://test.tscn" id="2_a0tk4"]
-
-[node name="Node3D" type="Node3D"]
-script = ExtResource("1_noarx")
-
-[node name="Node3D" parent="." instance=ExtResource("2_a0tk4")]
