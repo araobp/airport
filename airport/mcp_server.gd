@@ -2,6 +2,8 @@ extends Node
 
 var utilities = load("res://utilities.gd").new()
 
+@export var test_mode = false
+
 const GREETING_TOOL = {
 	"name": "greeting",
 	"description": """
@@ -58,6 +60,10 @@ const TOOLS = [
 	GATE_CONTROL_TOOL,
 	TIMER_TOOL
 ]
+
+func _ready():
+	if test_mode:
+		gate_control({"control": "open"})
 
 func list_tools():
 	return TOOLS

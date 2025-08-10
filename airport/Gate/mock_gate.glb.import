@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://4mh1b3ahjfq5"
-path="res://.godot/imported/mock_gate.glb-3d2dd653c9db3cf986dc94767c50adc7.scn"
+path="res://.godot/imported/mock_gate.glb-ed7569c16c9ae6f317e45017b61303a0.scn"
 
 [deps]
 
-source_file="res://mock_gate.glb"
-dest_files=["res://.godot/imported/mock_gate.glb-3d2dd653c9db3cf986dc94767c50adc7.scn"]
+source_file="res://Gate/mock_gate.glb"
+dest_files=["res://.godot/imported/mock_gate.glb-ed7569c16c9ae6f317e45017b61303a0.scn"]
 
 [params]
 

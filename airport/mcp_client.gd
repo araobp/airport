@@ -18,7 +18,8 @@ func _ready() -> void:
 	var tools = mcp_server.list_tools()
 	
 	if enable_gemini:
-		await gemini.chat("My name is araobp. Wait for one seconds, open the gate, wait for three seconds, then close it.", mcp_server)
+		# await gemini.chat("My name is araobp. Wait for one seconds, open the gate, wait for three seconds, then close it.", mcp_server)
+		await gemini.chat("My name is araobp. Wait for two seconds, open the gate.", mcp_server)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

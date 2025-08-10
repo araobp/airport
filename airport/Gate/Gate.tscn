@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://olwpoxba07gh"]
 
-[ext_resource type="PackedScene" uid="uid://4mh1b3ahjfq5" path="res://mock_gate.glb" id="1_15vrf"]
-[ext_resource type="Script" uid="uid://uv3go4h5wmof" path="res://gate.gd" id="2_5lukw"]
+[ext_resource type="PackedScene" uid="uid://4mh1b3ahjfq5" path="res://Gate/mock_gate.glb" id="1_15vrf"]
+[ext_resource type="Script" uid="uid://uv3go4h5wmof" path="res://Gate/gate.gd" id="2_5lukw"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1g733"]
 animation = &"Open"
@@ -36,12 +36,6 @@ graph_offset = Vector2(-77.07, 39.5497)
 
 [node name="Gate" instance=ExtResource("1_15vrf")]
 script = ExtResource("2_5lukw")
-
-[node name="Cube" parent="." index="0"]
-transform = Transform3D(0.03, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
-
-[node name="Cube_001" parent="." index="1"]
-transform = Transform3D(0.03, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
 tree_root = SubResource("AnimationNodeStateMachine_igcwn")
