@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=14 format=3 uid="uid://d0gpwnkq5rhna"]
 
+[ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://chat_window.gd" id="3_1ayyj"]
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="3_r1c7q"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://mcp_client.gd" id="4_1ayyj"]
 [ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://first_person.gd" id="4_r1c7q"]
@@ -51,7 +52,7 @@ script = ExtResource("4_1ayyj")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 
-[node name="ChatWindow" type="TextEdit" parent="."]
+[node name="ChatWindow" type="TextEdit" parent="McpClient"]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -63,6 +64,7 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
+script = ExtResource("3_1ayyj")
 
 [node name="FirstPerson" type="CharacterBody3D" parent="."]
 script = ExtResource("4_r1c7q")
@@ -73,6 +75,7 @@ fov = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FirstPerson"]
 transform = Transform3D(0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.4, 0, 0.8, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_hh24k")
 skeleton = NodePath("../..")
 
