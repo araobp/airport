@@ -46,7 +46,3 @@ transform = Transform3D(0.03, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
 tree_root = SubResource("AnimationNodeStateMachine_igcwn")
 anim_player = NodePath("../AnimationPlayer")
-
-[node name="Camera3D" type="Camera3D" parent="." index="5"]
-transform = Transform3D(0.0713059, 0, 0.997454, 0, 1, 0, -0.997454, 0, 0.0713059, 1.80069, 0.715092, 0)
-visible = false

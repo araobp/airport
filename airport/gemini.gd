@@ -1,7 +1,9 @@
 extends Node
 
 # Gemini 2.5 Flash Model endpoint
-const MODEL = "gemini-2.5-flash"
+#const MODEL = "gemini-2.5-flash"
+const MODEL = "gemini-2.0-flash"
+
 var GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": MODEL})
 
 # Gemini API Key
@@ -18,7 +20,7 @@ func _get_environment_variable(filePath):
 	content = content.strip_edges()
 	return content
 
-func _init(http_request, gemini_api_key=null, system_instruction="") -> void:
+func _init(http_request, system_instruction="") -> void:
 
 	GEMINI_API_KEY = _get_environment_variable(GEMINI_API_KEY_FILE_PATH)
 	HTTP_REQUEST = http_request
@@ -75,6 +77,7 @@ func chat(query, mcp_server=null):
 		
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		
+		print(json)
 		var candidate = json["candidates"][0]
 		var parts = candidate["content"]["parts"]
 

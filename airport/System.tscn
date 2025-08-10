@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=13 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="PackedScene" uid="uid://olwpoxba07gh" path="res://Gate.tscn" id="2_hh24k"]
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="3_r1c7q"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://mcp_client.gd" id="4_1ayyj"]
+[ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://first_person.gd" id="4_r1c7q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -17,11 +18,20 @@ sky = SubResource("Sky_8uh7m")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hh24k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh24k"]
+radius = 0.2
+height = 1.6
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eyiwp"]
 albedo_color = Color(0.220388, 0.223285, 0.163385, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_hh24k"]
 material = SubResource("StandardMaterial3D_eyiwp")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hh24k"]
+size = Vector3(1, 0.00622559, 1)
 
 [node name="System" type="Node3D"]
 
@@ -32,19 +42,62 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_6uqi0")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.238703, 0, 0.971093, 0, 1, 0, -0.971093, 0, -0.238703, 2.1317, 1.07149, -0.708623)
-
 [node name="McpServer" type="Node" parent="."]
 script = ExtResource("3_r1c7q")
 
 [node name="McpClient" type="Node" parent="."]
 script = ExtResource("4_1ayyj")
+enable_gemini = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Gate" parent="." instance=ExtResource("2_hh24k")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -4)
+
+[node name="ChatWindow" type="TextEdit" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 384.0
+offset_top = -184.0
+offset_right = -384.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+
+[node name="FirstPerson" type="CharacterBody3D" parent="."]
+script = ExtResource("4_r1c7q")
+
+[node name="Camera3D" type="Camera3D" parent="FirstPerson"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+fov = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FirstPerson"]
+transform = Transform3D(0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.4, 0, 0.8, 0)
+mesh = SubResource("CapsuleMesh_hh24k")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstPerson"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_hh24k")
+
+[node name="Floor" type="RigidBody3D" parent="."]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 10000.0
+freeze = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 mesh = SubResource("PlaneMesh_hh24k")
+skeleton = NodePath("../..")
 
-[node name="Gate" parent="." instance=ExtResource("2_hh24k")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(18.99, 0, 0, 0, 18.99, 0, 0, 0, 18.99, 0, -0.0672176, 0)
+shape = SubResource("BoxShape3D_hh24k")
