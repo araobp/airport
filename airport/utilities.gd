@@ -1,7 +1,7 @@
 extends Node3D
 
 func greeting(my_name):
-	var message = "hello " + my_name
+	var message = "Hello " + my_name
 	print(message)
 	return message
 			

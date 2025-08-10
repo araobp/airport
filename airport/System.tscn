@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=15 format=3 uid="uid://d0gpwnkq5rhna"]
 
+[ext_resource type="Script" uid="uid://45aormtde1om" path="res://globals.gd" id="1_rvu7u"]
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://chat_window.gd" id="3_1ayyj"]
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="3_r1c7q"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://mcp_client.gd" id="4_1ayyj"]
@@ -35,6 +36,7 @@ material = SubResource("StandardMaterial3D_eyiwp")
 size = Vector3(1, 0.00622559, 1)
 
 [node name="System" type="Node3D"]
+script = ExtResource("1_rvu7u")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.500258, -0.53958, 0.677197, 0.262786, 0.839816, 0.475029, -0.825037, -0.0596791, 0.561919, 0, 0, 0)
@@ -45,7 +47,6 @@ environment = SubResource("Environment_6uqi0")
 
 [node name="McpServer" type="Node" parent="."]
 script = ExtResource("3_r1c7q")
-test_mode = true
 
 [node name="McpClient" type="Node" parent="."]
 script = ExtResource("4_1ayyj")
@@ -58,12 +59,12 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 384.0
-offset_top = -184.0
+offset_top = -376.0
 offset_right = -384.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 script = ExtResource("3_1ayyj")
 
 [node name="FirstPerson" type="CharacterBody3D" parent="."]

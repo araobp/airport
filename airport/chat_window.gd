@@ -7,10 +7,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	if Globals.chat_window_enabled:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 # Disable tab key to insert tab space in TextEdit
 func _gui_input(event):
-	if event.is_action_pressed("ui_focus_next") or event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down") or event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right"):
+	if event.is_action_pressed("ui_focus_next"):
 		get_viewport().set_input_as_handled()
 		

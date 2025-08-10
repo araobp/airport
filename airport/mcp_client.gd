@@ -16,12 +16,9 @@ func _ready() -> void:
 		)
 
 	var tools = mcp_server.list_tools()
-	
-	if enable_gemini:
-		# await gemini.chat("My name is araobp. Wait for one seconds, open the gate, wait for three seconds, then close it.", mcp_server)
-		await gemini.chat("My name is araobp. Wait for two seconds, open the gate.", mcp_server)
 
 	$ChatWindow.grab_focus()
+	$ChatWindow.insert_text_at_caret("Hit Tab key to hide or show this chat window.\nWelcome to ABC Airport! What can I help you?\n\nYou: ")
 
 var processing = false
 
@@ -30,7 +27,10 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_text_indent"):
 		$ChatWindow.visible = not $ChatWindow.visible
 		if $ChatWindow.visible:
+			Globals.chat_window_enabled = true
 			$ChatWindow.grab_focus()
+		else:
+			Globals.chat_window_enabled = false
 
 	if !processing and Input.is_key_pressed(KEY_ENTER) and $ChatWindow.text != "":
 		processing = true
@@ -39,6 +39,6 @@ func _process(delta: float) -> void:
 			text,
 			mcp_server
 			)
-		$ChatWindow.insert_text_at_caret("Robot: {response_text}\nYou: ".format({"response_text": response_text}), -1)
+		$ChatWindow.insert_text_at_caret("Assistant: {response_text}\nYou: ".format({"response_text": response_text}), -1)
 		$ChatWindow.scroll_vertical = 10000
 		processing = false

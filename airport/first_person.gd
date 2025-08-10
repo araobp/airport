@@ -14,10 +14,10 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("ui_cancel"): get_tree().quit()
 	
-	if event is InputEventMouseMotion:
-		rotation.y -= event.relative.x * CAMERA_SENS
-		rotation.x -= event.relative.y * CAMERA_SENS
-		rotation.x = clamp(rotation.x, -0.5, 1.2)
+	if not Globals.chat_window_enabled and event is InputEventMouseMotion:
+			rotation.y -= event.relative.x * CAMERA_SENS
+			rotation.x -= event.relative.y * CAMERA_SENS
+			rotation.x = clamp(rotation.x, -0.5, 1.2)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -30,13 +30,14 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+	if not Globals.chat_window_enabled:
+		var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if direction:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.z = move_toward(velocity.z, 0, SPEED)
 
-	move_and_slide()
+		move_and_slide()

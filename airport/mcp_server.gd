@@ -2,12 +2,10 @@ extends Node
 
 var utilities = load("res://utilities.gd").new()
 
-@export var test_mode = false
-
 const GREETING_TOOL = {
 	"name": "greeting",
 	"description": """
-	A function to print "Hello" with the name.
+	A function to print "Hello" with the name. Then return a message "Hello" to the name.
 	""",
 	"parameters": {
 		"type": "object",
@@ -24,7 +22,7 @@ const GREETING_TOOL = {
 const GATE_CONTROL_TOOL = {
 	"name": "gate_control",
 	"description": """
-	A function to open or close the gate.
+	A function to open or close the gate that can be called as "door" as well).
 	""",
 	"parameters": {
 		"type": "object",
@@ -61,20 +59,16 @@ const TOOLS = [
 	TIMER_TOOL
 ]
 
-func _ready():
-	if test_mode:
-		gate_control({"control": "open"})
-
 func list_tools():
 	return TOOLS
 	
 func greeting(args):
-	return utilities.greeting(args["my_name"])
+	return await utilities.greeting(args["my_name"])
 	
 func gate_control(args):
 	var control = args["control"]
 	var gate = get_parent().get_node("Gate")
-	return gate.gate_control(control)
+	return await gate.gate_control(control)
 		
 func timer(args):
 	return await utilities.timer(get_tree(), args["seconds"])
