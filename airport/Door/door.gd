@@ -1,17 +1,16 @@
 extends Node3D
 
-var min_num_bodies = 10000
 var state_machine
 var forced_open = false
 
 func _ready():
 	state_machine = $AnimationTree["parameters/playback"]
+	print(len($SensingArea.get_overlapping_bodies()))
 
 func _process(delta):
 	var num_boies = len($SensingArea.get_overlapping_bodies())
-	min_num_bodies = min(min_num_bodies, num_boies)
 
-	if num_boies > min_num_bodies:
+	if num_boies > 0:
 		if state_machine.get_current_node() != "Open":
 			state_machine.travel("Open")
 	else:

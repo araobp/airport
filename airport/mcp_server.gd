@@ -67,7 +67,7 @@ func greeting(args):
 	
 func door_control(args):
 	var control = args["control"]
-	var door = get_parent().get_node("Door")
+	var door = get_parent().get_node("Door_2_1_2")
 	return await door.door_control(control)
 		
 func timer(args):

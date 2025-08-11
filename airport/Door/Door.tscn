@@ -45,8 +45,7 @@ tree_root = SubResource("AnimationNodeStateMachine_lov5c")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="SensingArea" type="Area3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SensingArea" index="0"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.75, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.75, 0)
 shape = SubResource("CylinderShape3D_4s0j3")
