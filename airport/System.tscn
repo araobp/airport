@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=17 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://45aormtde1om" path="res://globals.gd" id="1_rvu7u"]
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://chat_window.gd" id="3_1ayyj"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://mcp_client.gd" id="4_1ayyj"]
 [ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://first_person.gd" id="4_r1c7q"]
 [ext_resource type="PackedScene" uid="uid://olwpoxba07gh" path="res://Gate/Gate.tscn" id="4_rvu7u"]
+[ext_resource type="PackedScene" uid="uid://1fcc5lv0tfl8" path="res://Terminal/Terminal.tscn" id="7_v3stw"]
+[ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="8_5nvr7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -18,7 +20,10 @@ sky_material = SubResource("ProceduralSkyMaterial_37kl0")
 background_mode = 2
 sky = SubResource("Sky_8uh7m")
 tonemap_mode = 2
-glow_enabled = true
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_read_sky_light = false
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hh24k"]
 
@@ -39,7 +44,7 @@ size = Vector3(1, 0.00622559, 1)
 script = ExtResource("1_rvu7u")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.500258, -0.53958, 0.677197, 0.262786, 0.839816, 0.475029, -0.825037, -0.0596791, 0.561919, 0, 0, 0)
+transform = Transform3D(-0.887866, 0.403194, -0.221651, 0.262786, 0.839817, 0.475029, 0.377675, 0.363515, -0.851598, 0, 0, -868.151)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -68,6 +73,7 @@ theme_override_font_sizes/font_size = 24
 script = ExtResource("3_1ayyj")
 
 [node name="FirstPerson" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.04603, 0)
 script = ExtResource("4_r1c7q")
 
 [node name="Camera3D" type="Camera3D" parent="FirstPerson"]
@@ -76,7 +82,6 @@ fov = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FirstPerson"]
 transform = Transform3D(0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.4, 0, 0.8, 0)
-visible = false
 mesh = SubResource("CapsuleMesh_hh24k")
 skeleton = NodePath("../..")
 
@@ -105,3 +110,9 @@ shape = SubResource("BoxShape3D_hh24k")
 
 [node name="Gate" parent="." instance=ExtResource("4_rvu7u")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -4)
+
+[node name="Terminal" parent="." instance=ExtResource("7_v3stw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="levels" parent="." instance=ExtResource("8_5nvr7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
