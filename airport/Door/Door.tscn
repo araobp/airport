@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://olwpoxba07gh"]
+[gd_scene load_steps=12 format=3 uid="uid://dvgh6kkfs3p4"]
 
-[ext_resource type="PackedScene" uid="uid://4mh1b3ahjfq5" path="res://Gate/mock_gate.glb" id="1_15vrf"]
-[ext_resource type="Script" uid="uid://uv3go4h5wmof" path="res://Gate/gate.gd" id="2_5lukw"]
+[ext_resource type="PackedScene" uid="uid://oo81ntf13ybs" path="res://Door/door.glb" id="1_d0h81"]
+[ext_resource type="Script" uid="uid://diq1ipbna6dlh" path="res://Door/door.gd" id="2_f0u5g"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1g733"]
 animation = &"Open"
@@ -23,7 +23,7 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7butm"]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_igcwn"]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_lov5c"]
 states/Close/node = SubResource("AnimationNodeAnimation_1g733")
 states/Close/position = Vector2(494.688, 245.5)
 states/Idle/node = SubResource("AnimationNodeStateMachine_jhui3")
@@ -34,14 +34,14 @@ states/Start/position = Vector2(209.812, 19.75)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_6ekym"), "Idle", "Open", SubResource("AnimationNodeStateMachineTransition_s3oi5"), "Open", "Close", SubResource("AnimationNodeStateMachineTransition_i1jse"), "Close", "Idle", SubResource("AnimationNodeStateMachineTransition_7butm")]
 graph_offset = Vector2(-77.07, 39.5497)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_cg54u"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4s0j3"]
 height = 0.5
 
-[node name="Gate" instance=ExtResource("1_15vrf")]
-script = ExtResource("2_5lukw")
+[node name="Door" instance=ExtResource("1_d0h81")]
+script = ExtResource("2_f0u5g")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
-tree_root = SubResource("AnimationNodeStateMachine_igcwn")
+tree_root = SubResource("AnimationNodeStateMachine_lov5c")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="SensingArea" type="Area3D" parent="." index="5"]
@@ -49,4 +49,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SensingArea" index="0"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.75, 0)
-shape = SubResource("CylinderShape3D_cg54u")
+shape = SubResource("CylinderShape3D_4s0j3")

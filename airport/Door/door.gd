@@ -18,7 +18,7 @@ func _process(delta):
 		if state_machine.get_current_node() == "Open" and not forced_open:
 			state_machine.travel("Close")
 		
-func gate_control(control):
+func door_control(control):
 	var state_machine = $AnimationTree["parameters/playback"]
 
 	match control:

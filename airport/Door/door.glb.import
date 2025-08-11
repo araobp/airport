@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://4mh1b3ahjfq5"
-path="res://.godot/imported/mock_gate.glb-ed7569c16c9ae6f317e45017b61303a0.scn"
+uid="uid://oo81ntf13ybs"
+path="res://.godot/imported/door.glb-82447377e095fcb1042a28acb936bb8b.scn"
 
 [deps]
 
-source_file="res://Gate/mock_gate.glb"
-dest_files=["res://.godot/imported/mock_gate.glb-ed7569c16c9ae6f317e45017b61303a0.scn"]
+source_file="res://Door/door.glb"
+dest_files=["res://.godot/imported/door.glb-82447377e095fcb1042a28acb936bb8b.scn"]
 
 [params]
 

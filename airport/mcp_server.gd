@@ -19,10 +19,10 @@ const GREETING_TOOL = {
 	}
 }
 
-const GATE_CONTROL_TOOL = {
-	"name": "gate_control",
+const DOOR_CONTROL_TOOL = {
+	"name": "door_control",
 	"description": """
-	A function to open or close the gate that can be called as "door" as well).
+	A function to open or close the door.
 	""",
 	"parameters": {
 		"type": "object",
@@ -55,7 +55,7 @@ const TIMER_TOOL = {
 
 const TOOLS = [
 	GREETING_TOOL,
-	GATE_CONTROL_TOOL,
+	DOOR_CONTROL_TOOL,
 	TIMER_TOOL
 ]
 
@@ -65,10 +65,10 @@ func list_tools():
 func greeting(args):
 	return await utilities.greeting(args["my_name"])
 	
-func gate_control(args):
+func door_control(args):
 	var control = args["control"]
-	var gate = get_parent().get_node("Gate")
-	return await gate.gate_control(control)
+	var door = get_parent().get_node("Door")
+	return await door.door_control(control)
 		
 func timer(args):
 	return await utilities.timer(get_tree(), args["seconds"])

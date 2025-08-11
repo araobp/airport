@@ -1,13 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=14 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://45aormtde1om" path="res://globals.gd" id="1_rvu7u"]
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://chat_window.gd" id="3_1ayyj"]
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="3_r1c7q"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://mcp_client.gd" id="4_1ayyj"]
 [ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://first_person.gd" id="4_r1c7q"]
-[ext_resource type="PackedScene" uid="uid://olwpoxba07gh" path="res://Gate/Gate.tscn" id="4_rvu7u"]
 [ext_resource type="PackedScene" uid="uid://1fcc5lv0tfl8" path="res://Terminal/Terminal.tscn" id="7_v3stw"]
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="8_5nvr7"]
+[ext_resource type="PackedScene" uid="uid://dvgh6kkfs3p4" path="res://Door/Door.tscn" id="8_qr17b"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -30,15 +30,6 @@ sdfgi_read_sky_light = false
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh24k"]
 radius = 0.2
 height = 1.6
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eyiwp"]
-albedo_color = Color(0.220388, 0.223285, 0.163385, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_hh24k"]
-material = SubResource("StandardMaterial3D_eyiwp")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hh24k"]
-size = Vector3(1, 0.00622559, 1)
 
 [node name="System" type="Node3D"]
 script = ExtResource("1_rvu7u")
@@ -89,30 +80,11 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_hh24k")
 
-[node name="Floor" type="RigidBody3D" parent="."]
-axis_lock_linear_x = true
-axis_lock_linear_y = true
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
-mass = 10000.0
-freeze = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("PlaneMesh_hh24k")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-transform = Transform3D(18.99, 0, 0, 0, 18.99, 0, 0, 0, 18.99, 0, -0.0672176, 0)
-shape = SubResource("BoxShape3D_hh24k")
-
-[node name="Gate" parent="." instance=ExtResource("4_rvu7u")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -4)
-
 [node name="Terminal" parent="." instance=ExtResource("7_v3stw")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="levels" parent="." instance=ExtResource("8_5nvr7")]
+[node name="Levels" parent="." instance=ExtResource("8_5nvr7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Door" parent="." instance=ExtResource("8_qr17b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, 6.62384)
