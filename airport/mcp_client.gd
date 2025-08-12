@@ -3,22 +3,30 @@ extends Node
 var mcp_server
 var gemini
 
-@export var enable_gemini = false
+@export var first_person : CharacterBody3D
 
-const SYSTEM_INSTRUCTION  = "You are an AI agent good at controling facilities of the building"
+func _system_instruction():
+	return """
+	You are an AI agent good at controling facilities or amenities of ABC airport.
+	My name is {name}. I am visiting the airport, and I am currently in {area}.
+	When asked something, you make an action in the area I am currently in.
+	If the area is unkown, you just make a general reply such as "Which area do you want to ...".
+	""".format({
+		"name": first_person.name,
+		"area": $"../McpServer".get_area({"name": first_person.name})
+		})
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	mcp_server = get_parent().get_node("McpServer")
 	gemini = load("res://gemini.gd").new(
-			$HTTPRequest,
-			SYSTEM_INSTRUCTION
+			$HTTPRequest
 		)
 
 	var tools = mcp_server.list_tools()
 
 	$ChatWindow.grab_focus()
-	$ChatWindow.insert_text_at_caret("Hit Tab key to hide or show this chat window.\nWelcome to ABC Airport! What can I help you?\n\nYou: ")
+	$ChatWindow.insert_text_at_caret("Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: ")
 
 var processing = false
 
@@ -37,8 +45,9 @@ func _process(delta: float) -> void:
 		var text = $ChatWindow.text
 		var response_text = await gemini.chat(
 			text,
+			_system_instruction(),
 			mcp_server
 			)
-		$ChatWindow.insert_text_at_caret("Assistant: {response_text}\nYou: ".format({"response_text": response_text}), -1)
+		$ChatWindow.insert_text_at_caret("AI: {response_text}\nYou: ".format({"response_text": response_text}), -1)
 		$ChatWindow.scroll_vertical = 10000
 		processing = false

@@ -5,7 +5,6 @@ var forced_open = false
 
 func _ready():
 	state_machine = $AnimationTree["parameters/playback"]
-	print(len($SensingArea.get_overlapping_bodies()))
 
 func _process(delta):
 	var num_boies = len($SensingArea.get_overlapping_bodies())

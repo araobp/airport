@@ -10,7 +10,6 @@ var GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/{model
 var GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
 var GEMINI_API_KEY = ""
 
-var SYSTEM_INSTRUCTION
 var HTTP_REQUEST
 
 # Get an environment variable in the file
@@ -20,19 +19,24 @@ func _get_environment_variable(filePath):
 	content = content.strip_edges()
 	return content
 
-func _init(http_request, system_instruction="") -> void:
+func _init(http_request):
 
 	GEMINI_API_KEY = _get_environment_variable(GEMINI_API_KEY_FILE_PATH)
 	HTTP_REQUEST = http_request
-	SYSTEM_INSTRUCTION = system_instruction
 	
-func chat(query, mcp_server=null):
+func chat(query, system_instruction, mcp_server=null):
 	
 	const headers = [
 		"Content-Type: application/json",
 		"Accept-Encoding: identity"
 	]
-
+	
+	var system_instruction_ = {
+		"parts": [
+			{"text": system_instruction}
+		]
+	}
+	
 	var contents = [
   		{
 			"role": "user",
@@ -45,6 +49,7 @@ func chat(query, mcp_server=null):
 	]
 
 	var payload = {
+		"system_instruction": system_instruction_,
 		"contents": contents
 	}
 	
