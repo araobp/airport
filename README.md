@@ -58,6 +58,102 @@ The `McpClient` node exposes the following parameters, which can be configured w
 -   `first_person` (NodePath to `CharacterBody3D`): This parameter should be set to the `CharacterBody3D` node representing the player character. It is essential for the AI to understand the player's position and to capture images from their viewpoint.
 -   `camera_resolution_height` (Integer): Defines the desired height (in pixels) for the images captured and sent to the AI. The width is automatically scaled to maintain the aspect ratio. A lower resolution can improve performance.
 
+## AI Agent Implementation Details
+
+This project features an AI agent powered by Google's Gemini model, designed to interact with the airport environment through natural language and visual input. The implementation leverages Gemini's function calling capabilities to enable the AI to perform actions and retrieve information from the simulated airport.
+
+### Chat History and Multimodal Input
+
+The AI agent maintains a conversation history to understand context and provide relevant responses. This history is structured as an array of "content" objects, each representing a turn in the conversation.
+
+```json
+[
+  {
+    "role": "user",
+    "parts": [
+      {
+        "text": "What is the status of the main entrance door?"
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "The main entrance door is currently closed."
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      {
+        "text": "Can you open it?",
+        "inline_data": {
+          "mime_type": "image/jpeg",
+          "data": "BASE64_ENCODED_IMAGE_DATA"
+        }
+      }
+    ]
+  }
+]
+```
+
+As shown above, user messages can include both text and inline image data (Base64 encoded JPEG). This multimodal input allows the AI to understand visual cues from the player's perspective, such as identifying objects or assessing the environment. The `McpClient` node captures screenshots from the player's camera and encodes them for inclusion in the chat history.
+
+### Function Calling
+
+The AI agent's ability to interact with the airport environment is facilitated by Gemini's function calling feature. The `McpServer` node defines a set of available tools (functions) that the AI can "call" to perform specific actions or retrieve dynamic information.
+
+Here's an example of a tool definition for controlling a door:
+
+```gdscript
+const DOOR_CONTROL_TOOL = {
+    "name": "door_control",
+    "description": """
+    A function to open or close the door.
+    If the area name is unknown, this function is not called.
+    """,
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "area": {
+                "type": "string",
+                "description": "Area name where the door is located."
+            },
+            "control": {
+                "type": "string",
+                "enum": ["open", "close"]
+            }
+        },
+        "required": ["control"]
+    }
+}
+```
+
+When the AI determines that a user's request can be fulfilled by one of these tools, it generates a `functionCall` in its response. The `gemini.gd` script intercepts this `functionCall`, executes the corresponding function on the `McpServer`, and then appends the function's response back into the chat history. This allows the AI to reason about the outcome of its actions and continue the conversation.
+
+For instance, if the AI decides to open a door, the `gemini.gd` script will execute `mcp_server.door_control({"area": "Entrance_2F_2", "control": "open"})`. The result of this operation is then fed back to the AI, enabling a continuous and interactive dialogue.
+
+```json
+{
+  "role": "model",
+  "parts": [
+    {
+      "functionCall": {
+        "name": "door_control",
+        "args": {
+          "area": "Entrance_2F_2",
+          "control": "open"
+        }
+      }
+    }
+  ]
+}
+```
+
+The `mcp_server.gd` script contains the actual implementations of these functions, delegating tasks to other nodes or utility scripts as needed. This modular design ensures a clear separation of concerns and allows for easy expansion of the AI's capabilities.
+
 ### At the moment
 
 https://github.com/user-attachments/assets/45cc041f-88ca-47e5-bb7c-76915c546d6d
