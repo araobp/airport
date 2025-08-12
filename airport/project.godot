@@ -26,6 +26,11 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 
+[editor]
+
+movie_writer/movie_file="/Users/shiny/Documents/temp/godot_movies/movie.avi"
+movie_writer/fps=30
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
