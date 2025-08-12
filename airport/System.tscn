@@ -1,6 +1,5 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=15 format=3 uid="uid://d0gpwnkq5rhna"]
 
-[ext_resource type="Script" uid="uid://45aormtde1om" path="res://globals.gd" id="1_rvu7u"]
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://chat_window.gd" id="3_1ayyj"]
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="3_r1c7q"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://mcp_client.gd" id="4_1ayyj"]
@@ -8,6 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://1fcc5lv0tfl8" path="res://Terminal/Terminal.tscn" id="7_v3stw"]
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="8_5nvr7"]
 [ext_resource type="PackedScene" uid="uid://dvgh6kkfs3p4" path="res://Door/Door.tscn" id="8_qr17b"]
+
+[sub_resource type="GDScript" id="GDScript_rvu7u"]
+script/source = "extends Node3D
+
+var chat_window_enabled = true
+"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -27,6 +32,15 @@ ssao_enabled = true
 ssil_enabled = true
 sdfgi_read_sky_light = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.099986, 0.099986, 0.099986, 0.501961)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hh24k"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh24k"]
@@ -34,7 +48,7 @@ radius = 0.2
 height = 1.6
 
 [node name="System" type="Node3D"]
-script = ExtResource("1_rvu7u")
+script = SubResource("GDScript_rvu7u")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.887866, 0.403194, -0.221651, 0.262786, 0.839817, 0.475029, 0.377675, 0.363515, -0.851598, 0, 0, -868.151)
@@ -64,7 +78,9 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_v3stw")
 wrap_mode = 1
+caret_blink = true
 script = ExtResource("3_1ayyj")
 
 [node name="Visitor1" type="CharacterBody3D" parent="."]

@@ -84,11 +84,20 @@ const AREA_TOOL = {
 	}
 }
 
+const QUIT_TOOL = {
+	"name": "quit",
+	"description": """
+	A function to quit this journey.
+	Note: before calling this function, output some goodbye message in text, wait for three seconds then call this function to quit this journey."
+	"""
+}
+
 const TOOLS = [
 	GREETING_TOOL,
 	DOOR_CONTROL_TOOL,
 	TIMER_TOOL,
-	AREA_TOOL
+	AREA_TOOL,
+	QUIT_TOOL
 ]
 
 func list_tools():
@@ -110,3 +119,6 @@ func timer(args):
 func get_area(args):
 	var name = args["name"]
 	return await terminal.get_area(name)
+	
+func quit(args):
+	return await utilities.quit(get_tree())

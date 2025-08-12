@@ -1,8 +1,8 @@
 extends Node
 
 # Gemini 2.5 Flash Model endpoint
-#const MODEL = "gemini-2.5-flash"
-const MODEL = "gemini-2.0-flash"
+const MODEL = "gemini-2.5-flash"
+#const MODEL = "gemini-2.0-flash"
 
 var GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": MODEL})
 
@@ -11,6 +11,10 @@ var GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
 var GEMINI_API_KEY = ""
 
 var HTTP_REQUEST
+var CALLBACK: Callable
+
+var chat_history = []
+const MAX_CHAT_HISTORY_LENGTH = 32
 
 # Get an environment variable in the file
 func _get_environment_variable(filePath):
@@ -19,10 +23,11 @@ func _get_environment_variable(filePath):
 	content = content.strip_edges()
 	return content
 
-func _init(http_request):
+func _init(http_request, callback: Callable):
 
 	GEMINI_API_KEY = _get_environment_variable(GEMINI_API_KEY_FILE_PATH)
 	HTTP_REQUEST = http_request
+	CALLBACK = callback
 	
 func chat(query, system_instruction, mcp_server=null, base64_image=null):
 	
@@ -45,6 +50,10 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 	  			},
 			],
   		}
+
+	if len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
+		chat_history = chat_history[-MAX_CHAT_HISTORY_LENGTH]
+	chat_history.append(content.duplicate(true))
 		
 	if base64_image:
 		content["parts"].append({
@@ -54,7 +63,7 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 			}
 		})
 	
-	var contents = [content]
+	var contents = chat_history + [content]
 
 	var payload = {
 		"system_instruction": system_instruction_,
@@ -91,17 +100,24 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 		
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		
-		print(json)
+		# print(json)
 		var candidate = json["candidates"][0]
 		var parts = candidate["content"]["parts"]
 
 		var functionCalled = false
-				
+		
+		chat_history.append({
+			"role": "model",
+			"parts": parts
+		})
+		#print(chat_history)
+		
 		for part in parts:
 			if "text" in part:
 				response_text = part["text"]
 				# print(response_text)
-				
+				CALLBACK.call(response_text)
+								
 			if "functionCall" in part:
 				var functionCall = part["functionCall"]
 				var func_name = functionCall["name"]
@@ -145,4 +161,4 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 		if not functionCalled:
 			break
 			
-	return response_text
+	return

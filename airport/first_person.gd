@@ -12,17 +12,17 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 func _input(event):
-	if not Globals.chat_window_enabled and event is InputEventMouseMotion:
-			rotation.y -= event.relative.x * CAMERA_SENS
-			rotation.x -= event.relative.y * CAMERA_SENS
-			rotation.x = clamp(rotation.x, -0.5, 1.2)
+	if not $"../McpClient/ChatWindow".visible and event is InputEventMouseMotion:
+		rotation.y -= event.relative.x * CAMERA_SENS
+		rotation.x -= event.relative.y * CAMERA_SENS
+		rotation.x = clamp(rotation.x, -0.5, 1.2)
 
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	if not Globals.chat_window_enabled:
+	if not $"../McpClient/ChatWindow".visible:
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
