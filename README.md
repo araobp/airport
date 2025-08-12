@@ -29,6 +29,26 @@ This project is a work-in-progress implementation of the following specification
 
 **Note:** This prototype uses direct API calls with function calling to mimic MCP, instead of relying on STDIO or a REST API.
 
+## Core Components
+
+### McpClient Node
+
+The `McpClient` node (`airport/mcp_client.gd`) serves as the central hub for user interaction and AI communication within the project. It orchestrates the flow of information between the user interface (chat window), the AI model, and the airport's services (via `McpServer`).
+
+Key responsibilities include:
+
+-   **User Input Handling:** Manages the chat window, capturing user queries and displaying AI responses.
+-   **AI Integration:** Initializes and communicates with the Gemini AI model, sending user queries and receiving AI-generated text and function calls.
+-   **Multimodal Input:** Captures real-time screenshots from the player's perspective and sends them to the AI, enabling the AI to understand visual context.
+-   **Service Orchestration:** Interacts with the `McpServer` to execute AI-determined actions, such as controlling doors or retrieving information about the player's location.
+
+**Configurable Parameters:**
+
+The `McpClient` node exposes the following parameters, which can be configured within the Godot editor:
+
+-   `first_person` (NodePath to `CharacterBody3D`): This parameter should be set to the `CharacterBody3D` node representing the player character. It is essential for the AI to understand the player's position and to capture images from their viewpoint.
+-   `camera_resolution_height` (Integer): Defines the desired height (in pixels) for the images captured and sent to the AI. The width is automatically scaled to maintain the aspect ratio. A lower resolution can improve performance.
+
 ### At the moment
 
 https://github.com/user-attachments/assets/45cc041f-88ca-47e5-bb7c-76915c546d6d
