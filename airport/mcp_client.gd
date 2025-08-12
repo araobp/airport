@@ -3,7 +3,24 @@ extends Node
 var mcp_server
 var gemini
 
+var lastText = ""
+
 @export var first_person : CharacterBody3D
+@export var image_resize_ratio: float = 0.5
+
+var utilities = preload("res://utilities.gd").new()
+
+func _capture_image():
+	var image = get_viewport().get_texture().get_image()
+	
+	# Resize the image to make the size smaller
+	image.resize(image.get_width()*image_resize_ratio, image.get_height() * image_resize_ratio, Image.INTERPOLATE_BILINEAR)
+	
+	# Encode the image to Base64
+	var b64image = Marshalls.raw_to_base64(image.save_jpg_to_buffer())
+	
+
+	return b64image
 
 func _system_instruction():
 	return """
@@ -28,7 +45,9 @@ func _ready() -> void:
 	var tools = mcp_server.list_tools()
 
 	$ChatWindow.grab_focus()
-	$ChatWindow.insert_text_at_caret("Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: ")
+	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
+	$ChatWindow.insert_text_at_caret(WELCOME_MESSAGE)
+	lastText = WELCOME_MESSAGE
 
 var processing = false
 
@@ -44,12 +63,16 @@ func _process(delta: float) -> void:
 
 	if !processing and Input.is_key_pressed(KEY_ENTER) and $ChatWindow.text != "":
 		processing = true
-		var text = $ChatWindow.text
+		var query = utilities.get_newly_added_lines(lastText, $ChatWindow.text)[-1].replace("You: ", "")
+		print(query)
+
 		var response_text = await gemini.chat(
-			text,
+			query,
 			_system_instruction(),
-			mcp_server
+			mcp_server,
+			_capture_image()
 			)
 		$ChatWindow.insert_text_at_caret("AI: {response_text}\nYou: ".format({"response_text": response_text}), -1)
 		$ChatWindow.scroll_vertical = 10000
+		lastText = $ChatWindow.text
 		processing = false

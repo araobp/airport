@@ -24,7 +24,7 @@ func _init(http_request):
 	GEMINI_API_KEY = _get_environment_variable(GEMINI_API_KEY_FILE_PATH)
 	HTTP_REQUEST = http_request
 	
-func chat(query, system_instruction, mcp_server=null):
+func chat(query, system_instruction, mcp_server=null, base64_image=null):
 	
 	const headers = [
 		"Content-Type: application/json",
@@ -36,9 +36,8 @@ func chat(query, system_instruction, mcp_server=null):
 			{"text": system_instruction}
 		]
 	}
-	
-	var contents = [
-  		{
+		
+	var content = {
 			"role": "user",
 			"parts": [
 	  			{
@@ -46,7 +45,16 @@ func chat(query, system_instruction, mcp_server=null):
 	  			},
 			],
   		}
-	]
+		
+	if base64_image:
+		content["parts"].append({
+			"inline_data": {
+				"mime_type":"image/jpeg",
+				"data": base64_image
+			}
+		})
+	
+	var contents = [content]
 
 	var payload = {
 		"system_instruction": system_instruction_,
@@ -65,6 +73,7 @@ func chat(query, system_instruction, mcp_server=null):
 	var response_text = null
 
 	while true:
+		# print(payload)
 		
 		var err = HTTP_REQUEST.request(
 			GEMINI_API + "?key=" + GEMINI_API_KEY,

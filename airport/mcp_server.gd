@@ -8,7 +8,7 @@ var doors = {}
 func _ready():
 	var door_objects = $"../Doors".get_children()
 	for obj in door_objects:
-		print(obj)
+		# print(obj)
 		doors[obj.name] = obj
 
 const GREETING_TOOL = {

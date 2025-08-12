@@ -11,6 +11,7 @@ func _process(delta: float) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+
 # Disable tab key to insert tab space in TextEdit
 func _gui_input(event):
 	if event.is_action_pressed("ui_focus_next"):
