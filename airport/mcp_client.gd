@@ -8,22 +8,9 @@ var lastText = ""
 @export var first_person : CharacterBody3D
 @export var camera_resolution_height: int = 360
 
+@onready var chatWindow = $CanvasLayer/ChatWindow
+
 var utilities = preload("res://utilities.gd").new()
-
-func _capture_image():
-
-	var image = get_viewport().get_texture().get_image()
-	
-	# Resize the image to make the size smaller
-	var h = image.get_height()
-	var w = image.get_width()
-	var camera_resolution_width = w * camera_resolution_height / h
-	image.resize(camera_resolution_width, camera_resolution_height, Image.INTERPOLATE_BILINEAR)
-	
-	# Encode the image to Base64
-	var b64image = Marshalls.raw_to_base64(image.save_jpg_to_buffer())
-	
-	return b64image
 
 func _system_instruction():
 	return """
@@ -52,17 +39,17 @@ func _ready() -> void:
 
 	var tools = mcp_server.list_tools()
 
-	$ChatWindow.grab_focus()
+	chatWindow.grab_focus()
 	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
-	$ChatWindow.insert_text_at_caret(WELCOME_MESSAGE)
+	chatWindow.insert_text_at_caret(WELCOME_MESSAGE)
 	lastText = WELCOME_MESSAGE
 
 var processing = false
 
 func _add_text(text):
-	$ChatWindow.insert_text_at_caret(text, -1)
-	$ChatWindow.scroll_vertical = 10000
-	lastText = $ChatWindow.text
+	chatWindow.insert_text_at_caret(text, -1)
+	chatWindow.scroll_vertical = 10000
+	lastText = chatWindow.text
 
 func output_text(response_text):
 	print("AI: " + response_text)
@@ -73,21 +60,17 @@ func output_text(response_text):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_text_indent"):
-		$ChatWindow.visible = not $ChatWindow.visible
-		if $ChatWindow.visible:
-			$ChatWindow.grab_focus()
+		chatWindow.visible = not chatWindow.visible
+		if chatWindow.visible:
+			chatWindow.grab_focus()
 
-	if !processing and Input.is_key_pressed(KEY_ENTER) and $ChatWindow.text != "":
+	if !processing and Input.is_key_pressed(KEY_ENTER) and chatWindow.text != "":
 		processing = true
 
-		var query = utilities.get_newly_added_lines(lastText, $ChatWindow.text).replace("You: ", "")
+		var query = utilities.get_newly_added_lines(lastText, chatWindow.text).replace("You: ", "")
 		print("You: " + query)
 		
-		$ChatWindow.visible = false
-		await get_tree().process_frame
-		var base64_image = await _capture_image()
-		$ChatWindow.visible = true
-		$ChatWindow.grab_focus()
+		var base64_image = first_person.capture_image(camera_resolution_height)
 				
 		await gemini.chat(
 			query,

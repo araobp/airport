@@ -122,7 +122,7 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 				var functionCall = part["functionCall"]
 				var func_name = functionCall["name"]
 				var args = functionCall["args"]
-				print(func_name, args)	
+				print(func_name, "(", args, ")")	
 				
 				var callable = Callable(mcp_server, func_name)
 				var result = await callable.call(args)

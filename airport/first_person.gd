@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var camera_3d = $Camera3D
+@onready var chatWindow = $"../../../McpClient/CanvasLayer/ChatWindow"
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -12,7 +13,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 func _input(event):
-	if not $"../McpClient/ChatWindow".visible and event is InputEventMouseMotion:
+	if not chatWindow.visible and event is InputEventMouseMotion:
 		rotation.y -= event.relative.x * CAMERA_SENS
 		rotation.x -= event.relative.y * CAMERA_SENS
 		rotation.x = clamp(rotation.x, -0.5, 1.2)
@@ -22,7 +23,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	if not $"../McpClient/ChatWindow".visible:
+	if not chatWindow.visible:
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
@@ -39,3 +40,18 @@ func _physics_process(delta):
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 
 		move_and_slide()
+
+func capture_image(camera_resolution_height):
+
+	var image = $"..".get_viewport().get_texture().get_image()
+	
+	# Resize the image to make the size smaller
+	var h = image.get_height()
+	var w = image.get_width()
+	var camera_resolution_width = w * camera_resolution_height / h
+	image.resize(camera_resolution_width, camera_resolution_height, Image.INTERPOLATE_BILINEAR)
+	
+	# Encode the image to Base64
+	var b64image = Marshalls.raw_to_base64(image.save_jpg_to_buffer())
+	
+	return b64image
