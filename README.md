@@ -40,6 +40,10 @@ This project is a work-in-progress implementation of the following specification
 
 ## Core Components
 
+### Main Scene
+
+The main scene of the project is now `airport/Airport.tscn`. This scene orchestrates the various components of the airport simulation.
+
 ### McpClient Node
 
 The `McpClient` node (`airport/mcp_client.gd`) serves as the central hub for user interaction and AI communication within the project. It orchestrates the flow of information between the user interface (chat window), the AI model, and the airport's services (via `McpServer`).
@@ -57,6 +61,7 @@ The `McpClient` node exposes the following parameters, which can be configured w
 
 -   `first_person` (NodePath to `CharacterBody3D`): This parameter should be set to the `CharacterBody3D` node representing the player character. It is essential for the AI to understand the player's position and to capture images from their viewpoint.
 -   `camera_resolution_height` (Integer): Defines the desired height (in pixels) for the images captured and sent to the AI. The width is automatically scaled to maintain the aspect ratio. A lower resolution can improve performance.
+-   `llm_model` (String, Enum): Specifies the Gemini model to be used for AI interactions. Options include "gemini-2.0-flash" and "gemini-2.5-flash".
 
 ## AI Agent Implementation Details
 

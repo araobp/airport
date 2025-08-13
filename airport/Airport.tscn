@@ -39,7 +39,6 @@ ambient_light_color = Color(0.464235, 0.464235, 0.464235, 1)
 tonemap_mode = 2
 ssr_enabled = true
 ssao_enabled = true
-ssil_enabled = true
 sdfgi_read_sky_light = false
 
 [node name="McpServer" type="Node3D"]
