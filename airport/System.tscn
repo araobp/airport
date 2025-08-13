@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=14 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://chat_window.gd" id="3_1ayyj"]
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="3_r1c7q"]
@@ -7,12 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://1fcc5lv0tfl8" path="res://Terminal/Terminal.tscn" id="7_v3stw"]
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="8_5nvr7"]
 [ext_resource type="PackedScene" uid="uid://dvgh6kkfs3p4" path="res://Door/Door.tscn" id="8_qr17b"]
-
-[sub_resource type="GDScript" id="GDScript_rvu7u"]
-script/source = "extends Node3D
-
-var chat_window_enabled = true
-"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
 content_margin_left = 10.0
@@ -48,7 +42,6 @@ ssil_enabled = true
 sdfgi_read_sky_light = false
 
 [node name="ABC Airport" type="Node3D"]
-script = SubResource("GDScript_rvu7u")
 
 [node name="McpClient" type="Node" parent="." node_paths=PackedStringArray("first_person")]
 script = ExtResource("4_1ayyj")
