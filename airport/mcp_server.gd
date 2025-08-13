@@ -2,11 +2,11 @@ extends Node
 
 var utilities = load("res://utilities.gd").new()
 
-@onready var terminal = $"../Terminal"
+@onready var terminal = $Airport/Terminal
 var doors = {}
 
 func _ready():
-	var door_objects = $"../Doors".get_children()
+	var door_objects = $Airport/Doors.get_children()
 	for obj in door_objects:
 		# print(obj)
 		doors[obj.name] = obj

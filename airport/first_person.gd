@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
 @onready var camera_3d = $Camera3D
-@onready var chatWindow = $"../../../McpClient/CanvasLayer/ChatWindow"
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -13,7 +12,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 func _input(event):
-	if not chatWindow.visible and event is InputEventMouseMotion:
+	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:
 		rotation.y -= event.relative.x * CAMERA_SENS
 		rotation.x -= event.relative.y * CAMERA_SENS
 		rotation.x = clamp(rotation.x, -0.5, 1.2)
@@ -23,7 +22,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	if not chatWindow.visible:
+	if Globals.mode == Globals.MODE.CONTROL:
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 			velocity.y = JUMP_VELOCITY

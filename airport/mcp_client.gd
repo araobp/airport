@@ -1,6 +1,7 @@
 extends Node
 
-var mcp_server
+@onready var	 mcp_server = get_node("/root/McpServer")
+
 var gemini
 
 var lastText = ""
@@ -25,12 +26,12 @@ func _system_instruction():
 	If you are asked "What can you do?" or something like that, show me the features of function calling for the airport.	
 	""".format({
 		"name": first_person.name,
-		"area": $"../McpServer".get_area({"name": first_person.name})
+		"area": mcp_server.get_area({"name": first_person.name})
 		})
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	mcp_server = get_parent().get_node("McpServer")
+	print(mcp_server.name)
 	var callback_ref = output_text
 	gemini = load("res://gemini.gd").new(
 			$HTTPRequest,
@@ -63,7 +64,10 @@ func _process(delta: float) -> void:
 		chatWindow.visible = not chatWindow.visible
 		if chatWindow.visible:
 			chatWindow.grab_focus()
-
+			Globals.mode = Globals.MODE.CHAT
+		else:
+			Globals.mode = Globals.MODE.CONTROL
+			
 	if !processing and Input.is_key_pressed(KEY_ENTER) and chatWindow.text != "":
 		processing = true
 
