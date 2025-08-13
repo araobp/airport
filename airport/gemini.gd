@@ -1,20 +1,20 @@
 extends Node
 
 # Gemini 2.5 Flash Model endpoint
-const MODEL = "gemini-2.5-flash"
-#const MODEL = "gemini-2.0-flash"
-
-var GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": MODEL})
+var MODEL
+var GEMINI_CHAT_API
 
 # Gemini API Key
 var GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
 var GEMINI_API_KEY = ""
 
+# Reference to HTTPRequest node
 var HTTP_REQUEST
-var CALLBACK: Callable
 
+# Chat history
 var chat_history = []
 const MAX_CHAT_HISTORY_LENGTH = 32
+var ENABLE_HISTORY
 
 # Get an environment variable in the file
 func _get_environment_variable(filePath):
@@ -23,13 +23,22 @@ func _get_environment_variable(filePath):
 	content = content.strip_edges()
 	return content
 
-func _init(http_request, callback: Callable):
+# Default callback function
+func _output_text(text):
+	print("default output: " + text)
 
+# Constructor	
+func _init(http_request, model="gemini-2.0-flash", enable_history=false):
+	MODEL = model
+	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": MODEL})
 	GEMINI_API_KEY = _get_environment_variable(GEMINI_API_KEY_FILE_PATH)
+	GEMINI_CHAT_API = api + "?key=" + GEMINI_API_KEY
 	HTTP_REQUEST = http_request
-	CALLBACK = callback
-	
-func chat(query, system_instruction, mcp_server=null, base64_image=null):
+	ENABLE_HISTORY = enable_history
+	# print(model)
+
+# Chat with Gemini
+func chat(query, system_instruction, base64_image=null, mcp_servers=null, callback:Callable=_output_text):
 	
 	const headers = [
 		"Content-Type: application/json",
@@ -50,11 +59,8 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 	  			},
 			],
   		}
-
-	if len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
-		chat_history = chat_history[-MAX_CHAT_HISTORY_LENGTH]
-	chat_history.append(content.duplicate(true))
-		
+	var content_ = content.duplicate(true)
+	
 	if base64_image:
 		content["parts"].append({
 			"inline_data": {
@@ -63,29 +69,31 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 			}
 		})
 	
+	# payload to be sent to Gemini Chat API
+	if len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
+		chat_history = chat_history[-MAX_CHAT_HISTORY_LENGTH]
 	var contents = chat_history + [content]
-
 	var payload = {
 		"system_instruction": system_instruction_,
 		"contents": contents
 	}
-	
-	if mcp_server:
-		var function_declarations = mcp_server.list_tools()
+
+	# Note: Base64 image data is not appended to the chat history
+	if ENABLE_HISTORY:
+		chat_history.append(content_)
+	# print("chat history: " + str(chat_history))
 		
-		payload["tools"] = [
-			{
-				"functionDeclarations": function_declarations
-			}
-		]
+	# Function calling
+	if mcp_servers:		
+		payload["tools"] = mcp_servers["tools"]
 	
 	var response_text = null
 
 	while true:
-		# print(payload)
 		
+		# Call Gemini Chat API
 		var err = HTTP_REQUEST.request(
-			GEMINI_API + "?key=" + GEMINI_API_KEY,
+			GEMINI_CHAT_API,
 			headers,
 			HTTPClient.METHOD_POST,
 			JSON.stringify(payload)
@@ -95,70 +103,80 @@ func chat(query, system_instruction, mcp_server=null, base64_image=null):
 			return
 
 		var res = await HTTP_REQUEST.request_completed
-
-		var body = res[3]
-		
+		var body = res[3]		
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		
 		# print(json)
-		var candidate = json["candidates"][0]
-		var parts = candidate["content"]["parts"]
+		var candidate
+		var parts
+		if "candidates" in json:
+			candidate = json["candidates"][0]
+			parts = candidate["content"]["parts"]
+		else:
+			print(json)
+			chat_history.clear()
+			return
 
 		var functionCalled = false
 		
-		chat_history.append({
+		var content_in_res = {
 			"role": "model",
 			"parts": parts
-		})
+		}
+		
+		if ENABLE_HISTORY:
+			chat_history.append(content_in_res)
+		contents.append(content_in_res)
 		#print(chat_history)
 		
 		for part in parts:
 			if "text" in part:
 				response_text = part["text"]
+				# Output text via callback
+				callback.call(response_text)
 				# print(response_text)
-				CALLBACK.call(response_text)
 								
+			# Function calling case
 			if "functionCall" in part:
-				var functionCall = part["functionCall"]
-				var func_name = functionCall["name"]
-				var args = functionCall["args"]
+				var function_call = part["functionCall"]
+				var function = function_call["name"].split(".")  # <mcp_server_name>.<function_name>
+				
+				var mcp_server_name = function[0]
+				var func_name = function[1]
+				var args = function_call["args"]
 				print(func_name, "(", args, ")")	
 				
-				var callable = Callable(mcp_server, func_name)
+				# Call function via Callable
+				var ref = mcp_servers["ref"][mcp_server_name]
+				var callable = Callable(ref, func_name)
 				var result = await callable.call(args)
 				
-				var functionResponsePart = {
-					"name": func_name,
+				var function_response_part = {
+					"name": function_call["name"],
 					"response": {
 						"result": result
 					}
 				}
 				
-				contents.append(
-					{
-						"role": "model",
-						"parts": [
-							{
-								"functionCall": functionCall
-							}
-						]
-					}
-				)
+				var content_func_res = {
+					"role": "user",
+					"parts": [
+						{
+							"functionResponse": function_response_part,
+						}
+					]
+				}
 				
-				contents.append(
-					{
-						"role": "user",
-						"parts": [
-							{
-								"functionResponse": functionResponsePart,
-							}
-						]
-					}
-				)
+				if ENABLE_HISTORY:
+					chat_history.append(content_func_res)
+				contents.append(content_func_res)
 				
 				functionCalled = true
 					
 		if not functionCalled:
 			break
-			
-	return
+	
+	if callback == _output_text:	
+		return response_text
+	else:  # response_text already returned via callback
+		return

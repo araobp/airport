@@ -77,7 +77,7 @@ const AREA_TOOL = {
 		"properties": {
 			"name": {
 				"type": "string",
-				"description": "Name of the person"
+				"description": "Name of the person visiting the airport."
 			},
 		},
 		"required": ["name"],
@@ -101,7 +101,10 @@ const TOOLS = [
 ]
 
 func list_tools():
-	return TOOLS
+	var tools = TOOLS.duplicate(true)
+	for tool in tools:
+		tool["name"] = "{server_name}.{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
+	return tools
 	
 func greeting(args):
 	return await utilities.greeting(args["my_name"])
