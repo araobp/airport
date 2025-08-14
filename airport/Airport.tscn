@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=16 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://globals.gd" id="2_slhsa"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://chat_window.gd" id="4_1tehv"]
 [ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://first_person.gd" id="5_qiqb0"]
 [ext_resource type="PackedScene" uid="uid://1fcc5lv0tfl8" path="res://Terminal/Terminal.tscn" id="6_1c1gk"]
+[ext_resource type="Script" uid="uid://dbd71s1f42m8t" path="res://airport_services.gd" id="6_slhsa"]
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="7_r0grm"]
 [ext_resource type="PackedScene" uid="uid://dvgh6kkfs3p4" path="res://Door/Door.tscn" id="8_2bi0w"]
 
@@ -50,7 +51,6 @@ script = ExtResource("2_slhsa")
 [node name="McpClient" type="Node" parent="." node_paths=PackedStringArray("first_person")]
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
-llm_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 
@@ -85,10 +85,11 @@ render_target_update_mode = 4
 [node name="Visitor1" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -27.6729, 5.04603, 6.52959)
 script = ExtResource("5_qiqb0")
+fov_wide = 100.0
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Visitor1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
-fov = 50.0
+fov = 60.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Visitor1"]
 transform = Transform3D(0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.4, 0, 0.8, 0)
@@ -107,6 +108,7 @@ shadow_enabled = true
 environment = SubResource("Environment_6uqi0")
 
 [node name="Airport" type="Node3D" parent="."]
+script = ExtResource("6_slhsa")
 
 [node name="Terminal" parent="Airport" instance=ExtResource("6_1c1gk")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -116,38 +118,49 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 
 [node name="Doors" type="Node3D" parent="Airport"]
 
-[node name="Entrance_2F_2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-1-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, 6.51613)
 
-[node name="Entrance_2F_1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="SensingArea" parent="Airport/Doors/2F-E-1-ew-2" index="5"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.75, 0)
+
+[node name="CollisionShape3D" parent="Airport/Doors/2F-E-1-ew-2/SensingArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="2F-E-1-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, 19.5121)
 
-[node name="Entrance_1F_1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="1F-E-1-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(0.999975, 0, -0.00710343, 0, 1, 0, 0.00710343, 0, 0.999975, -22.7123, 0.18877, 19.5121)
 
-[node name="Entrance_1F_2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="1F-E-1-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0.000366519, 0, 1, 0, -0.000366519, 0, 1, -22.6891, 0.189, 6.516)
 
-[node name="Entrance_2F_3" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-2-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, -72.819)
 
-[node name="Entrance_2F_4" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-2-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, -59.6324)
 
-[node name="Entrance_1F_3" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="1F-E-2-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 0.18877, -59.6324)
 
-[node name="Entrance_1F_4" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="1F-E-2-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.712, 0.189, -72.8191)
 
-[node name="Entrance_2F_5" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-3-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(0.873126, 0, -0.487494, 0, 1, 0, 0.487494, 0, 0.873126, 19.9824, 5.04467, -170.491)
 
-[node name="Entrance_2F_6" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-3-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(0.873449, 0, -0.486915, 0, 1, 0, 0.486915, 0, 0.873449, 25.797, 5.04467, -180.98)
 
-[node name="Entrance_1F_5" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="1F_E_3_ew_1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(0.872155, 0, -0.48923, 0, 1, 0, 0.48923, 0, 0.872155, 25.7906, 0.189, -181.033)
 
-[node name="Entrance_1F_6" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="1F_E_3_ew_2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(0.871958, 0, -0.48958, 0, 1, 0, 0.48958, 0, 0.871958, 19.9335, 0.18877, -170.446)
+
+[editable path="Airport/Terminal"]
+[editable path="Airport/Doors/2F-E-1-ew-2"]
+[editable path="Airport/Doors/2F-E-1-ew-1"]
+[editable path="Airport/Doors/1F-E-1-ew-1"]

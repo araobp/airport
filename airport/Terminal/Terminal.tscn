@@ -1,13 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://1fcc5lv0tfl8"]
+[gd_scene load_steps=2 format=3 uid="uid://1fcc5lv0tfl8"]
 
 [ext_resource type="PackedScene" uid="uid://ci1gnndowy15x" path="res://Terminal/terminal.glb" id="1_apu1k"]
-[ext_resource type="Script" uid="uid://dtyadvjtbla6u" path="res://Terminal/terminal.gd" id="2_rt0cr"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_jfiwo"]
-radius = 6.0
 
 [node name="Terminal" instance=ExtResource("1_apu1k")]
-script = ExtResource("2_rt0cr")
 
 [node name="StaticBody3D" parent="Building" index="0"]
 axis_lock_linear_x = true
@@ -16,19 +11,3 @@ axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-
-[node name="Areas" type="Node3D" parent="." index="2"]
-
-[node name="Entrance_2F_2" type="Area3D" parent="Areas" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.51969, 5.04491, 22.7977)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/Entrance_2F_2" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.89, 0)
-shape = SubResource("CylinderShape3D_jfiwo")
-
-[node name="Entrance_2F_1" type="Area3D" parent="Areas" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3566, 5.04491, 22.7977)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/Entrance_2F_1" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.89, 0)
-shape = SubResource("CylinderShape3D_jfiwo")

@@ -38,7 +38,7 @@ func _init(http_request, model="gemini-2.0-flash", enable_history=false):
 	# print(model)
 
 # Chat with Gemini
-func chat(query, system_instruction, base64_image=null, mcp_servers=null, callback:Callable=_output_text):
+func chat(query, system_instruction, base64_image=null, mcp_servers=null, callback:Callable=_output_text, json_output=false):
 	
 	const headers = [
 		"Content-Type: application/json",
@@ -86,6 +86,12 @@ func chat(query, system_instruction, base64_image=null, mcp_servers=null, callba
 	# Function calling
 	if mcp_servers:		
 		payload["tools"] = mcp_servers["tools"]
+	
+	# Request JSON Output
+	if json_output:
+		payload["generationConfig"] = {
+			"response_mime_type": "application/json"
+		}
 	
 	var response_text = null
 

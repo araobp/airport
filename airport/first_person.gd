@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 @onready var camera_3d = $Camera3D
+@export var fov: float = 60
+@export var fov_wide: float = 120
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -10,6 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	$Camera3D.fov = fov
 	
 func _input(event):
 	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:
@@ -40,8 +43,12 @@ func _physics_process(delta):
 
 		move_and_slide()
 
-func capture_image(camera_resolution_height):
+func capture_image(camera_resolution_height, enable_wide_fov=false):
 
+	if enable_wide_fov:
+		camera_3d.fov = fov_wide
+		await get_tree().process_frame
+		
 	var image = $"..".get_viewport().get_texture().get_image()
 	
 	# Resize the image to make the size smaller
@@ -52,5 +59,8 @@ func capture_image(camera_resolution_height):
 	
 	# Encode the image to Base64
 	var b64image = Marshalls.raw_to_base64(image.save_jpg_to_buffer())
+	
+	if enable_wide_fov:
+		camera_3d.fov = fov
 	
 	return b64image

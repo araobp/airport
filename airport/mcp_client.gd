@@ -4,15 +4,15 @@ extends Node
 @export var camera_resolution_height: int = 360
 @export_enum("gemini-2.0-flash", "gemini-2.5-flash") var llm_model: String = "gemini-2.5-flash"
 
+var utilities = load("res://utilities.gd").new()
+
 @onready var	 mcp_server = get_node("/root/McpServer")
 @onready var chat_window = $CanvasLayer/ChatWindow
 
-var gemini
-var gemini2
+var gemini  # for AI Agent processing
+var gemini2  # for McpClient local tools
 
-var last_text = ""
-
-# Local tool
+##### Local tools #####
 const CAMERA_TOOL = {
 	"name": "take_photo",
 	"description": """
@@ -31,8 +31,36 @@ const CAMERA_TOOL = {
 	}
 }
 
+const ZOON_TOOL = {
+	"name": "get_zone_id",
+	"description": """
+	A function to get the zone ID of the location where the person is. The zone id represents the visitor's location in the airport."
+	""",
+	"parameters": {
+		"type": "object",
+		"properties": {},
+		"required": [],
+	}
+}
+
+const QUIT_TOOL = {
+	"name": "quit",
+	"description": """
+	A function to quit this journey.
+	Note: before calling this function, output some goodbye message in text, wait for three seconds then call this function to quit this journey."
+	""",
+	"parameters": {
+		"type": "object",
+		"properties": {},
+		"required": [],
+	}
+}
+
+
 const LOCAL_TOOLS = [
-	CAMERA_TOOL
+	CAMERA_TOOL,
+	ZOON_TOOL,
+	QUIT_TOOL
 ]
 
 func list_tools():
@@ -42,29 +70,23 @@ func list_tools():
 	return tools
 
 func _system_instruction():
-	return """You are an AI agent good at controlling the facilities or amenities of ABC Airport.  
-You are also good at recognizing the attached image captured by the onboard camera of my wearable device.
+	return """You are an AI agent that controls the facilities and amenities of ABC Airport. You can also recognize images captured by the onboard camera of my wearable device.
 
-My name is {name}. I am visiting the airport, and I am currently in {area}.  
-When asked something, you take an action in the area I am currently in.
+My name is {name}, and I'm visiting the airport.
 
-If you do not know where I am, call the function to determine the area first before taking further actions.  
-If the area is unknown, you simply give a general reply such as "Which area do you want to ...".  
-If you are asked "What can you do?" or something similar, show me the available function-calling features for the airport.
+If you need to know my location, first determine my zone ID before taking any further actions.
 
-When you are executing functions in order, output some text before calling each function to explain what you are going to do with the function at each function call step.
-Instead of mentioning function names, just mention what you are going to do.
+When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
 
 Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
 """.format({
-		"name": first_person.name,
-		"area": mcp_server.get_area({"name": first_person.name})
+		"name": first_person.name
 	})
 	
 
 func take_photo(visitor_name):
 	# Note: visitor_name if for future use
-	var base64_image = first_person.capture_image(camera_resolution_height)
+	var base64_image = await first_person.capture_image(camera_resolution_height)
 	const QUERY = "Recognize the attached image and output detailed explanations on it"		
 	var result = await gemini2.chat(
 		QUERY,
@@ -72,9 +94,47 @@ func take_photo(visitor_name):
 		base64_image
 		)
 	return result
+	
+func get_zone_id(args):
+	var base64_image = await first_person.capture_image(camera_resolution_height, true)
+	const QUERY = """
+	If you identify three alphanumeric strings connected by hyphens in the image,
+	extract it and output that string.
+	
+	Additionally, if the color of the string is green, append "-e" to the end of the string, and if it's orange, append "-w". For example, if the extracted string is 2F-E-1, and the string is green, the output should be 2F-E-1-e; if the string is orange, the output should be 2F-E-1-w.
+	Output the final result in the following JSON format.
+	
+	If you do not identify such three alphanumeric strings in the image, output "unknown" following the JSON format.
 
+	## JSON Format
+	
+	{"zone_id": "..."}
+	"""
+	
+	var result = await gemini2.chat(
+		QUERY,
+		_system_instruction(),
+		base64_image
+		)
+
+	# Remove the code block notation: ```json{...}```
+	result = result.replace("```json", "").replace("```", "")
+	print(result)
+	var json = JSON.parse_string(result)
+	if json:
+		return json["zone_id"]
+	else:  # JSON parse failed
+		return "unknown"
+
+
+func quit(args):
+	return await utilities.quit(get_tree())
 
 var processing = false
+
+######
+
+var last_text = ""
 
 # Insert text at caret in TextEdit
 func _insert_text(text):
