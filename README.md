@@ -63,6 +63,10 @@ The `McpClient` node exposes the following parameters, which can be configured w
 -   `camera_resolution_height` (Integer): Defines the desired height (in pixels) for the images captured and sent to the AI. The width is automatically scaled to maintain the aspect ratio. A lower resolution can improve performance.
 -   `llm_model` (String, Enum): Specifies the Gemini model to be used for AI interactions. Options include "gemini-2.0-flash" and "gemini-2.5-flash".
 
+### Wearable Device: The Smartkey
+
+To interact with the AI agent, this project envisions a 'smartkey' as a dedicated wearable device. This universal key, equipped with an embedded camera, microphone, and speaker, can be used to operate anything from a car to a house door. It also serves as a biometric authenticator for services at the airport and beyond. It serves as a seamless, hands-free interface for the user, evolving the initial concept of a chest-worn smartphone into a more specialized and integrated piece of hardware.
+
 ## AI Agent Implementation Details
 
 This project features an AI agent powered by Google's Gemini model, designed to interact with the airport environment through natural language and visual input. The implementation leverages Gemini's function calling capabilities to enable the AI to perform actions and retrieve information from the simulated airport.
