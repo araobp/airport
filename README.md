@@ -150,7 +150,7 @@ const DOOR_CONTROL_TOOL = {
 
 When the AI determines that a user's request can be fulfilled by one of these tools, it generates a `functionCall` in its response. The `gemini.gd` script intercepts this `functionCall`, executes the corresponding function on the `McpServer` or `McpClient` (depending on where the tool is defined), and then appends the function's response back into the chat history. This allows the AI to reason about the outcome of its actions and continue the conversation.
 
-For instance, if the AI decides to open a door, the `gemini.gd` script will execute `airport_services.door_control({"zone_id": "2F-E-1-ew-2", "control": "open"})`. The result of this operation is then fed back to the AI, enabling a continuous and interactive dialogue.
+For instance, if the AI decides to open a door, the `gemini.gd` script will execute `airport_services.door_control({"zone_id": "2F-E-1", "control": "open"})`. The result of this operation is then fed back to the AI, enabling a continuous and interactive dialogue.
 
 ```json
 {
