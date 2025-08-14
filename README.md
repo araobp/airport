@@ -160,7 +160,7 @@ For instance, if the AI decides to open a door, the `gemini.gd` script will exec
       "functionCall": {
         "name": "door_control",
         "args": {
-          "zone_id": "2F-E-1-ew-2",
+          "zone_id": "2F-E-1-e",
           "control": "open"
         }
       }
