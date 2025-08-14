@@ -111,10 +111,22 @@ func get_zone_id(args):
 	{"zone_id": "..."}
 	"""
 	
+	const json_schema = {
+		"type": "object",
+		"properties": {
+			"zone_id": {
+				"type": "string"
+			}
+		},
+		"required": ["zone_id"]
+	}
+	
 	var result = await gemini2.chat(
 		QUERY,
 		_system_instruction(),
-		base64_image
+		base64_image,
+		null,
+		json_schema
 		)
 
 	# Remove the code block notation: ```json{...}```
@@ -206,6 +218,7 @@ func _process(delta: float) -> void:
 			_system_instruction(),
 			null,
 			mcp_servers,
+			null,
 			output_text
 			)
 		
