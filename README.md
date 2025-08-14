@@ -67,6 +67,8 @@ The `McpClient` node exposes the following parameters, which can be configured w
 
 To interact with the AI agent, this project envisions a 'smartkey' as a dedicated wearable device. This universal key, equipped with an embedded camera, microphone, and speaker, can be used to operate anything from a car to a house door. It also serves as a biometric authenticator for services at the airport and beyond. It serves as a seamless, hands-free interface for the user, evolving the initial concept of a chest-worn smartphone into a more specialized and integrated piece of hardware.
 
+<img src="./docs/smartkey.png" width=200>
+
 ## AI Agent Implementation Details
 
 This project features an AI agent powered by Google's Gemini model, designed to interact with the airport environment through natural language and visual input. The implementation leverages Gemini's function calling capabilities to enable the AI to perform actions and retrieve information from the simulated airport.
