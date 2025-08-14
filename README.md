@@ -1,7 +1,5 @@
 # Airport
 
-**Note:** The `gemini_api_key_env.txt` file, which contains the `GEMINI_API_KEY`, should be placed in the `airport` directory. This file is ignored by the root `.gitignore` file, so it will not be committed to the repository.
-
 ## Gemini's Role in This Project
 
 This project heavily leverages the Gemini AI model throughout its development and functionality. Gemini has been instrumental in various aspects, including:
@@ -46,22 +44,30 @@ The main scene of the project is now `airport/Airport.tscn`. This scene orchestr
 
 ### McpClient Node
 
-The `McpClient` node (`airport/mcp_client.gd`) serves as the central hub for user interaction and AI communication within the project. It orchestrates the flow of information between the user interface (chat window), the AI model, and the airport's services (via `McpServer`).
+The `McpClient` node (`airport/mcp_client.gd`) is the core of the AI interaction in this project. It is responsible for managing the user interface, communicating with the Gemini AI model, and orchestrating actions within the airport environment.
 
-Key responsibilities include:
+#### Configuration
 
--   **User Input Handling:** Manages the chat window, capturing user queries and displaying AI responses.
--   **AI Integration:** Initializes and communicates with the Gemini AI model, sending user queries and receiving AI-generated text and function calls.
--   **Multimodal Input:** Captures real-time screenshots from the player's perspective and sends them to the AI, enabling the AI to understand visual context.
--   **Service Orchestration:** Interacts with the `McpServer` to execute AI-determined actions, such as controlling doors or retrieving information about the player's location.
+The `McpClient` node has several exported variables that can be configured in the Godot editor's Inspector tab:
 
-**Configurable Parameters:**
+-   **First Person:** A `NodePath` to the `CharacterBody3D` representing the player. This is crucial for the AI to understand the player's location and perspective.
+-   **Camera Resolution Height:** An integer that sets the height of the images captured from the player's viewpoint. The width is scaled automatically.
+-   **Gemini Api Key:** Your Gemini API key. See the "API Key Management" section for more details.
+-   **Gemini Model:** An enum to select the Gemini model to use (e.g., "gemini-2.0-flash", "gemini-2.5-flash").
 
-The `McpClient` node exposes the following parameters, which can be configured within the Godot editor:
+### API Key Management
 
--   `first_person` (NodePath to `CharacterBody3D`): This parameter should be set to the `CharacterBody3D` node representing the player character. It is essential for the AI to understand the player's position and to capture images from their viewpoint.
--   `camera_resolution_height` (Integer): Defines the desired height (in pixels) for the images captured and sent to the AI. The width is automatically scaled to maintain the aspect ratio. A lower resolution can improve performance.
--   `llm_model` (String, Enum): Specifies the Gemini model to be used for AI interactions. Options include "gemini-2.0-flash" and "gemini-2.5-flash".
+To use the AI features in this project, you need to provide a Gemini API key. This is done by setting the `Gemini Api Key` property on the `McpClient` node in the Godot editor.
+
+1.  Open the `Airport.tscn` scene in the Godot editor.
+2.  Select the `McpClient` node in the Scene tree.
+3.  In the Inspector tab, you will see the "Gemini Api Key" field. Paste your API key here.
+
+This method ensures that your API key is not hardcoded in the scripts and is not committed to version control.
+
+### Airport Services
+
+The `airport_services.gd` script centralizes the logic for various airport services. Currently, it handles door control, allowing the AI to open and close doors within the simulated environment. This modular design promotes reusability and simplifies the management of airport functionalities.
 
 ### Wearable Device: The Smartkey
 
@@ -110,11 +116,11 @@ The AI agent maintains a conversation history to understand context and provide 
 ]
 ```
 
-As shown above, user messages can include both text and inline image data (Base64 encoded JPEG). This multimodal input allows the AI to understand visual cues from the player's perspective, such as identifying objects or assessing the environment. The `McpClient` node captures screenshots from the player's camera and encodes them for inclusion in the chat history.
+As shown above, user messages can include both text and inline image data (Base64 encoded JPEG). This multimodal input allows the AI to understand visual cues from the player's perspective, such as identifying objects or assessing the environment. The `McpClient` node captures screenshots from the player's camera and encodes them for inclusion in the chat history. The `first_person.gd` script also allows for capturing images with a wider field of view, which can be useful for broader environmental context.
 
 ### Function Calling
 
-The AI agent's ability to interact with the airport environment is facilitated by Gemini's function calling feature. The `McpServer` node defines a set of available tools (functions) that the AI can "call" to perform specific actions or retrieve dynamic information.
+The AI agent's ability to interact with the airport environment is facilitated by Gemini's function calling feature. The `McpServer` node and `McpClient` node define a set of available tools (functions) that the AI can "call" to perform specific actions or retrieve dynamic information.
 
 Here's an example of a tool definition for controlling a door:
 
@@ -123,14 +129,14 @@ const DOOR_CONTROL_TOOL = {
     "name": "door_control",
     "description": """
     A function to open or close the door.
-    If the area name is unknown, this function is not called.
+    If the zone ID is unknown, this function is not called.
     """,
     "parameters": {
         "type": "object",
         "properties": {
-            "area": {
+            "zone_id": {
                 "type": "string",
-                "description": "Area name where the door is located."
+                "description": "Zone ID where the door is located."
             },
             "control": {
                 "type": "string",
@@ -142,9 +148,9 @@ const DOOR_CONTROL_TOOL = {
 }
 ```
 
-When the AI determines that a user's request can be fulfilled by one of these tools, it generates a `functionCall` in its response. The `gemini.gd` script intercepts this `functionCall`, executes the corresponding function on the `McpServer`, and then appends the function's response back into the chat history. This allows the AI to reason about the outcome of its actions and continue the conversation.
+When the AI determines that a user's request can be fulfilled by one of these tools, it generates a `functionCall` in its response. The `gemini.gd` script intercepts this `functionCall`, executes the corresponding function on the `McpServer` or `McpClient` (depending on where the tool is defined), and then appends the function's response back into the chat history. This allows the AI to reason about the outcome of its actions and continue the conversation.
 
-For instance, if the AI decides to open a door, the `gemini.gd` script will execute `mcp_server.door_control({"area": "Entrance_2F_2", "control": "open"})`. The result of this operation is then fed back to the AI, enabling a continuous and interactive dialogue.
+For instance, if the AI decides to open a door, the `gemini.gd` script will execute `airport_services.door_control({"zone_id": "2F-E-1-ew-2", "control": "open"})`. The result of this operation is then fed back to the AI, enabling a continuous and interactive dialogue.
 
 ```json
 {
@@ -154,7 +160,7 @@ For instance, if the AI decides to open a door, the `gemini.gd` script will exec
       "functionCall": {
         "name": "door_control",
         "args": {
-          "area": "Entrance_2F_2",
+          "zone_id": "2F-E-1-ew-2",
           "control": "open"
         }
       }
@@ -163,7 +169,11 @@ For instance, if the AI decides to open a door, the `gemini.gd` script will exec
 }
 ```
 
-The `mcp_server.gd` script contains the actual implementations of these functions, delegating tasks to other nodes or utility scripts as needed. This modular design ensures a clear separation of concerns and allows for easy expansion of the AI's capabilities.
+The `mcp_server.gd` and `mcp_client.gd` scripts contain the actual implementations of these functions, delegating tasks to other nodes or utility scripts as needed. This modular design ensures a clear separation of concerns and allows for easy expansion of the AI's capabilities.
+
+### Enforcing JSON Output with Schema
+
+The Gemini integration now enforces JSON output with a schema for certain function calls, such as `get_zone_id`. This ensures that the AI's responses are consistently formatted and can be reliably parsed by the application. This feature is implemented in `gemini.gd` by accepting a `json_schema` parameter in the `chat` function.
 
 ### At the moment
 
