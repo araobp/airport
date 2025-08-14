@@ -2,7 +2,8 @@ extends Node
 
 @export var first_person : CharacterBody3D
 @export var camera_resolution_height: int = 360
-@export_enum("gemini-2.0-flash", "gemini-2.5-flash") var llm_model: String = "gemini-2.5-flash"
+@export var gemini_api_key = ""
+@export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
 
 var utilities = load("res://utilities.gd").new()
 
@@ -183,12 +184,14 @@ func _ready() -> void:
 	
 	gemini = load("res://gemini.gd").new(
 			$HTTPRequest,
-			llm_model,
+			gemini_api_key,
+			gemini_model,
 			true  # enable history
 		)
 	gemini2 = load("res://gemini.gd").new(
 			$HTTPRequest,
-			llm_model,
+			gemini_api_key,
+			gemini_model,
 			false  # disable history
 		)
 

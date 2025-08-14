@@ -51,6 +51,7 @@ script = ExtResource("2_slhsa")
 [node name="McpClient" type="Node" parent="." node_paths=PackedStringArray("first_person")]
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
+gemini_api_key = "AIzaSyAugytjnDjFQ10XjmH2Sy-UPOUARWPL9PM"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 

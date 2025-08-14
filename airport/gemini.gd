@@ -4,10 +4,6 @@ extends Node
 var MODEL
 var GEMINI_CHAT_API
 
-# Gemini API Key
-var GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
-var GEMINI_API_KEY = ""
-
 # Reference to HTTPRequest node
 var HTTP_REQUEST
 
@@ -16,23 +12,15 @@ var chat_history = []
 const MAX_CHAT_HISTORY_LENGTH = 32
 var ENABLE_HISTORY
 
-# Get an environment variable in the file
-func _get_environment_variable(filePath):
-	var file = FileAccess.open(filePath, FileAccess.READ)
-	var content = file.get_as_text()
-	content = content.strip_edges()
-	return content
-
 # Default callback function
 func _output_text(text):
 	print("default output: " + text)
 
 # Constructor	
-func _init(http_request, model="gemini-2.0-flash", enable_history=false):
+func _init(http_request, gemini_api_key, model="gemini-2.0-flash", enable_history=false):
 	MODEL = model
 	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": MODEL})
-	GEMINI_API_KEY = _get_environment_variable(GEMINI_API_KEY_FILE_PATH)
-	GEMINI_CHAT_API = api + "?key=" + GEMINI_API_KEY
+	GEMINI_CHAT_API = api + "?key=" + gemini_api_key
 	HTTP_REQUEST = http_request
 	ENABLE_HISTORY = enable_history
 	# print(model)
