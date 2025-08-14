@@ -16,7 +16,7 @@ This project heavily leverages the Gemini AI model throughout its development an
 <table>
   <tr>
     <td>
-      <img src="docs/airport.jpg" width=500>
+      <img src="docs/airport_smartkeys.jpg" width=500>
     </td>
     <td>
       <img src="docs/Airport Services.jpg" width=600>
