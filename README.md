@@ -88,7 +88,7 @@ AI Agents at airports offer various services that are often linked to a passenge
 
 This process works as follows: the AI Agent, operating on a passenger's wearable device, uses the camera to learn the positions of different amenities throughout the terminal. The **AI Agent** then accurately pinpoints its location by recognizing and processing **Zone IDs** posted within the airport environment. This innovative method eliminates the need for conventional indoor positioning infrastructure, leveraging the visual information available to the user's device.
 
-<img src="./docs/ZoneIDs.jpg" width=500>
+<img src="./docs/ZoneIDs.jpg" width=600>
 
 ## Model Context Protocol (MCP)
 
