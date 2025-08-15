@@ -1,12 +1,470 @@
-[gd_scene load_steps=2 format=3 uid="uid://broru318qspky"]
+[gd_scene load_steps=3 format=3 uid="uid://broru318qspky"]
 
 [ext_resource type="PackedScene" uid="uid://dqkvvujy1mqp8" path="res://FlightInfo/flight_info_display.glb" id="1_k4ds4"]
+[ext_resource type="Material" uid="uid://2p6s8hj5r45j" path="res://FlightInfo/letters.tres" id="2_cf04q"]
 
 [node name="flight_info_display" instance=ExtResource("1_k4ds4")]
 
-[node name="Line0" parent="." index="1"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0688395, 0.826673, -0.0398491)
+[node name="Text" parent="Board" index="1"]
+material_override = ExtResource("2_cf04q")
 
-[node name="Label3D" type="Label3D" parent="Line0" index="0"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000276752, 0, 2.46184)
-text = "12:00"
+[node name="Text_001" parent="Board" index="2"]
+surface_material_override/0 = ExtResource("2_cf04q")
+
+[node name="Text_002" parent="Board" index="3"]
+material_override = ExtResource("2_cf04q")
+
+[node name="Text_003" parent="Board" index="4"]
+material_override = ExtResource("2_cf04q")
+
+[node name="Text_004" parent="Board" index="5"]
+material_override = ExtResource("2_cf04q")
+
+[node name="Text_005" parent="Board" index="6"]
+material_override = ExtResource("2_cf04q")
+
+[node name="Text_006" parent="Board" index="7"]
+material_override = ExtResource("2_cf04q")
+
+[node name="Text_007" parent="Board" index="8"]
+material_override = ExtResource("2_cf04q")
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line0" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line0" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line0" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line0" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line0" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line0" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line0" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line1" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line1" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line1" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line1" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line1" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line1" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line1" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line2" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line2" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line2" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line2" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line2" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line2" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line2" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line3" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line3" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line3" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line3" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line3" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line3" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line3" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line4" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line4" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line4" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line4" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line4" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line4" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line4" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line5" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line5" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line5" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line5" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line5" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line5" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line5" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line6" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line6" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line6" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line6" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line6" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line6" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line6" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line7" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line7" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line7" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line7" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line7" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line7" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line7" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line8" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line8" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line8" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line8" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line8" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line8" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line8" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
+
+[node name="Scheduled" type="Label3D" parent="Lines/Line9" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000893071, 0, 2.66616)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Estimated" type="Label3D" parent="Lines/Line9" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 2.12413)
+pixel_size = 0.004
+text = "12:00
+"
+horizontal_alignment = 0
+
+[node name="Destination" type="Label3D" parent="Lines/Line9" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, 1.57258)
+pixel_size = 0.004
+text = "Frankfurt"
+horizontal_alignment = 0
+
+[node name="Flight" type="Label3D" parent="Lines/Line9" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -0.121851)
+pixel_size = 0.004
+text = "LF888"
+horizontal_alignment = 0
+
+[node name="CheckIn" type="Label3D" parent="Lines/Line9" index="4"]
+transform = Transform3D(-4.37111e-08, 1.52581e-10, 1, 0.00349065, 0.999994, 0, -0.999994, 0.00349065, -4.37114e-08, 0.000999998, 0, -0.841655)
+pixel_size = 0.004
+text = "A-8"
+horizontal_alignment = 0
+
+[node name="Gate" type="Label3D" parent="Lines/Line9" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.20896)
+pixel_size = 0.004
+text = "88"
+horizontal_alignment = 0
+
+[node name="Remarks" type="Label3D" parent="Lines/Line9" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000999998, 0, -1.56587)
+pixel_size = 0.004
+text = "Delayed"
+horizontal_alignment = 0
