@@ -96,6 +96,9 @@ The underlying specification for the AI's interaction with the airport environme
 
 **Note:** The current implementation mimics MCP, as the Gemini API only partially supports the MCP specification. This implementation uses direct API calls rather than STDIO or HTTP to access MCP services.
 
+## Future Development
+We plan to automatically generate a network graph representing the amenities and their positional relationships within the airport from automatically collected user data.
+
 ## License
 
 This project is licensed under the terms of the MIT license.
