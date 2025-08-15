@@ -1,6 +1,6 @@
 # Airport: A Smart Airport Simulation
 
-[![Godot Engine](https://img.shields.io/badge/Godot-4.2-blue.svg)](https://godotengine.org)
+[![Godot Engine](https://img.shields.io/badge/Godot-4.4.1-blue.svg)](https://godotengine.org)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-purple.svg)](https://ai.google.dev/)
 
 This project is a work-in-progress simulation of a "smart airport" environment, showcasing the power of AI, particularly Google's Gemini model, to create interactive and intelligent experiences. The simulation is built using the Godot Engine.
@@ -87,6 +87,8 @@ The AI uses Gemini's function calling feature to interact with the simulation. T
 AI Agents at airports offer various services that are often linked to a passenger's location. While traditional indoor positioning has relied on methods like beacons and Wi-Fi, the era of generative AI enables a new approach: determining a user's indoor location and providing location-based services (LBS) entirely through image data.
 
 This process works as follows: the AI Agent, operating on a passenger's wearable device, uses the camera to learn the positions of different amenities throughout the terminal. The **AI Agent** then accurately pinpoints its location by recognizing and processing **Zone IDs** posted within the airport environment. This innovative method eliminates the need for conventional indoor positioning infrastructure, leveraging the visual information available to the user's device.
+
+<img src="./docs/ZoneIDs.jpg" width=600>
 
 ## Model Context Protocol (MCP)
 
