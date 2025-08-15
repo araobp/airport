@@ -33,8 +33,16 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
 
 The inspiration for this project comes from a past experiment with an AI Drive Recorder App on an Android smartphone. Carrying it in a chest pocket, it felt like a wearable AI, hinting at the potential for such technology. I also once developed an AR app for Android, but my stakeholders did not show interest in it. With the advent of smart glasses and advanced AI agents, the value of this concept has grown exponentially. This project explores that potential in the context of a smart airport.
 
-<img src="./docs/prototype.jpg" width="400">
-<img src="./docs/ar_app.jpg" width="400">
+<table>
+  <tr>
+    <td>
+      <img src="./docs/prototype.jpg" width="400">
+    </td>
+    <td>
+      <img src="./docs/ar_app.jpg" width="400">
+    </td>
+  </tr>
+</table>
 
 ## Core Components
 
