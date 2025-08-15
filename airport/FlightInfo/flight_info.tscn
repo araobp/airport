@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://broru318qspky"]
+
+[ext_resource type="PackedScene" uid="uid://dqkvvujy1mqp8" path="res://FlightInfo/flight_info_display.glb" id="1_k4ds4"]
+
+[node name="flight_info_display" instance=ExtResource("1_k4ds4")]
+
+[node name="Line0" parent="." index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0688395, 0.826673, -0.0398491)
+
+[node name="Label3D" type="Label3D" parent="Line0" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000276752, 0, 2.46184)
+text = "12:00"

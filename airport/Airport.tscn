@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=17 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://globals.gd" id="2_slhsa"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dbd71s1f42m8t" path="res://airport_services.gd" id="6_slhsa"]
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="7_r0grm"]
 [ext_resource type="PackedScene" uid="uid://dvgh6kkfs3p4" path="res://Door/Door.tscn" id="8_2bi0w"]
+[ext_resource type="PackedScene" uid="uid://broru318qspky" path="res://FlightInfo/flight_info.tscn" id="10_vglmr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
 content_margin_left = 10.0
@@ -52,6 +53,7 @@ script = ExtResource("2_slhsa")
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
 gemini_api_key = "AIzaSyAugytjnDjFQ10XjmH2Sy-UPOUARWPL9PM"
+gemini_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 
@@ -161,7 +163,20 @@ transform = Transform3D(0.872155, 0, -0.48923, 0, 1, 0, 0.48923, 0, 0.872155, 25
 [node name="1F_E_3_ew_2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(0.871958, 0, -0.48958, 0, 1, 0, 0.48958, 0, 0.871958, 19.9335, 0.18877, -170.446)
 
+[node name="flight_info_display" parent="Airport" instance=ExtResource("10_vglmr")]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.82114, 11.2273, 29.3055)
+
+[node name="Line0" parent="Airport/flight_info_display" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.101, 0.827, -0.04)
+
+[node name="Label3D" parent="Airport/flight_info_display/Line0" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.000276804, 0, 2.66194)
+pixel_size = 0.004
+modulate = Color(0.648078, 0.648078, 0.648078, 1)
+horizontal_alignment = 0
+
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-1-ew-2"]
 [editable path="Airport/Doors/2F-E-1-ew-1"]
 [editable path="Airport/Doors/1F-E-1-ew-1"]
+[editable path="Airport/flight_info_display"]
