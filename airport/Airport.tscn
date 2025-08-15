@@ -180,6 +180,275 @@ transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211
 [node name="Display5" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
 transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211, 47.3679, 11, -167.166)
 
+[node name="Zones" type="Node3D" parent="Airport"]
+
+[node name="2F-E-3-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, -22.816, 7.9607, 12.8692)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-E-3"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-1-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, 64.9211)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-1"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-1-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 64.9211)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-1"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-2-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 51.9843)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-2"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-3-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 38.9707)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-3"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-4-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 25.9572)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-4"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-5-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 12.9628)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-5"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-6-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, -0.00389671)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-6"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-7-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.94575, 7.9607, -13.2217)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-7"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-8-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.946, 7.961, -25.1447)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-8"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-9-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.94575, 10.6578, -37.5393)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-8"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-10-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.946, 7.961, -53.3489)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-10"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-11-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.946, 7.961, -66.147)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-11"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-12-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.946, 7.961, -79.3481)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-D-12"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-2-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, 51.974)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-2"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-3-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, 38.9713)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-3
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-4-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, 26.7107)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-4
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-5-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -22.6024, 7.9607, 12.9822)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-5
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-6-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, -0.783685)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-6
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-7-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, -13.274)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-7
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-8-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, -26.5038)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-8
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-9-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, -39.7181)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-9
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-10-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -15.8319, 7.9607, -52.1439)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-10
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-11-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -22.69, 8.64967, -66.1752)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-11
+"
+font_size = 64
+outline_size = 0
+
+[node name="2F-D-12-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(0.174902, 0, 1.48977, 0, 1.5, 0, -1.48977, 0, 0.174902, -15.849, 7.9607, -80.3134)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "2F-D-12
+"
+font_size = 64
+outline_size = 0
+
+[node name="1F-E-3-e" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, -22.816, 2.84399, 12.8692)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "1F-E-3
+"
+font_size = 64
+outline_size = 0
+
+[node name="1F-D-3-w" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -22.6015, 2.84399, 12.8692)
+modulate = Color(0.441021, 0.177591, 0.0377085, 1)
+text = "1F-D-3
+"
+font_size = 64
+outline_size = 0
+
+[node name="Signs" type="Node3D" parent="Airport"]
+
+[node name="Label3D" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(-1.09278e-07, 0, -2.5, 0, 2.5, 0, 2.5, 0, -1.09278e-07, -22.9316, 9.12968, -66.2022)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
+[node name="Label3D7" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(-1.74846e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, 33.2941, 13.4043, -39.1187)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
+[node name="Label3D8" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(1.98602, 0, 3.47214, 0, 4, 0, -3.47214, 0, 1.98602, 76.8805, 13.4043, -175.043)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
+[node name="Label3D5" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(-1.21912, 0, -2.1826, 0, 2.5, 0, 2.1826, 0, -1.21912, 22.7224, 9.12968, -175.82)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
+[node name="Label3D6" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(-1.21912, 0, -2.1826, 0, 2.5, 0, 2.1826, 0, -1.21912, 22.7224, 3.96414, -175.82)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
+[node name="Label3D3" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(-1.09278e-07, 0, -2.5, 0, 2.5, 0, 2.5, 0, -1.09278e-07, -22.9316, 9.12968, 12.9353)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
+[node name="Label3D2" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(-1.09278e-07, 0, -2.5, 0, 2.5, 0, 2.5, 0, -1.09278e-07, -22.9316, 4.06889, -66.2022)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
+[node name="Label3D4" type="Label3D" parent="Airport/Signs"]
+transform = Transform3D(-1.09278e-07, 0, -2.5, 0, 2.5, 0, 2.5, 0, -1.09278e-07, -22.9316, 4.06889, 12.8969)
+modulate = Color(0, 0.279969, 0.497254, 1)
+outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
+text = "ABC International Airport"
+font_size = 128
+outline_size = 10
+
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-1-ew-2"]
 [editable path="Airport/Doors/2F-E-1-ew-1"]
