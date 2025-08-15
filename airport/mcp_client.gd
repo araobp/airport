@@ -14,33 +14,20 @@ var gemini  # for AI Agent processing
 var gemini2  # for McpClient local tools
 
 ##### Local tools #####
-const CAMERA_TOOL = {
-	"name": "take_photo",
+const SURROUNDINGS_TOOL = {
+	"name": "take_surroundings",
 	"description": """
-	Know the visitor's surroundings from a picture taken with the onboard camera of the visitor's wearable device.
-	This function uses LLM for image recognition.
+	A function to take a picture of visitor's surroundings and extract a zone ID from the picture.
 	""",
 	"parameters": {
 		"type": "object",
 		"properties": {
-			"name": {
+			"visitor_id": {
 				"type": "string",
-				"description": "Name of the person visiting the airport."
-			}
+				"description": "Visitor ID"
+			},
 		},
-	"required": ["name"],
-	}
-}
-
-const ZOON_TOOL = {
-	"name": "get_zone_id",
-	"description": """
-	A function to get the zone ID of the location where the person is. The zone id represents the visitor's location in the airport."
-	""",
-	"parameters": {
-		"type": "object",
-		"properties": {},
-		"required": [],
+		"required": ["visitor_id"],
 	}
 }
 
@@ -59,8 +46,7 @@ const QUIT_TOOL = {
 
 
 const LOCAL_TOOLS = [
-	CAMERA_TOOL,
-	ZOON_TOOL,
+	SURROUNDINGS_TOOL,
 	QUIT_TOOL
 ]
 
@@ -73,9 +59,7 @@ func list_tools():
 func _system_instruction():
 	return """You are an AI agent that controls the facilities and amenities of ABC Airport. You can also recognize images captured by the onboard camera of my wearable device.
 
-My name is {name}, and I'm visiting the airport.
-
-If you need to know my location, first determine my zone ID before taking any further actions.
+My name is {name} that is also my Visitor ID, and I'm visiting the airport.
 
 When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
 
@@ -84,46 +68,47 @@ Do not use consecutive '\n' (something like '\n\n') when you output some text. J
 		"name": first_person.name
 	})
 	
-
-func take_photo(visitor_name):
-	# Note: visitor_name if for future use
-	var base64_image = await first_person.capture_image(camera_resolution_height)
-	const QUERY = "Recognize the attached image and output detailed explanations on it"		
-	var result = await gemini2.chat(
-		QUERY,
-		_system_instruction(),
-		base64_image
-		)
-	return result
+func take_surroundings(args):
+	print(args)
+	var visitor_id = args["visitor_id"]
 	
-func get_zone_id(args):
 	var base64_image = await first_person.capture_image(camera_resolution_height, true)
-	const QUERY = """
+	
+	var query = """
+	I am {visitor_id} that is also my Visitor ID.
+	Recognize my surroundings from a picture taken with the onboard camera of my wearable device.
+
 	If you identify three alphanumeric strings connected by hyphens in the image,
-	extract it and output that string.
+	extract it and output that string as zone ID.
 	
 	Additionally, if the color of the string is green, append "-e" to the end of the string, and if it's orange, append "-w". For example, if the extracted string is 2F-E-1, and the string is green, the output should be 2F-E-1-e; if the string is orange, the output should be 2F-E-1-w.
 	Output the final result in the following JSON format.
 	
 	If you do not identify such three alphanumeric strings in the image, output "unknown" following the JSON format.
 
-	## JSON Format
+	If you identify multiple zone IDs in the image, pick up the closest one (the largest one) and do not mention about the other node IDs (the smaller ones).
 	
-	{"zone_id": "..."}
-	"""
+	You output JSON data only with no extra explanations about the output.	
+	""".format({"visitor_id": visitor_id})
 	
 	const json_schema = {
 		"type": "object",
 		"properties": {
+			"visitor_id": {
+				"type": "string"
+			},
 			"zone_id": {
+				"type": "string"
+			},
+			"surroundings": {
 				"type": "string"
 			}
 		},
-		"required": ["zone_id"]
+		"required": ["visitor_id", "zone_id", "surroundings"]
 	}
 	
 	var result = await gemini2.chat(
-		QUERY,
+		query,
 		_system_instruction(),
 		base64_image,
 		null,
@@ -135,7 +120,7 @@ func get_zone_id(args):
 	print(result)
 	var json = JSON.parse_string(result)
 	if json:
-		return json["zone_id"]
+		return JSON.stringify(json)
 	else:  # JSON parse failed
 		return "unknown"
 

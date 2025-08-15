@@ -85,7 +85,7 @@ func chat(query, system_instruction, base64_image=null, mcp_servers=null, json_s
 	var response_text = null
 
 	while true:
-		
+		# print(payload)
 		# Call Gemini Chat API
 		var err = HTTP_REQUEST.request(
 			GEMINI_CHAT_API,
@@ -101,14 +101,13 @@ func chat(query, system_instruction, base64_image=null, mcp_servers=null, json_s
 		var body = res[3]		
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		
-		# print(json)
 		var candidate
 		var parts
 		if "candidates" in json:
 			candidate = json["candidates"][0]
 			parts = candidate["content"]["parts"]
 		else:
-			print(json)
+			# print(json)
 			chat_history.clear()
 			return
 

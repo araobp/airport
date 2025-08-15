@@ -53,7 +53,6 @@ script = ExtResource("2_slhsa")
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
 gemini_api_key = "AIzaSyAugytjnDjFQ10XjmH2Sy-UPOUARWPL9PM"
-gemini_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 
@@ -86,9 +85,9 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="Visitor1" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -40.2873, 5.04603, -59.5582)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -37.2717, 5.04603, -59.5582)
 script = ExtResource("5_qiqb0")
-fov_wide = 100.0
+fov_wide = 70.0
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Visitor1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
