@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://mpx7f4ipodaq"
+path.s3tc="res://.godot/imported/kiosk_snack1_normal.png-9f75522c4ce0847494f63372fd53a0aa.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "b0f93fee22d42428f945b6c2a2d4df6a"
+}
+
+[deps]
+
+source_file="res://Kiosk/kiosk_snack1_normal.png"
+dest_files=["res://.godot/imported/kiosk_snack1_normal.png-9f75522c4ce0847494f63372fd53a0aa.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://Kiosk/kiosk_snack1_normal.png"
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

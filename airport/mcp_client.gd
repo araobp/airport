@@ -17,7 +17,8 @@ var gemini2  # for McpClient local tools
 const SURROUNDINGS_TOOL = {
 	"name": "take_surroundings",
 	"description": """
-	A function to take a picture of visitor's surroundings and extract a zone ID from the picture.
+	This function analyzes a picture of a visitor's surroundings to extract a zone ID.
+	Upon successful recognition of both the zone and its surroundings, it triggers a data logging function to record the user's visit.
 	""",
 	"parameters": {
 		"type": "object",
@@ -60,6 +61,8 @@ func _system_instruction():
 	return """You are an AI agent that controls the facilities and amenities of ABC Airport. You can also recognize images captured by the onboard camera of my wearable device.
 
 My name is {name} that is also my Visitor ID, and I'm visiting the airport.
+
+Please refer to our past conversation history and answer my various questions to the best of your ability.
 
 When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
 

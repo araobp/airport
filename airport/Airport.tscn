@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=18 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://globals.gd" id="2_slhsa"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="7_r0grm"]
 [ext_resource type="PackedScene" uid="uid://dvgh6kkfs3p4" path="res://Door/Door.tscn" id="8_2bi0w"]
 [ext_resource type="PackedScene" uid="uid://broru318qspky" path="res://FlightInfo/flight_info.tscn" id="10_vglmr"]
+[ext_resource type="PackedScene" uid="uid://b2ce8swrdu164" path="res://Kiosk/Kiosk.tscn" id="11_1tehv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
 content_margin_left = 10.0
@@ -87,6 +88,7 @@ render_target_update_mode = 4
 [node name="Visitor1" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -37.2717, 5.04603, -59.5582)
 script = ExtResource("5_qiqb0")
+fov = 40.0
 fov_wide = 70.0
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Visitor1"]
@@ -447,6 +449,17 @@ outline_modulate = Color(0.0670937, 3.36915e-07, 0.462497, 1)
 text = "ABC International Airport"
 font_size = 128
 outline_size = 10
+
+[node name="Kiosks" type="Node3D" parent="Airport"]
+
+[node name="kiosk" parent="Airport/Kiosks" instance=ExtResource("11_1tehv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.7309, 5.04413, -6.89629)
+
+[node name="kiosk2" parent="Airport/Kiosks" instance=ExtResource("11_1tehv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.7309, 5.04413, -46.0368)
+
+[node name="kiosk3" parent="Airport/Kiosks" instance=ExtResource("11_1tehv")]
+transform = Transform3D(0.465568, 0, 0.885012, 0, 1, 0, -0.885012, 0, 0.465568, 20.4631, 5.04641, -156.486)
 
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-1-ew-2"]
