@@ -63,6 +63,7 @@ func _system_instruction():
 My name is {name} that is also my Visitor ID, and I'm visiting the airport.
 
 Please refer to our past conversation history and answer my various questions to the best of your ability.
+If you do not know an answer to my question, take a picture of my surroundings and think.
 
 When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
 
@@ -75,7 +76,8 @@ func take_surroundings(args):
 	print(args)
 	var visitor_id = args["visitor_id"]
 	
-	var base64_image = await first_person.capture_image(camera_resolution_height, true)
+	var base64_image = await first_person.capture_image(camera_resolution_height, false)
+	var base64_image_wide = await first_person.capture_image(camera_resolution_height, true)
 	
 	var query = """
 	I am {visitor_id} that is also my Visitor ID.
@@ -113,7 +115,7 @@ func take_surroundings(args):
 	var result = await gemini2.chat(
 		query,
 		_system_instruction(),
-		base64_image,
+		[ base64_image, base64_image_wide ],
 		null,
 		json_schema
 		)

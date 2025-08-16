@@ -26,7 +26,7 @@ func _init(http_request, gemini_api_key, model="gemini-2.0-flash", enable_histor
 	# print(model)
 
 # Chat with Gemini
-func chat(query, system_instruction, base64_image=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text):
+func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text):
 	
 	const headers = [
 		"Content-Type: application/json",
@@ -49,13 +49,14 @@ func chat(query, system_instruction, base64_image=null, mcp_servers=null, json_s
   		}
 	var content_ = content.duplicate(true)
 	
-	if base64_image:
-		content["parts"].append({
-			"inline_data": {
-				"mime_type":"image/jpeg",
-				"data": base64_image
-			}
-		})
+	if base64_images:
+		for image in base64_images:
+			content["parts"].append({
+				"inline_data": {
+					"mime_type":"image/jpeg",
+					"data": image
+				}
+			})
 	
 	# payload to be sent to Gemini Chat API
 	if len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
