@@ -83,6 +83,8 @@ The agent maintains a conversation history, allowing for contextual understandin
 
 The AI uses Gemini's function calling feature to interact with the simulation. The `McpServer` and `McpClient` nodes define a set of tools (functions) that the AI can call to perform actions (e.g., opening doors) or retrieve information. When the AI decides to use a tool, it generates a `functionCall` in its response, which is then executed by the system.
 
+Since the Gemini API does not fully support the Model Context Protocol (MCP) at this time, this implementation relies on Gemini's function calling capability as a temporary measure. We anticipate that full MCP support will be available in the near future.
+
 ### AI Agents and Location-Based Services
 
 AI Agents at airports offer various services that are often linked to a passenger's location. While traditional indoor positioning has relied on methods like beacons and Wi-Fi, the era of generative AI enables a new approach: determining a user's indoor location and providing location-based services (LBS) entirely through image data.
