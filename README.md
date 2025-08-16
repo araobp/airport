@@ -77,7 +77,7 @@ The AI agent, powered by the Gemini model, interacts with the airport environmen
 
 ### Chat History and Multimodal Input
 
-The agent maintains a conversation history, allowing for contextual understanding. User input can be multimodal, combining text with inline image data (Base64 encoded JPEGs) captured from the player's viewpoint. This enables the AI to "see" and understand the environment.
+The agent maintains a conversation history, allowing for contextual understanding. User input can be multimodal, combining text with inline image data (Base64 encoded JPEGs) captured from the player's viewpoint. This enables the AI to "see" and understand the environment. It's important to note that while the image is sent to the AI for analysis, the Base64 encoded image data is not stored in the chat history to avoid excessive memory usage.
 
 ### Function Calling
 
