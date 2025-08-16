@@ -50,6 +50,7 @@ The inspiration for this project comes from a past experiment with an AI Drive R
 -   **McpClient (`airport/mcp_client.gd`):** The heart of the AI interaction, managing the UI, communication with the Gemini AI, and in-environment actions.
 -   **Airport Services (`airport/airport_services.gd`):** A centralized script for managing airport services like door control.
 -   **Wearable Device (Smartkey):** A conceptual smartkey device with a camera, microphone, and speaker, serving as the primary interface with the AI agent.
+-   **Location Data (`airport/locations.json`):** A JSON file that stores the data collected by the AI agent about the locations of amenities in the airport.
 
 <img src="./docs/smartkey.png" width="200">
 
@@ -89,6 +90,39 @@ AI Agents at airports offer various services that are often linked to a passenge
 This process works as follows: the AI Agent, operating on a passenger's wearable device, uses the camera to learn the positions of different amenities throughout the terminal. The **AI Agent** then accurately pinpoints its location by recognizing and processing **Zone IDs** posted within the airport environment. This innovative method eliminates the need for conventional indoor positioning infrastructure, leveraging the visual information available to the user's device.
 
 <img src="./docs/ZoneIDs.jpg" width=600>
+
+### How the Simulator Learns Amenity Locations
+
+The simulation employs a unique process for dynamically learning and recording the locations of various amenities within the airport. This is achieved through the visitor's wearable device and the power of generative AI, without relying on pre-existing maps or location data.
+
+Here's a step-by-step breakdown of how it works:
+
+1.  **Visual-Based Interaction**: The process begins when a visitor, equipped with a wearable device (simulated as the first-person view), looks at an amenity (e.g., a vending machine, a check-in counter).
+
+2.  **Image Capture**: When the visitor interacts with the AI assistant (e.g., by asking a question), the wearable device captures an image of their current view.
+
+3.  **AI Analysis**: This image is sent to the Gemini AI model for analysis. The AI is prompted to identify two key pieces of information from the image:
+    *   The **Zone ID**: A unique identifier for the specific area or zone the visitor is in. These Zone IDs are visually present in the environment.
+    *   The **Amenity**: The specific object or service the visitor is looking at.
+
+4.  **Data Logging**: Once the AI successfully identifies both the Zone ID and the amenity, it calls a specific function (`record_user_data`). This function logs the collected data—the visitor's ID, the Zone ID, and the name of the amenity—into a structured data file (`locations.json`).
+
+5.  **Building a Knowledge Base**: Over time, as the visitor explores the airport and interacts with various amenities, this process builds a comprehensive knowledge base of what amenities are located in which zones. This data can then be used for various purposes, such as generating a network graph of the airport's layout or providing location-based recommendations to other visitors.
+
+This innovative approach allows the airport environment to be "self-mapping," where the locations of services are learned organically through user interaction and AI-powered environmental understanding.
+
+#### Sample Data
+
+Here is an example of what the `locations.json` file looks like after a visitor has explored the airport and interacted with a few amenities:
+
+```json
+{"amenities":"Kiosk","time":"2025-08-16T23:42:44","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
+{"amenities":"self-service kiosk","time":"2025-08-16T23:42:57","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
+{"amenities":"Zone 2F-D-10-w","time":"2025-08-16T23:43:16","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
+{"amenities":"a kiosk and airport zone signs","time":"2025-08-17T00:08:44","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
+{"amenities":"snack shop","time":"2025-08-17T00:22:27","visitor_id":"Visitor1","zone_id":"2F-D-9-w"},
+{"amenities":"self-checkout kiosk and refrigerators","time":"2025-08-17T00:23:58","visitor_id":"Visitor1","zone_id":"2F-E-1"},
+```
 
 ## Model Context Protocol (MCP)
 
