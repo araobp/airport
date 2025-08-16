@@ -23,8 +23,27 @@ func door_control(zone_id, control):
 			await door.door_control(control)
 	return
 
+const LOCATIONS_JSON_FILE = "res://locations.json"
+
 func record_user_data(visitor_id, zone_id, amenities):
-	user_data.append({"visitor_id": visitor_id, "zone_id": zone_id, "amenities": amenities})
-	print(user_data)
-	return
+	var current_time_string = Time.get_datetime_string_from_system()
+	var record = {"time": current_time_string, "visitor_id": visitor_id, "zone_id": zone_id, "amenities": amenities}
+	user_data.append(record)
+	print(record)
+	
+	var file = FileAccess.open(LOCATIONS_JSON_FILE, FileAccess.WRITE)
+	if file:
+		file.seek_end()
+		file.store_line(JSON.stringify(record) + ",")  # Append record
+		file.close()	
+	else:
+		push_error("Cannot open locations.json")
+
+func generate_network_graph():
+	var file = FileAccess.open(LOCATIONS_JSON_FILE, FileAccess.READ)
+	var data = []
+	if file:
+		var text = file.get_as_text()
+	else:
+		push_error("Cannot open locations.json")
 	

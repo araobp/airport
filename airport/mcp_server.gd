@@ -62,7 +62,7 @@ const TIMER_TOOL = {
 const USER_DATA_RECORDER_TOOL = {
 	"name": "record_user_data",
 	"description": """
-	This function is called after an image capture from a visitor's wearable device.
+	This function is a data logging function called after an image capture from a visitor's wearable device.
 	If the generative AI analysis successfully identifies both a zone ID and an amenity, the resulting text data is used to record the amenity's location.
 	This function is automatically called based on the AI agent's decision.
 	""",

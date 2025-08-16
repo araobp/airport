@@ -4,15 +4,24 @@ extends CharacterBody3D
 @export var fov: float = 60
 @export var fov_wide: float = 120
 
+@export var stride: float = 0.6  # 60 cm
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const CAMERA_SENS = 0.003
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+# Step counter
+var pos: Vector3 = Vector3.ZERO
+var sigma_delta_d: float = 0.0
+var steps: int = 0
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	$Camera3D.fov = fov
+	
+	pos = position
 	
 func _input(event):
 	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:
@@ -21,6 +30,16 @@ func _input(event):
 		rotation.x = clamp(rotation.x, -0.5, 1.2)
 
 func _physics_process(delta):
+	
+	# Delta distance
+	var delta_d = (pos - position).length()
+	sigma_delta_d += delta_d
+	pos = position
+	# Step
+	if sigma_delta_d > stride:
+		steps += 1
+		sigma_delta_d = 0.0
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta

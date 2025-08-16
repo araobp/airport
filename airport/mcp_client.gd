@@ -18,7 +18,7 @@ const SURROUNDINGS_TOOL = {
 	"name": "take_surroundings",
 	"description": """
 	This function analyzes a picture of a visitor's surroundings to extract a zone ID.
-	Upon successful recognition of both the zone and its surroundings, it triggers a data logging function to record the user's visit.
+	Upon successful recognition of both the zone and its surroundings, it calls a data logging function to record the user's visit.
 	""",
 	"parameters": {
 		"type": "object",
@@ -31,6 +31,7 @@ const SURROUNDINGS_TOOL = {
 		"required": ["visitor_id"],
 	}
 }
+
 
 const QUIT_TOOL = {
 	"name": "quit",
@@ -57,21 +58,27 @@ func list_tools():
 		tool["name"] = "{server_name}.{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
 	return tools
 
-func _system_instruction():
+func _system_instruction(name, delta_steps, delta_rotation_degree_y):
 	return """You are an AI agent that controls the facilities and amenities of ABC Airport. You can also recognize images captured by the onboard camera of my wearable device.
 
 My name is {name} that is also my Visitor ID, and I'm visiting the airport.
 
-Please refer to our past conversation history and answer my various questions to the best of your ability.
+According to the pedometer in my wearable device, I have advanced {delta_steps} steps since the last inquiry.
+And according to the gyroscope in the device, my gaze have rotated {delta_rotation_degrees_y} degrees on the vertical axis since the last inquiry.
+If the rotation is negative, it means clockwise. And if the rotation is positive, it means counter-clockwise.
+
+Please refer to our past conversation history and the steps, then answer my various questions to the best of your ability.
 If you do not know an answer to my question, take a picture of my surroundings and think.
 
 When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
 
 Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
 """.format({
-		"name": first_person.name
+		"name": name,
+		"delta_steps": delta_steps,
+		"delta_rotation_degrees_y": round(delta_rotation_degrees_y)
 	})
-	
+		
 func take_surroundings(args):
 	print(args)
 	var visitor_id = args["visitor_id"]
@@ -111,10 +118,10 @@ func take_surroundings(args):
 		},
 		"required": ["visitor_id", "zone_id", "surroundings"]
 	}
-	
+		
 	var result = await gemini2.chat(
 		query,
-		_system_instruction(),
+		_system_instruction(first_person.name, delta_steps, delta_rotation_degrees_y),
 		[ base64_image, base64_image_wide ],
 		null,
 		json_schema
@@ -154,7 +161,7 @@ func output_text(response_text):
 
 # MCP servers (mimicked)
 var mcp_servers
-	
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var function_declarations = mcp_server.list_tools()
@@ -190,6 +197,14 @@ func _ready() -> void:
 	chat_window.insert_text_at_caret(WELCOME_MESSAGE)
 	last_text = WELCOME_MESSAGE
 
+# Steps of the first person
+var previous_steps = 0
+var delta_steps = 0
+
+# Rotation of the first person
+var previous_rotation_degrees = Vector3(0, 90, 0)
+var delta_rotation_degrees_y = 0
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_text_indent"):
@@ -205,10 +220,20 @@ func _process(delta: float) -> void:
 
 		var query = chat_window.text.replace(last_text, "")
 		print("You: " + query)
-						
+		
+		# Calculate Delta steps
+		delta_steps = first_person.steps - previous_steps
+		previous_steps = first_person.steps
+		print(delta_steps)
+		
+		# Calculate Delta rotation
+		var delta_rotation_degrees = first_person.rotation_degrees - previous_rotation_degrees
+		previous_rotation_degrees = first_person.rotation_degrees
+		delta_rotation_degrees_y = delta_rotation_degrees.y  # Y-axis rotation
+		
 		await gemini.chat(
 			query,
-			_system_instruction(),
+			_system_instruction(first_person.name, delta_steps, delta_rotation_degrees_y),
 			null,
 			mcp_servers,
 			null,

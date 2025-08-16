@@ -104,11 +104,11 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		
 		var candidate
 		var parts
-		if "candidates" in json:
+		if json and "candidates" in json and len(json["candidates"]) > 0:
 			candidate = json["candidates"][0]
 			parts = candidate["content"]["parts"]
 		else:
-			# print(json)
+			push_error(json)
 			chat_history.clear()
 			return
 
