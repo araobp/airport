@@ -134,10 +134,12 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 			# Function calling case
 			if "functionCall" in part:
 				var function_call = part["functionCall"]
-				var function = function_call["name"].split(".")  # <mcp_server_name>.<function_name>
+				print(function_call)
+				var function = function_call["name"].split("_")  # <mcp_server_name>.<function_name>
 				
 				var mcp_server_name = function[0]
-				var func_name = function[1]
+				function.remove_at(0)
+				var func_name = ("_").join(function)
 				var args = function_call["args"]
 				print(func_name, "(", args, ")")	
 				

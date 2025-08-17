@@ -59,8 +59,8 @@ const TIMER_TOOL = {
 	}
 }
 
-const USER_DATA_RECORDER_TOOL = {
-	"name": "record_user_data",
+const LOGGING_TOOL = {
+	"name": "record_log",
 	"description": """
 	This function is a data logging function called after an image capture from a visitor's wearable device.
 	If the generative AI analysis successfully identifies both a zone ID and an amenity, the resulting text data is used to record the amenity's location.
@@ -86,17 +86,45 @@ const USER_DATA_RECORDER_TOOL = {
 	}
 }
 
+const AMENITIES_TOOL = {
+	"name": "list_amenities_nearby",
+	"description": """
+	A function to list amenities near the visitor.
+	zone_id or amenity
+	""",
+	"parameters": {
+		"type": "object",
+		"properties": {
+			"visitor_id": {
+				"type": "string",
+				"description": "Visitor ID"
+			},
+			"zone_id": {
+				"type": "string",
+				"description": "Zone ID identified by generative AI from images of a visitor's surroundings."
+			},
+			"amenity": {
+				"type": "string",
+				"description": "An amenity the visitor is looking for."
+			},			
+		},
+		"required": ["visitor_id"],
+	}
+}
+
+
 const TOOLS = [
 	GREETING_TOOL,
 	DOOR_CONTROL_TOOL,
 	TIMER_TOOL,
-	USER_DATA_RECORDER_TOOL
+	LOGGING_TOOL,
+	AMENITIES_TOOL
 ]
 
 func list_tools():
 	var tools = TOOLS.duplicate(true)
 	for tool in tools:
-		tool["name"] = "{server_name}.{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
+		tool["name"] = "{server_name}_{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
 	return tools
 	
 func greeting(args):
@@ -107,11 +135,19 @@ func door_control(args):
 	var control = args["control"]
 	return await airport_services.door_control(zone_id, control)
 
-func record_user_data(args):
+func record_log(args):
 	var visitor_id = args["visitor_id"]
 	var zone_id = args["zone_id"]
 	var amenities = args["amenities"]
-	return await airport_services.record_user_data(visitor_id, zone_id, amenities)
+	return await airport_services.record_log(visitor_id, zone_id, amenities)
+
+const LAST_N = 128
+func list_amenities_nearby(args):
+	var visitor_id = args["visitor_id"]
+	
+	var zone_id = args["zone_id"] if "args_id" in args else null
+	var amenity = args["amenity"] if "amenity" in args else null
+	return await airport_services.list_amenities_nearby(visitor_id, zone_id, amenity)
 	
 func timer(args):
 	return await utilities.timer(get_tree(), args["seconds"])

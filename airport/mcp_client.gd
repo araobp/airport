@@ -55,7 +55,7 @@ const LOCAL_TOOLS = [
 func list_tools():
 	var tools = LOCAL_TOOLS.duplicate(true)
 	for tool in tools:
-		tool["name"] = "{server_name}.{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
+		tool["name"] = "{server_name}_{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
 	return tools
 
 func _system_instruction(name, delta_steps, delta_rotation_degree_y):
@@ -164,6 +164,12 @@ var mcp_servers
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Share Gemini API key with other scripts
+	# Note: sharing a secret key is not normal in a real case.
+	Globals.gemini_api_key = gemini_api_key
+	Globals.gemini_model = gemini_model
+
+	# List all the tools	
 	var function_declarations = mcp_server.list_tools()
 	function_declarations.append_array(self.list_tools())
 	
