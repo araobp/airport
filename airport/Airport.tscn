@@ -170,7 +170,7 @@ transform = Transform3D(0.871958, 0, -0.48958, 0, 1, 0, 0.48958, 0, 0.871958, 19
 [node name="FlightInfo" type="Node3D" parent="Airport"]
 
 [node name="Display1" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.821, 11, 51.9946)
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.821, 11, 39.0796)
 
 [node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.115733)
@@ -200,7 +200,7 @@ font_size = 64
 outline_size = 0
 
 [node name="Display4" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
-transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211, 16.585, 11, -112.595)
+transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211, 24.5791, 11, -126.837)
 
 [node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.140274)
@@ -210,7 +210,7 @@ font_size = 64
 outline_size = 0
 
 [node name="Display5" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
-transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211, 47.3679, 11, -167.166)
+transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211, 46.1152, 11, -164.934)
 
 [node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.145529)
@@ -244,14 +244,14 @@ font_size = 64
 outline_size = 0
 
 [node name="2F-D-1-e" type="Label3D" parent="Airport/Zones"]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 64.9211)
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 65.971)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
 text = "2F-D-1"
 font_size = 64
 outline_size = 0
 
 [node name="2F-D-2-e" type="Label3D" parent="Airport/Zones"]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 51.9843)
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 51.081)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
 text = "2F-D-2"
 font_size = 64
@@ -265,21 +265,21 @@ font_size = 64
 outline_size = 0
 
 [node name="2F-D-4-e" type="Label3D" parent="Airport/Zones"]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 25.9572)
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 26.9536)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
 text = "2F-D-4"
 font_size = 64
 outline_size = 0
 
 [node name="2F-D-5-e" type="Label3D" parent="Airport/Zones"]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, 12.9628)
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.003, 10.658, 12.963)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
 text = "2F-D-5"
 font_size = 64
 outline_size = 0
 
 [node name="2F-D-6-e" type="Label3D" parent="Airport/Zones"]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, -0.00389671)
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 4.00272, 7.9607, -0.872262)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
 text = "2F-D-6"
 font_size = 64
@@ -321,7 +321,7 @@ font_size = 64
 outline_size = 0
 
 [node name="2F-D-12-e" type="Label3D" parent="Airport/Zones"]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.946, 7.961, -79.3481)
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.946, 7.961, -77.5043)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
 text = "2F-D-12"
 font_size = 64
