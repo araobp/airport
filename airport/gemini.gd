@@ -57,10 +57,14 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 					"data": image
 				}
 			})
-	
+
 	# payload to be sent to Gemini Chat API
 	if len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
-		chat_history = chat_history[-MAX_CHAT_HISTORY_LENGTH]
+		# Calculate the starting index
+		var start_index = max(0, chat_history.size() - MAX_CHAT_HISTORY_LENGTH)
+		# Use slice() to get the last n elements
+		chat_history = chat_history.slice(start_index)
+
 	var contents = chat_history + [content]
 	var payload = {
 		"system_instruction": system_instruction_,
@@ -96,7 +100,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		)
 		
 		if err != OK:
-			return
+			return error_string(err)
 
 		var res = await _http_request.request_completed
 		var body = res[3]		
@@ -134,7 +138,6 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 			# Function calling case
 			if "functionCall" in part:
 				var function_call = part["functionCall"]
-				print(function_call)
 				var function = function_call["name"].split("_")  # <mcp_server_name>.<function_name>
 				
 				var mcp_server_name = function[0]

@@ -55,9 +55,10 @@ script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
 camera_resolution_height = 256
 gemini_api_key = "AIzaSyAugytjnDjFQ10XjmH2Sy-UPOUARWPL9PM"
+gemini_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
-timeout = 10.0
+timeout = 20.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="McpClient"]
 
@@ -507,7 +508,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.73
 transform = Transform3D(0.465568, 0, 0.885012, 0, 1, 0, -0.885012, 0, 0.465568, 20.4631, 5.04641, -156.486)
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Airport"]
-timeout = 10.0
+timeout = 20.0
 
 [node name="Node" type="Node" parent="."]
 

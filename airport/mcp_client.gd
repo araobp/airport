@@ -4,6 +4,8 @@ extends Node
 @export var camera_resolution_height: int = 360
 @export var gemini_api_key = ""
 @export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
+@export var delta_steps_threshold: int = 3
+@export var delta_rotation_threshold: float = 20.0
 
 var utilities = load("res://utilities.gd").new()
 
@@ -57,34 +59,7 @@ func list_tools():
 	for tool in tools:
 		tool["name"] = "{server_name}_{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
 	return tools
-
-func _system_instruction(visitor_id, delta_steps_, delta_rotation_degrees_y_):
-	return """
-	You are an AI agent that controls and manages the amenities of ABC Airport.
-
-	My name is {visitor_id}, which is also my Visitor ID, and I am visiting the airport.
-
-	You can also recognize images captured by the onboard camera of my wearable device.
-
-	According to the pedometer in my wearable device, I have advanced {delta_steps} steps since the last inquiry.
-	According to the device's gyroscope, my gaze has rotated {delta_rotation_degrees_y} degrees on the vertical axis since the last inquiry. A negative rotation value means clockwise, and a positive value means counter-clockwise.
-
-	Please refer to our past conversation history, as well as the steps and rotation information, to answer my various questions to the best of your ability.
-
-	Please take a picture of my surroundings before making an action if any of the following conditions apply:
-	- You don't know how to answer my question.
-	- I have advanced over 5 steps since the last query.
-	- My gaze has rotated over 20 degrees on the vertical axis since the last query.
 	
-	When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
-
-	Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
-	""".format({
-			"visitor_id": visitor_id,
-			"delta_steps": delta_steps_,
-			"delta_rotation_degrees_y": round(delta_rotation_degrees_y_)
-		})
-		
 func take_surroundings(args):
 	print(args)
 	var visitor_id = args["visitor_id"]
@@ -95,7 +70,7 @@ func take_surroundings(args):
 	var query = """
 	I am {visitor_id}, which is also my Visitor ID.
 
-	Please recognize my surroundings from a picture taken with the onboard camera of my wearable device.
+	Please analyze the image from my wearable device's onboard camera. The analysis should provide a detailed description of my surroundings.
 
 	If you identify an alphanumeric string with three hyphen-connected sections in the image, extract it and output that string as the zone ID.
 
@@ -130,10 +105,12 @@ func take_surroundings(args):
 		},
 		"required": ["visitor_id", "zone_id", "zone_id_description_for_human", "surroundings"]
 	}
-		
+	
+	var system_instruction = "You are an AI assistant good at image recognition."
+	
 	var result = await gemini2.chat(
 		query,
-		_system_instruction(first_person.name, delta_steps, delta_rotation_degrees_y),
+		system_instruction,
 		[ base64_image, base64_image_wide ],
 		null,
 		json_schema
@@ -249,9 +226,33 @@ func _process(_delta: float) -> void:
 		previous_rotation_degrees = first_person.rotation_degrees
 		delta_rotation_degrees_y = delta_rotation_degrees.y  # Y-axis rotation
 		
+		var system_instruction = """
+		You are an AI agent that controls and manages the amenities of ABC Airport in cooperation with the visitor's wearable device.
+
+		My name is {visitor_id}, which is also my Visitor ID, and I am visiting the airport.
+
+		Please respond to my queries. If you don't know the answer, first take a picture to understand the surroundings, then provide a response.
+
+		When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
+
+		Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
+		""".format({
+				"visitor_id": first_person.name
+			})
+			
+		print(delta_steps, " ", delta_rotation_degrees_y)
+		
+		if abs(delta_steps) > delta_steps_threshold or abs(delta_rotation_degrees_y) > delta_rotation_threshold:
+			query = """
+			Take a picture to understand surroudings of the visitor, then respond to the following query:
+				
+			""" + query
+	
+		print(query)
+
 		await gemini.chat(
 			query,
-			_system_instruction(first_person.name, delta_steps, delta_rotation_degrees_y),
+			system_instruction,
 			null,
 			mcp_servers,
 			null,
