@@ -1,14 +1,16 @@
 extends CharacterBody3D
 
 @onready var camera_3d = $Camera3D
-@export var fov: float = 60
-@export var fov_wide: float = 120
+@export var fov: float = 60  # in degrees
+@export var fov_wide: float = 120  # in degrees
 
+# Step stride
 @export var stride: float = 0.6  # 60 cm
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const CAMERA_SENS = 0.003
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -21,7 +23,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	$Camera3D.fov = fov
 	
-	pos = position
+	pos = position  # Initial position of the first person
 	
 func _input(event):
 	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:

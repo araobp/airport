@@ -5,7 +5,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the evious frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if self.visible:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else:

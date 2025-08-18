@@ -58,26 +58,32 @@ func list_tools():
 		tool["name"] = "{server_name}_{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
 	return tools
 
-func _system_instruction(name, delta_steps, delta_rotation_degree_y):
-	return """You are an AI agent that controls the facilities and amenities of ABC Airport. You can also recognize images captured by the onboard camera of my wearable device.
+func _system_instruction(visitor_id, delta_steps_, delta_rotation_degrees_y_):
+	return """
+	You are an AI agent that controls and manages the amenities of ABC Airport.
 
-My name is {name} that is also my Visitor ID, and I'm visiting the airport.
+	My name is {visitor_id}, which is also my Visitor ID, and I am visiting the airport.
 
-According to the pedometer in my wearable device, I have advanced {delta_steps} steps since the last inquiry.
-And according to the gyroscope in the device, my gaze have rotated {delta_rotation_degrees_y} degrees on the vertical axis since the last inquiry.
-If the rotation is negative, it means clockwise. And if the rotation is positive, it means counter-clockwise.
+	You can also recognize images captured by the onboard camera of my wearable device.
 
-Please refer to our past conversation history and the steps, then answer my various questions to the best of your ability.
-If you do not know an answer to my question, take a picture of my surroundings and think.
+	According to the pedometer in my wearable device, I have advanced {delta_steps} steps since the last inquiry.
+	According to the device's gyroscope, my gaze has rotated {delta_rotation_degrees_y} degrees on the vertical axis since the last inquiry. A negative rotation value means clockwise, and a positive value means counter-clockwise.
 
-When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
+	Please refer to our past conversation history, as well as the steps and rotation information, to answer my various questions to the best of your ability.
 
-Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
-""".format({
-		"name": name,
-		"delta_steps": delta_steps,
-		"delta_rotation_degrees_y": round(delta_rotation_degrees_y)
-	})
+	Please take a picture of my surroundings before making an action if any of the following conditions apply:
+	- You don't know how to answer my question.
+	- I have advanced over 5 steps since the last query.
+	- My gaze has rotated over 20 degrees on the vertical axis since the last query.
+	
+	When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
+
+	Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
+	""".format({
+			"visitor_id": visitor_id,
+			"delta_steps": delta_steps_,
+			"delta_rotation_degrees_y": round(delta_rotation_degrees_y_)
+		})
 		
 func take_surroundings(args):
 	print(args)
@@ -87,20 +93,23 @@ func take_surroundings(args):
 	var base64_image_wide = await first_person.capture_image(camera_resolution_height, true)
 	
 	var query = """
-	I am {visitor_id} that is also my Visitor ID.
-	Recognize my surroundings from a picture taken with the onboard camera of my wearable device.
+	I am {visitor_id}, which is also my Visitor ID.
 
-	If you identify three alphanumeric strings connected by hyphens in the image,
-	extract it and output that string as zone ID.
-	
-	Additionally, if the color of the string is green, append "-e" to the end of the string, and if it's orange, append "-w". For example, if the extracted string is 2F-E-1, and the string is green, the output should be 2F-E-1-e; if the string is orange, the output should be 2F-E-1-w.
+	Please recognize my surroundings from a picture taken with the onboard camera of my wearable device.
+
+	If you identify an alphanumeric string with three hyphen-connected sections in the image, extract it and output that string as the zone ID.
+
+	Additionally, if the string's color is green, append "-e" to the end and mention that . If the string's color is orange, append "-w". For example, if the extracted string is "2F-E-1" and the string is green, the output should be "2F-E-1-e"; if the string is orange, the output should be "2F-E-1-w".
+
 	Output the final result in the following JSON format.
-	
-	If you do not identify such three alphanumeric strings in the image, output "unknown" following the JSON format.
 
-	If you identify multiple zone IDs in the image, pick up the closest one (the largest one) and do not mention about the other node IDs (the smaller ones).
-	
-	You output JSON data only with no extra explanations about the output.	
+	If you do not identify such an alphanumeric string in the image, output "unknown" in the JSON format.
+
+	If you identify multiple zone IDs in the image, please select the one in the center if you are confident in its accuracy. If there is no zone ID in the center, select the one that is closest (the largest) if you are confident in its accuracy. Do not mention any other node IDs.
+
+	Output "zone_id_description_for_human" for a visitor to identify the ID on the wall. For example, "2F-D-11 in orange printed on the wall".
+
+	You should output only the JSON data with no additional explanations.
 	""".format({"visitor_id": visitor_id})
 	
 	const json_schema = {
@@ -112,11 +121,14 @@ func take_surroundings(args):
 			"zone_id": {
 				"type": "string"
 			},
+			"zone_id_description_for_human": {
+				"type": "string"				
+			},
 			"surroundings": {
 				"type": "string"
 			}
 		},
-		"required": ["visitor_id", "zone_id", "surroundings"]
+		"required": ["visitor_id", "zone_id", "zone_id_description_for_human", "surroundings"]
 	}
 		
 	var result = await gemini2.chat(
@@ -137,7 +149,7 @@ func take_surroundings(args):
 		return "unknown"
 
 
-func quit(args):
+func quit(_args):
 	return await utilities.quit(get_tree())
 
 var processing = false
@@ -212,7 +224,7 @@ var previous_rotation_degrees = Vector3(0, 90, 0)
 var delta_rotation_degrees_y = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_text_indent"):
 		chat_window.visible = not chat_window.visible
 		if chat_window.visible:

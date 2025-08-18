@@ -1,16 +1,16 @@
 extends Node
 
 # Gemini 2.5 Flash Model endpoint
-var MODEL
-var GEMINI_CHAT_API
+var _model
+var _api
 
 # Reference to HTTPRequest node
-var HTTP_REQUEST
+var _http_request
 
 # Chat history
 var chat_history = []
+var _enable_history
 const MAX_CHAT_HISTORY_LENGTH = 32
-var ENABLE_HISTORY
 
 # Default callback function
 func _output_text(text):
@@ -18,11 +18,11 @@ func _output_text(text):
 
 # Constructor	
 func _init(http_request, gemini_api_key, model="gemini-2.0-flash", enable_history=false):
-	MODEL = model
-	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": MODEL})
-	GEMINI_CHAT_API = api + "?key=" + gemini_api_key
-	HTTP_REQUEST = http_request
-	ENABLE_HISTORY = enable_history
+	_model = model
+	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": _model})
+	_api = api + "?key=" + gemini_api_key
+	_http_request = http_request
+	_enable_history = enable_history
 	# print(model)
 
 # Chat with Gemini
@@ -68,7 +68,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	}
 
 	# Note: Base64 image data is not appended to the chat history
-	if ENABLE_HISTORY:
+	if _enable_history:
 		chat_history.append(content_)
 	# print("chat history: " + str(chat_history))
 	
@@ -88,8 +88,8 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	while true:
 		# print(payload)
 		# Call Gemini Chat API
-		var err = HTTP_REQUEST.request(
-			GEMINI_CHAT_API,
+		var err = _http_request.request(
+			_api,
 			headers,
 			HTTPClient.METHOD_POST,
 			JSON.stringify(payload)
@@ -98,7 +98,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		if err != OK:
 			return
 
-		var res = await HTTP_REQUEST.request_completed
+		var res = await _http_request.request_completed
 		var body = res[3]		
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		
@@ -119,7 +119,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 			"parts": parts
 		}
 		
-		if ENABLE_HISTORY:
+		if _enable_history:
 			chat_history.append(content_in_res)
 		contents.append(content_in_res)
 		#print(chat_history)
@@ -164,7 +164,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 					]
 				}
 				
-				if ENABLE_HISTORY:
+				if _enable_history:
 					chat_history.append(content_func_res)
 				contents.append(content_func_res)
 				
@@ -176,4 +176,4 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	if callback == _output_text:	
 		return response_text
 	else:  # response_text already returned via callback
-		return
+		return ""

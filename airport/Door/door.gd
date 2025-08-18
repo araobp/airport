@@ -1,12 +1,9 @@
 extends Node3D
 
-var state_machine
 var forced_open = false
+@onready var state_machine = $AnimationTree["parameters/playback"]
 
-func _ready():
-	state_machine = $AnimationTree["parameters/playback"]
-
-func _process(delta):
+func _process(_delta):
 	var num_boies = len($SensingArea.get_overlapping_bodies())
 
 	if num_boies > 0:
@@ -17,8 +14,6 @@ func _process(delta):
 			state_machine.travel("Close")
 		
 func door_control(control):
-	var state_machine = $AnimationTree["parameters/playback"]
-
 	match control:
 		"open":
 			state_machine.travel("Open")

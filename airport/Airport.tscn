@@ -53,10 +53,11 @@ script = ExtResource("2_slhsa")
 [node name="McpClient" type="Node" parent="." node_paths=PackedStringArray("first_person")]
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
+camera_resolution_height = 256
 gemini_api_key = "AIzaSyAugytjnDjFQ10XjmH2Sy-UPOUARWPL9PM"
-gemini_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
+timeout = 10.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="McpClient"]
 
@@ -119,32 +120,32 @@ script = ExtResource("6_slhsa")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Levels" parent="Airport" instance=ExtResource("7_r0grm")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.793e-12, 0, 6.38963e-05)
 
 [node name="Doors" type="Node3D" parent="Airport"]
 
-[node name="2F-E-1-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, 6.51613)
-
-[node name="SensingArea" parent="Airport/Doors/2F-E-1-ew-2" index="5"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.75, 0)
-
-[node name="CollisionShape3D" parent="Airport/Doors/2F-E-1-ew-2/SensingArea" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="2F-E-1-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-5-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, 19.5121)
 
-[node name="1F-E-1-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-5-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, 6.51613)
+
+[node name="SensingArea" parent="Airport/Doors/2F-E-5-2" index="5"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.75, 0)
+
+[node name="CollisionShape3D" parent="Airport/Doors/2F-E-5-2/SensingArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="1F-E-5-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(0.999975, 0, -0.00710343, 0, 1, 0, 0.00710343, 0, 0.999975, -22.7123, 0.18877, 19.5121)
 
-[node name="1F-E-1-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="1F-E-5-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0.000366519, 0, 1, 0, -0.000366519, 0, 1, -22.6891, 0.189, 6.516)
 
-[node name="2F-E-2-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-11-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, -72.819)
 
-[node name="2F-E-2-ew-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
+[node name="2F-E-11-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, -59.6324)
 
 [node name="1F-E-2-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
@@ -170,24 +171,67 @@ transform = Transform3D(0.871958, 0, -0.48958, 0, 1, 0, 0.48958, 0, 0.871958, 19
 [node name="Display1" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.821, 11, 51.9946)
 
+[node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.115733)
+pixel_size = 0.003
+text = "Flight Information Display"
+font_size = 64
+outline_size = 0
+
 [node name="Display2" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.821, 11, -13.2077)
+
+[node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.115733)
+pixel_size = 0.003
+text = "Flight Information Display"
+font_size = 64
+outline_size = 0
 
 [node name="Display3" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.821, 11, -66.1783)
 
+[node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.0929322)
+pixel_size = 0.003
+text = "Flight Information Display"
+font_size = 64
+outline_size = 0
+
 [node name="Display4" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
 transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211, 16.585, 11, -112.595)
+
+[node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.140274)
+pixel_size = 0.003
+text = "Flight Information Display"
+font_size = 64
+outline_size = 0
 
 [node name="Display5" parent="Airport/FlightInfo" instance=ExtResource("10_vglmr")]
 transform = Transform3D(-0.734211, 0, -1.30803, 0, 1.5, 0, 1.30803, 0, -0.734211, 47.3679, 11, -167.166)
 
+[node name="FlightInformationDisplay" type="Label3D" parent="Airport/FlightInfo/Display5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0274124, 1.66095, -0.145529)
+pixel_size = 0.003
+text = "Flight Information Display"
+font_size = 64
+outline_size = 0
+
 [node name="Zones" type="Node3D" parent="Airport"]
 
-[node name="2F-E-3-e" type="Label3D" parent="Airport/Zones"]
+[node name="2F-E-5" type="Label3D" parent="Airport/Zones"]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, -22.816, 7.9607, 12.8692)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
-text = "2F-E-3"
+text = "2F-E-5"
+font_size = 64
+outline_size = 0
+
+[node name="2F-E-11" type="Label3D" parent="Airport/Zones"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, -22.909, 7.9607, -66.3415)
+modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
+text = "2F-E-11
+"
 font_size = 64
 outline_size = 0
 
@@ -369,10 +413,10 @@ text = "2F-D-12
 font_size = 64
 outline_size = 0
 
-[node name="1F-E-3-e" type="Label3D" parent="Airport/Zones"]
+[node name="1F-E-5" type="Label3D" parent="Airport/Zones"]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, -22.816, 2.84399, 12.8692)
 modulate = Color(1.29351e-07, 0.193289, 0.1043, 1)
-text = "1F-E-3
+text = "1F-E-5
 "
 font_size = 64
 outline_size = 0
@@ -463,13 +507,14 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.73
 transform = Transform3D(0.465568, 0, 0.885012, 0, 1, 0, -0.885012, 0, 0.465568, 20.4631, 5.04641, -156.486)
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Airport"]
+timeout = 10.0
 
 [node name="Node" type="Node" parent="."]
 
 [editable path="Airport/Terminal"]
-[editable path="Airport/Doors/2F-E-1-ew-2"]
-[editable path="Airport/Doors/2F-E-1-ew-1"]
-[editable path="Airport/Doors/1F-E-1-ew-1"]
+[editable path="Airport/Doors/2F-E-5-1"]
+[editable path="Airport/Doors/2F-E-5-2"]
+[editable path="Airport/Doors/1F-E-5-1"]
 [editable path="Airport/FlightInfo/Display1"]
 [editable path="Airport/FlightInfo/Display2"]
 [editable path="Airport/FlightInfo/Display3"]

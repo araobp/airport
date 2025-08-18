@@ -25,13 +25,22 @@ func greeting(visitor_id):
 	return message
 
 func door_control(zone_id, control):
-	zone_id = zone_id.replace("-w", "").replace("-e", "")
+	if zone_id.ends_with("-w"):
+		zone_id = zone_id.replace("-w", "").replace("-D-", "-E-")
+	elif zone_id.ends_with("-e"):
+		zone_id = zone_id.replace("-e", "")
+	
+	var doors_found = false
 	for door in doors:
 		if door.name.begins_with(zone_id):
 			await door.door_control(control)
-	return
+			doors_found = true
+	if doors_found:
+		return "Operation completed"
+	else:
+		return "Door not found"
 
-const LOCATIONS_JSON_FILE = "res://locations.json"
+const LOG_FILE_PATH = "res://locations.json"
 
 func record_log(visitor_id, zone_id, amenities):
 	var current_time_string = Time.get_datetime_string_from_system()
@@ -39,7 +48,7 @@ func record_log(visitor_id, zone_id, amenities):
 	user_data.append(record)
 	print(record)
 	
-	var file = FileAccess.open(LOCATIONS_JSON_FILE, FileAccess.READ_WRITE)
+	var file = FileAccess.open(LOG_FILE_PATH, FileAccess.READ_WRITE)
 	if file:
 		file.seek_end()
 		file.store_line(JSON.stringify(record) + ",")  # Append record
@@ -47,27 +56,16 @@ func record_log(visitor_id, zone_id, amenities):
 	else:
 		push_error("Cannot open locations.json")
 
-func list_amenities_nearby(visitor_id, zone_id:Variant=null, amenity:Variant=null):
-	var log_data = utilities.get_last_n_lines(LOCATIONS_JSON_FILE, LAST_N)
+func list_amenities_nearby(visitor_id, zone_id="unknown", amenity="unknown"):
+	var log_data = utilities.get_last_n_lines(LOG_FILE_PATH, LAST_N)
 	if log_data:
-		var query
-		if zone_id and not amenity:
-			query = """
-			An airport visitor (visitor_id: {visitor_id}) is currently in the vicinity of {zone_id}.
-			Please list all the amenities in the surrounding area, referring to the log data.
-			"""
-		elif not zone_id and amenity:
-			query = """
-			Please list all {amenity} with its "zone_id" in the airport, referring to the log data.
-			"""
-		elif zone_id and amenity:
-			query = """
-			An airport visitor (visitor_id: {visitor_id}) is currently near zone {zone_id}.
-			Please navigate the visitor to {amenity}, referring to the log data.
-			"""
-		else:
-			push_error("Invalid arguments")
-			return "Invalid arguments"
+		var query = """
+		An airport visitor (Visitor ID: {visitor_id}) is currently near Zone {zone_id}.
+		Please guide the visitor to the {amenity} category, referring to the log data.
+		- If both the zone and category are unknown, please list all amenities.
+		- If the zone is unknown, please list all amenities within that category.
+		- If the category is unknown, please list all amenities near that zone.
+		"""
 				
 		query = query.format({"visitor_id": visitor_id, "zone_id": zone_id, "amenity": amenity})
 		query += """
@@ -90,5 +88,5 @@ func list_amenities_nearby(visitor_id, zone_id:Variant=null, amenity:Variant=nul
 		return result
 
 	else:
-		push_error("Cannot open " + LOCATIONS_JSON_FILE)
+		push_error("Cannot open " + LOG_FILE_PATH)
 		return "System error"

@@ -23,7 +23,8 @@ const GREETING_TOOL = {
 const DOOR_CONTROL_TOOL = {
 	"name": "door_control",
 	"description": """
-	A function to open or close the door.
+	A function to open or close the pair of entrance doors.
+	The entrance doors are located at zones with zone ID "*-D-*-w" or "*-E-*-e" (* means any alphanumeric strings).
 	If the zone ID is unknown, this function is not called.
 	""",
 	"parameters": {
@@ -89,8 +90,7 @@ const LOGGING_TOOL = {
 const AMENITIES_TOOL = {
 	"name": "list_amenities_nearby",
 	"description": """
-	A function to list amenities near the visitor.
-	zone_id or amenity
+	A function to guide the visitor to amenities in the airport.
 	""",
 	"parameters": {
 		"type": "object",
@@ -145,8 +145,8 @@ const LAST_N = 128
 func list_amenities_nearby(args):
 	var visitor_id = args["visitor_id"]
 	
-	var zone_id = args["zone_id"] if "args_id" in args else null
-	var amenity = args["amenity"] if "amenity" in args else null
+	var zone_id = args["zone_id"] if "args_id" in args else "unknown"
+	var amenity = args["amenity"] if "amenity" in args else "unknown"
 	return await airport_services.list_amenities_nearby(visitor_id, zone_id, amenity)
 	
 func timer(args):
