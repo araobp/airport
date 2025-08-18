@@ -44,6 +44,10 @@ The inspiration for this project comes from a past experiment with an AI Drive R
   </tr>
 </table>
 
+## Motivation
+
+I believe the current boom in AI agents in the IT world will not last long, and its focus will be shifting to the OT (Operational Technology) world, where there is a serious labor shortage and a strong demand for increased efficiency. Originally, DX (Digital Transformation) was supposed to be focused on OT (Operational Technology) in the first place.
+
 ## Core Components
 
 -   **Main Scene (`airport/Airport.tscn`):** The central scene that orchestrates the entire airport simulation.
