@@ -54,7 +54,6 @@ script = ExtResource("2_slhsa")
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
 camera_resolution_height = 256
-gemini_api_key = "AIzaSyAugytjnDjFQ10XjmH2Sy-UPOUARWPL9PM"
 gemini_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
@@ -89,7 +88,7 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="Visitor1" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.04506, 5.04603, -46.853)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.0764, 5.04603, -46.853)
 script = ExtResource("5_qiqb0")
 fov = 40.0
 fov_wide = 80.0
@@ -509,6 +508,24 @@ transform = Transform3D(0.465568, 0, 0.885012, 0, 1, 0, -0.885012, 0, 0.465568, 
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Airport"]
 timeout = 20.0
+
+[node name="Restrooms" type="Node3D" parent="Airport"]
+
+[node name="Restroom-1" type="Label3D" parent="Airport/Restrooms"]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.9937, 10.614, 74.238)
+modulate = Color(0.62, 0.62, 0.62, 1)
+text = "Restroom
+"
+font_size = 64
+outline_size = 0
+
+[node name="Restroom-2" type="Label3D" parent="Airport/Restrooms"]
+transform = Transform3D(-0.0977651, 0, -1.49681, 0, 1.5, 0, 1.49681, 0, -0.0977651, 4.22222, 10.614, -82.3995)
+modulate = Color(0.62, 0.62, 0.62, 1)
+text = "Restroom
+"
+font_size = 64
+outline_size = 0
 
 [node name="Node" type="Node" parent="."]
 

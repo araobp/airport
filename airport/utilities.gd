@@ -7,6 +7,16 @@ func timer(tree, seconds):
 func quit(tree):
 	tree.quit()
 
+# Get an environment variable in the file
+func get_environment_variable(file_path):
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if file:
+		var content = file.get_as_text()
+		content = content.strip_edges()
+		return content
+	else:
+		push_error(file_path + " not found")
+
 func get_last_n_lines(path: String, n: int):
 	var file = FileAccess.open(path, FileAccess.READ)
 	

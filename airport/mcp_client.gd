@@ -2,7 +2,7 @@ extends Node
 
 @export var first_person : CharacterBody3D
 @export var camera_resolution_height: int = 360
-@export var gemini_api_key = ""
+
 @export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
 @export var delta_steps_threshold: int = 3
 @export var delta_rotation_threshold: float = 20.0
@@ -11,6 +11,10 @@ var utilities = load("res://utilities.gd").new()
 
 @onready var	 mcp_server = get_node("/root/McpServer")
 @onready var chat_window = $CanvasLayer/ChatWindow
+
+# Gemini API Key
+const GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
+var gemini_api_key = ""
 
 var gemini  # for AI Agent processing
 var gemini2  # for McpClient local tools
@@ -153,6 +157,8 @@ var mcp_servers
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	gemini_api_key = utilities.get_environment_variable(GEMINI_API_KEY_FILE_PATH)
+	
 	# Share Gemini API key with other scripts
 	# Note: sharing a secret key is not normal in a real case.
 	Globals.gemini_api_key = gemini_api_key
