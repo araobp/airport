@@ -67,13 +67,14 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 
 ### API Key Management
 
-To use the AI features, you need to provide a Gemini API key:
+To use the AI features, you need to provide a Gemini API key. Create a file named `gemini_api_key_env.txt` in the `airport` directory and place your Gemini API key in it.
 
-1.  Open the `Airport.tscn` scene in the Godot editor.
-2.  Select the `McpClient` node in the Scene tree.
-3.  In the Inspector tab, find the "Gemini Api Key" field and paste your key.
+**`gemini_api_key_env.txt`:**
+```
+YOUR_GEMINI_API_KEY
+```
 
-This method avoids hardcoding your API key in scripts and keeps it out of version control.
+This file is listed in `.gitignore` and will not be committed to version control. The application will automatically read the key from this file.
 
 ## AI Agent Implementation
 
