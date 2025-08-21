@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvqfl5bh1qaut"]
+
+[ext_resource type="PackedScene" uid="uid://dxatio5rf0wp6" path="res://CheckIn/check_in.glb" id="1_cquut"]
+
+[node name="check_in" instance=ExtResource("1_cquut")]
