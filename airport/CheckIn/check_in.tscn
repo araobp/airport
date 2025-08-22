@@ -3,3 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://dxatio5rf0wp6" path="res://CheckIn/check_in.glb" id="1_cquut"]
 
 [node name="check_in" instance=ExtResource("1_cquut")]
+
+[node name="Label3D" type="Label3D" parent="." index="0"]
+transform = Transform3D(0.250631, 0, 0, 0, 0.246974, 0.0426598, 0, -0.0426598, 0.246974, -0.23681, 1.49, -0.117336)
+text = "Check In Kiosk
+"
+outline_size = 0
+horizontal_alignment = 0
+vertical_alignment = 0
