@@ -10,7 +10,7 @@ extends Node
 var utilities = load("res://utilities.gd").new()
 
 @onready var	 mcp_server = get_node("/root/McpServer")
-@onready var chat_window = $CanvasLayer/ChatWindow
+@onready var chat_window: TextEdit = $CanvasLayer/ChatWindow
 
 # Gemini API Key
 const GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
@@ -136,7 +136,6 @@ func quit(_args):
 var processing = false
 
 ######
-
 var last_text = ""
 
 # Insert text at caret in TextEdit
@@ -144,6 +143,9 @@ func _insert_text(text):
 	chat_window.insert_text_at_caret(text, -1)
 	chat_window.scroll_vertical = 10000
 	last_text = chat_window.text
+	var column = chat_window.get_caret_column()
+	var line = chat_window.get_caret_line()
+	caret_pos_limit = [column, line]
 
 # Callback function to output response text from Gemini
 func output_text(response_text):
@@ -195,7 +197,8 @@ func _ready() -> void:
 
 	chat_window.grab_focus()
 	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
-	chat_window.insert_text_at_caret(WELCOME_MESSAGE)
+	#chat_window.insert_text_at_caret(WELCOME_MESSAGE)
+	_insert_text(WELCOME_MESSAGE)
 	last_text = WELCOME_MESSAGE
 
 # Steps of the first person
@@ -205,6 +208,8 @@ var delta_steps = 0
 # Rotation of the first person
 var previous_rotation_degrees = Vector3(0, 90, 0)
 var delta_rotation_degrees_y = 0
+
+var caret_pos_limit = [0, 0]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -266,4 +271,34 @@ func _process(_delta: float) -> void:
 			)
 		
 		_insert_text("\nYou: ")
+		
 		processing = false
+
+
+func _input(event):
+	if event is InputEventMouseButton or event is InputEventKey:
+		call_deferred("_check_caret_position")
+	
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_BACKSPACE:
+			_check_caret_position()
+
+# Prevents the user from editing the previous conversation history by checking the caret position.
+# If the caret is in a read-only area, it moves it to the beginning of the editable area.
+func _check_caret_position():
+	var column_limit = caret_pos_limit[0]
+	var line_limit = caret_pos_limit[1]
+	var current_line = chat_window.get_caret_line()
+	var current_column = chat_window.get_caret_column()
+
+	var corrected = false
+		
+	if current_line < line_limit:
+		chat_window.set_caret_line(caret_pos_limit[1])
+		corrected = true
+	elif current_line == caret_pos_limit[1] and current_column <= caret_pos_limit[0]:
+		chat_window.set_caret_column(caret_pos_limit[0])
+		corrected = true
+
+	if corrected:
+		get_viewport().set_input_as_handled()
