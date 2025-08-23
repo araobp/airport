@@ -126,7 +126,8 @@ const SHOPS_TOOL = {
 			"capture_image_local": {
 				"type": "string",
 				"description": """
-				A Base64-encoded string representing an image of the product, captured by the visitor's wearable device. This value should always be an empty string ("") as the function will populate it with locally cached image data when called.
+				A Base64-encoded string representing an image of the product, captured by the visitor's wearable device. This value should always be an empty string ("") as the function will populate it with a local image capture function when called.
+				"""
 			}	
 		},
 		"required": ["visitor_id", "zone_id", "amenity", "capture_image_local"],
