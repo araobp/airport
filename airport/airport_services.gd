@@ -90,3 +90,7 @@ func list_amenities_nearby(visitor_id, zone_id="unknown", amenity="unknown"):
 	else:
 		push_error("Cannot open " + LOG_FILE_PATH)
 		return "System error"
+
+
+func get_product_info(visitor_id, zone_id, amenity, base64_image):
+		return "$3"

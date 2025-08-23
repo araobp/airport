@@ -106,9 +106,7 @@ const AMENITIES_TOOL = {
 const SHOPS_TOOL = {
 	"name": "get_product_info",
 	"description": """
-	Find information about a specific product, such as price, for a visitor at an airport.
-	This tool requires a visitor ID, their current zone ID within the airport, the type of amenity they are looking for (e.g., 'electronics store', 'duty-free shop'), and a Base64-encoded image of the product.
-	The tool can then search for and retrieve details such as product name, price, availability, and specific store location.
+	Retrieves information about a specific product, such as its price, for a visitor at the airport. This tool requires the visitor's ID, their current zone ID, the type of amenity (e.g., 'electronics store', 'duty-free shop'), and a Base64-encoded image of the product. It then searches for and provides details like product name, price, availability, and store location.
 	""",
 	"parameters": {
 		"type": "object",
@@ -128,10 +126,7 @@ const SHOPS_TOOL = {
 			"capture_image_local": {
 				"type": "string",
 				"description": """
-				This is a Base64-encoded string representing an image of the product the visitor is asking about.
-				The image is captured by a camera on their wearable device.
-				The value must always be an empty string ("") because the function will fill it with locally cached image data when called.
-				"""
+				A Base64-encoded string representing an image of the product, captured by the visitor's wearable device. This value should always be an empty string ("") as the function will populate it with locally cached image data when called.
 			}	
 		},
 		"required": ["visitor_id", "zone_id", "amenity", "capture_image_local"],
@@ -180,7 +175,7 @@ func get_product_info(args):
 	var zone_id = args["zone_id"]
 	var amenity = args["amenity"]
 	var base64_image = args["capture_image_local"]
-	print(base64_image)  # Mock function
+	return await airport_services.get_product_info(visitor_id, zone_id, amenity, base64_image)
 	
 func timer(args):
 	return await utilities.timer(get_tree(), args["seconds"])

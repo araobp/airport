@@ -55,6 +55,7 @@ script = ExtResource("2_slhsa")
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
 camera_resolution_height = 256
+gemini_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 timeout = 20.0
@@ -500,14 +501,210 @@ outline_size = 10
 [node name="kiosk" parent="Airport/Kiosks" instance=ExtResource("11_1tehv")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.7309, 5.04413, -6.89629)
 
+[node name="Label3D" type="Label3D" parent="Airport/Kiosks/kiosk"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.71847, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-6 Kiosk"
+outline_size = 1
+
+[node name="Label3D2" type="Label3D" parent="Airport/Kiosks/kiosk"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.7356, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-6 Kiosk"
+outline_size = 1
+
+[node name="Label3D3" type="Label3D" parent="Airport/Kiosks/kiosk"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.279686, 0.00446033, -0.414729)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-6 Kiosk"
+outline_size = 1
+
+[node name="Label3D4" type="Label3D" parent="Airport/Kiosks/kiosk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.23267, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-6 Kiosk"
+outline_size = 0
+
+[node name="Label3D5" type="Label3D" parent="Airport/Kiosks/kiosk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127709, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-6 Kiosk"
+outline_size = 0
+
+[node name="Label3D6" type="Label3D" parent="Airport/Kiosks/kiosk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46491, 2.68077, 1.02696)
+pixel_size = 0.003
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-6 Kiosk"
+font_size = 64
+outline_size = 1
+
 [node name="kiosk4" parent="Airport/Kiosks" instance=ExtResource("11_1tehv")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.7309, 5.04413, 45.6584)
+
+[node name="Label3D" type="Label3D" parent="Airport/Kiosks/kiosk4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.71847, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-2 Kiosk"
+outline_size = 1
+
+[node name="Label3D2" type="Label3D" parent="Airport/Kiosks/kiosk4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.7356, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-2 Kiosk"
+outline_size = 1
+
+[node name="Label3D3" type="Label3D" parent="Airport/Kiosks/kiosk4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.279686, 0.00446033, -0.414729)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-2 Kiosk"
+outline_size = 1
+
+[node name="Label3D4" type="Label3D" parent="Airport/Kiosks/kiosk4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.23267, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-2 Kiosk"
+outline_size = 0
+
+[node name="Label3D5" type="Label3D" parent="Airport/Kiosks/kiosk4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.201439, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-2 Kiosk"
+outline_size = 0
+
+[node name="Label3D6" type="Label3D" parent="Airport/Kiosks/kiosk4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46491, 2.68077, 1.02696)
+pixel_size = 0.003
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-2 Kiosk"
+font_size = 64
+outline_size = 1
 
 [node name="kiosk2" parent="Airport/Kiosks" instance=ExtResource("11_1tehv")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.7309, 5.04413, -46.0368)
 
+[node name="Label3D" type="Label3D" parent="Airport/Kiosks/kiosk2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.71847, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 1
+
+[node name="Label3D2" type="Label3D" parent="Airport/Kiosks/kiosk2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.7356, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 1
+
+[node name="Label3D3" type="Label3D" parent="Airport/Kiosks/kiosk2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.279686, 0.00446033, -0.414729)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 1
+
+[node name="Label3D4" type="Label3D" parent="Airport/Kiosks/kiosk2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.23267, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 0
+
+[node name="Label3D5" type="Label3D" parent="Airport/Kiosks/kiosk2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.201439, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 0
+
+[node name="Label3D6" type="Label3D" parent="Airport/Kiosks/kiosk2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46491, 2.68077, 1.02696)
+pixel_size = 0.003
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+font_size = 64
+outline_size = 1
+
 [node name="kiosk3" parent="Airport/Kiosks" instance=ExtResource("11_1tehv")]
 transform = Transform3D(0.465568, 0, 0.885012, 0, 1, 0, -0.885012, 0, 0.465568, 20.4631, 5.04641, -156.486)
+
+[node name="Label3D" type="Label3D" parent="Airport/Kiosks/kiosk3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.71847, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 1
+
+[node name="Label3D2" type="Label3D" parent="Airport/Kiosks/kiosk3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.7356, 0.00446033, -0.506736)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 1
+
+[node name="Label3D3" type="Label3D" parent="Airport/Kiosks/kiosk3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.279686, 0.00446033, -0.414729)
+pixel_size = 0.002
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 1
+
+[node name="Label3D4" type="Label3D" parent="Airport/Kiosks/kiosk3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.23267, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 0
+
+[node name="Label3D5" type="Label3D" parent="Airport/Kiosks/kiosk3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.201439, 2.41915, -0.998999)
+pixel_size = 0.004
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+outline_size = 0
+
+[node name="Label3D6" type="Label3D" parent="Airport/Kiosks/kiosk3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46491, 2.68077, 1.02696)
+pixel_size = 0.003
+modulate = Color(0.439216, 0.176471, 0.0392157, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "2F-D-9 Kiosk"
+font_size = 64
+outline_size = 1
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Airport"]
 timeout = 20.0
