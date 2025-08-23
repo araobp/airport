@@ -36,6 +36,7 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
   - [Function Calling](#function-calling)
 - [Model Context Protocol (MCP)](#model-context-protocol-mcp)
 - [Context Engineering](#context-engineering)
+- [Development Notes](#development-notes)
 - [License](#license)
 
 ## Inspiration
@@ -149,6 +150,10 @@ The underlying specification for the AI's interaction with the airport environme
 ## Context Engineering
 
 This project is a practical example of context engineering, demonstrating how to build a complex AI agent that interacts with its environment. For more information on the concept of context engineering, please see the [CONTEXT_ENGINEERING.md](docs/CONTEXT_ENGINEERING.md) file.
+
+## Development Notes
+
+I am using https://github.com/Coding-Solo/godot-mcp with Gemini CLI for code review.
 
 ## Future Development
 We plan to automatically generate a network graph representing the amenities and their positional relationships within the airport from automatically collected user data.
