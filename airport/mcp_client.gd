@@ -25,6 +25,7 @@ const SURROUNDINGS_TOOL = {
 	"description": """
 	This function analyzes a picture of a visitor's surroundings to extract a zone ID.
 	Upon successful recognition of both the zone and its surroundings, it calls a data logging function to record the user's visit.
+	If they are not clear, output the most recent zone ID and the type of amenity from our chat history.
 	""",
 	"parameters": {
 		"type": "object",
@@ -37,7 +38,6 @@ const SURROUNDINGS_TOOL = {
 		"required": ["visitor_id"],
 	}
 }
-
 
 const QUIT_TOOL = {
 	"name": "quit",
@@ -63,7 +63,10 @@ func list_tools():
 	for tool in tools:
 		tool["name"] = "{server_name}_{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
 	return tools
-	
+
+func capture_image_local():
+	return await first_person.capture_image(camera_resolution_height, false)
+
 func take_surroundings(args):
 	print(args)
 	var visitor_id = args["visitor_id"]
@@ -238,13 +241,15 @@ func _process(_delta: float) -> void:
 		delta_rotation_degrees_y = delta_rotation_degrees.y  # Y-axis rotation
 		
 		var system_instruction = """
-		You are an AI agent that controls and manages the amenities of ABC Airport in cooperation with the visitor's wearable device.
+		You are the ABC Airport Concierge AI. You manage airport amenities and services in partnership with the visitor's wearable device.
 
-		My name is {visitor_id}, which is also my Visitor ID, and I am visiting the airport.
+		Your visitor ID is {visitor_id}.
 
-		Please respond to my queries. If you don't know the answer, first take a picture to understand the surroundings, then provide a response.
+		Your primary goal is to assist me. If you don't know the answer to a question, first get a visual of my surroundings by taking a picture, then respond.
 
-		When executing functions in order, describe what you are about to do before calling each function. Do not mention the function names themselves.
+		When performing a series of actions, always state what you are about to do before you do it. Do not mention function names.
+
+		When a function requires a location and an amenity, use the most recent zone ID and amenity from our chat history.
 
 		Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
 		""".format({
@@ -267,7 +272,8 @@ func _process(_delta: float) -> void:
 			null,
 			mcp_servers,
 			null,
-			output_text
+			output_text,
+			self
 			)
 		
 		_insert_text("\nYou: ")

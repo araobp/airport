@@ -6,8 +6,6 @@ extends Node3D
 
 var utilities = load("res://utilities.gd").new()
 
-var user_data = []
-
 var _gemini = null
 
 func get_gemini():
@@ -41,6 +39,8 @@ func door_control(zone_id, control):
 		return "Door not found"
 
 const LOG_FILE_PATH = "res://locations.json"
+
+var user_data = []
 
 func record_log(visitor_id, zone_id, amenities):
 	var current_time_string = Time.get_datetime_string_from_system()

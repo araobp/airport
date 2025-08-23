@@ -26,7 +26,7 @@ func _init(http_request, gemini_api_key, model="gemini-2.0-flash", enable_histor
 	# print(model)
 
 # Chat with Gemini
-func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text):
+func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text, locals=null):
 	
 	const headers = [
 		"Content-Type: application/json",
@@ -90,7 +90,6 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	var response_text = null
 
 	while true:
-		# print(payload)
 		# Call Gemini Chat API
 		var err = _http_request.request(
 			_api,
@@ -103,7 +102,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 			return error_string(err)
 
 		var res = await _http_request.request_completed
-		var body = res[3]		
+		var body = res[3]
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		
 		var candidate
@@ -145,6 +144,11 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				var func_name = ("_").join(function)
 				var args = function_call["args"]
 				print(func_name, "(", args, ")")	
+				
+				# Outputs from local functions
+				for k in args:
+					if k.ends_with("_local"):
+						args[k] = await Callable(locals, k).call()
 				
 				# Call function via Callable
 				var ref = mcp_servers["ref"][mcp_server_name]

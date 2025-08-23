@@ -55,7 +55,6 @@ script = ExtResource("2_slhsa")
 script = ExtResource("3_vglmr")
 first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
 camera_resolution_height = 256
-gemini_model = "gemini-2.0-flash"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
 timeout = 20.0
