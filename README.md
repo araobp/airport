@@ -8,7 +8,7 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
 <table>
   <tr>
     <td>
-      <img src="docs/airport_smartkeys.jpg" width="500">
+      <img src="docs/airport_smartkeys.jpg" width="600">
     </td>
     <td>
       <img src="docs/Airport Services.jpg" width="600">
@@ -16,7 +16,7 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
   </tr>
     <tr>
     <td>
-      <img src="docs/screenshots/Screenshot 2025-08-23 at 20.26.20.jpg" width="500">
+      <img src="docs/screenshots/Screenshot 2025-08-23 at 20.26.20.jpg" width="600">
     </td>
     <td>
       <img src="docs/screenshots/Screenshot 2025-08-23 at 20.27.01.jpg" width="600">
