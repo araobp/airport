@@ -14,6 +14,14 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
       <img src="docs/Airport Services.jpg" width="600">
     </td>
   </tr>
+    <tr>
+    <td>
+      <img src="docs/screenshots/Screenshot 2025-08-23 at 20.26.20.jpg" width="500">
+    </td>
+    <td>
+      <img src="docs/screenshots/Screenshot 2025-08-23 at 20.27.01.jpg" width="600">
+    </td>
+  </tr>
 </table>
 
 ## Table of Contents
