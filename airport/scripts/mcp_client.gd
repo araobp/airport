@@ -7,7 +7,7 @@ extends Node
 @export var delta_steps_threshold: int = 3
 @export var delta_rotation_threshold: float = 20.0
 
-var utilities = load("res://utilities.gd").new()
+var utilities = load("res://scripts/utilities.gd").new()
 
 @onready var	 mcp_server = get_node("/root/McpServer")
 @onready var chat_window: TextEdit = $CanvasLayer/ChatWindow
@@ -185,13 +185,13 @@ func _ready() -> void:
 		]
 	}
 	
-	gemini = load("res://gemini.gd").new(
+	gemini = load("res://scripts/gemini.gd").new(
 			$HTTPRequest,
 			gemini_api_key,
 			gemini_model,
 			true  # enable history
 		)
-	gemini2 = load("res://gemini.gd").new(
+	gemini2 = load("res://scripts/gemini.gd").new(
 			$HTTPRequest,
 			gemini_api_key,
 			gemini_model,

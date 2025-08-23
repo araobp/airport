@@ -4,13 +4,13 @@ extends Node3D
 
 @onready var doors = $Doors.get_children()
 
-var utilities = load("res://utilities.gd").new()
+var utilities = load("res://scripts/utilities.gd").new()
 
 var _gemini = null
 
 func get_gemini():
 	if not _gemini:
-		_gemini = load("res://gemini.gd").new(
+		_gemini = load("res://scripts/gemini.gd").new(
 			$HTTPRequest,
 			Globals.gemini_api_key,
 			Globals.gemini_model

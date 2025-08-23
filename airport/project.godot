@@ -19,7 +19,7 @@ config/icon="uid://c7ik87eivia3y"
 
 [autoload]
 
-Globals="*res://globals.gd"
+Globals="*res://scripts/globals.gd"
 
 [display]
 

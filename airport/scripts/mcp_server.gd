@@ -1,6 +1,6 @@
 extends Node
 
-var utilities = load("res://utilities.gd").new()
+var utilities = load("res://scripts/utilities.gd").new()
 @onready var airport_services = $Airport
 
 const GREETING_TOOL = {
