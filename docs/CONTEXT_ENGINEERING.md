@@ -15,4 +15,3 @@ In contrast, **context engineering** is a broader, system-level discipline that 
 The video concludes that prompt engineering gives you "better questions," while context engineering gives you "better systems" [[07:12](http://www.youtube.com/watch?v=vD0E3EUb8-8&t=432)].
 
 [https://youtu.be/vD0E3EUb8-8](https://youtu.be/vD0E3EUb8-8)
-http://googleusercontent.com/youtube_content/0
