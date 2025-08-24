@@ -1,18 +1,9 @@
 extends Node
 
-@export var visitor_id = "Visitor1"
-@export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
-@export var camera_resolution_height: int = 360
-@export var delta_steps_threshold: int = 3
-@export var delta_rotation_threshold: float = 20.0
-
-@export var chat_window: TextEdit = null
-
 var utilities = load("res://scripts/utilities.gd").new()
 
-@onready var wearable_device : CharacterBody3D = $WearableDevice
-@export var mcp_server: Node3D
-#@onready var chat_window: TextEdit = $WearableDevice/CanvasLayer/ChatWindow
+@onready var visitor: CharacterBody3D = $"../"
+@onready var wearable_device : Node3D = $"../WearableDevice"
 
 # Gemini API Key
 const GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
@@ -67,11 +58,11 @@ func list_tools():
 	return tools
 
 func capture_image_local():
-	return await wearable_device.capture_image(camera_resolution_height, false)
+	return await wearable_device.capture_image(visitor.camera_resolution_height, false)
 
 func take_surroundings(_args):
-	var base64_image = await wearable_device.capture_image(camera_resolution_height, false)
-	var base64_image_wide = await wearable_device.capture_image(camera_resolution_height, true)
+	var base64_image = await wearable_device.capture_image(visitor.camera_resolution_height, false)
+	var base64_image_wide = await wearable_device.capture_image(visitor.camera_resolution_height, true)
 	
 	var query = """
 	I am {visitor_id}, which is also my Visitor ID.
@@ -91,7 +82,7 @@ func take_surroundings(_args):
 	Output "zone_id_description_for_human" for a visitor to identify the ID on the wall. For example, "2F-D-11 in orange printed on the wall".
 
 	You should output only the JSON data with no additional explanations.
-	""".format({"visitor_id": visitor_id})
+	""".format({"visitor_id": visitor.visitor_id})
 	
 	const json_schema = {
 		"type": "object",
@@ -142,11 +133,11 @@ var last_text = ""
 
 # Insert text at caret in TextEdit
 func _insert_text(text):
-	chat_window.insert_text_at_caret(text, -1)
-	chat_window.scroll_vertical = 10000
-	last_text = chat_window.text
-	var column = chat_window.get_caret_column()
-	var line = chat_window.get_caret_line()
+	visitor.chat_window.insert_text_at_caret(text, -1)
+	visitor.chat_window.scroll_vertical = 10000
+	last_text = visitor.chat_window.text
+	var column = visitor.chat_window.get_caret_column()
+	var line = visitor.chat_window.get_caret_line()
 	caret_pos_limit = [column, line]
 
 # Callback function to output response text from Gemini
@@ -166,11 +157,15 @@ func _ready() -> void:
 	# Share Gemini API key with other scripts
 	# Note: sharing a secret key is not normal in a real case.
 	Globals.gemini_api_key = gemini_api_key
-	Globals.gemini_model = gemini_model
+	Globals.gemini_model = visitor.gemini_model
 
 	# List all the tools	
+	var mcp_server = visitor.mcp_server
+
 	var function_declarations = mcp_server.list_tools()
 	function_declarations.append_array(self.list_tools())
+	
+	# print(function_declarations)
 	
 	mcp_servers = {
 		"ref": {
@@ -187,17 +182,17 @@ func _ready() -> void:
 	gemini = load("res://scripts/gemini.gd").new(
 			$HTTPRequest,
 			gemini_api_key,
-			gemini_model,
+			visitor.gemini_model,
 			true  # enable history
 		)
 	gemini2 = load("res://scripts/gemini.gd").new(
 			$HTTPRequest,
 			gemini_api_key,
-			gemini_model,
+			visitor.gemini_model,
 			false  # disable history
 		)
 
-	chat_window.grab_focus()
+	visitor.chat_window.grab_focus()
 	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
 	#chat_window.insert_text_at_caret(WELCOME_MESSAGE)
 	_insert_text(WELCOME_MESSAGE)
@@ -216,17 +211,17 @@ var caret_pos_limit = [0, 0]
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:		
 	if Input.is_action_just_pressed("ui_text_indent"):
-		chat_window.visible = not chat_window.visible
-		if chat_window.visible:
-			chat_window.grab_focus()
+		visitor.chat_window.visible = not visitor.chat_window.visible
+		if visitor.chat_window.visible:
+			visitor.chat_window.grab_focus()
 			Globals.mode = Globals.MODE.CHAT
 		else:
 			Globals.mode = Globals.MODE.CONTROL
 			
-	if !processing and Input.is_key_pressed(KEY_ENTER) and chat_window.text != "":
+	if !processing and Input.is_key_pressed(KEY_ENTER) and visitor.chat_window.text != "":
 		processing = true
 
-		var query = chat_window.text.replace(last_text, "")
+		var query = visitor.chat_window.text.replace(last_text, "")
 		print("You: " + query)
 		
 		# Calculate Delta steps
@@ -251,12 +246,12 @@ func _process(_delta: float) -> void:
 
 		Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
 		""".format({
-				"visitor_id": visitor_id
+				"visitor_id": visitor.visitor_id
 			})
 			
 		print("delta steps:" + str(delta_steps), ", delta rotation: ", str(delta_rotation_degrees_y))
 		
-		if abs(delta_steps) > delta_steps_threshold or abs(delta_rotation_degrees_y) > delta_rotation_threshold:
+		if abs(delta_steps) > visitor.delta_steps_threshold or abs(delta_rotation_degrees_y) > visitor.delta_rotation_threshold:
 			query = """
 			Take a picture to understand surroudings of the visitor, then respond to the following query:
 				
@@ -291,16 +286,16 @@ func _input(event):
 # If the caret is in a read-only area, it moves it to the beginning of the editable area.
 func _check_caret_position():
 	var line_limit = caret_pos_limit[1]
-	var current_line = chat_window.get_caret_line()
-	var current_column = chat_window.get_caret_column()
+	var current_line = visitor.chat_window.get_caret_line()
+	var current_column = visitor.chat_window.get_caret_column()
 
 	var corrected = false
 		
 	if current_line < line_limit:
-		chat_window.set_caret_line(caret_pos_limit[1])
+		visitor.chat_window.set_caret_line(caret_pos_limit[1])
 		corrected = true
 	elif current_line == caret_pos_limit[1] and current_column <= caret_pos_limit[0]:
-		chat_window.set_caret_column(caret_pos_limit[0])
+		visitor.chat_window.set_caret_column(caret_pos_limit[0])
 		corrected = true
 
 	if corrected:

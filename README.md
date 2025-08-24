@@ -80,8 +80,7 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 
 *   **Godot Simulation (`airport/`):** The main airport simulation built with the Godot Engine.
     *   **`Airport.tscn`:** The main scene of the simulation.
-    *   **`McpClient` & `McpServer`:** Manages the AI interaction, including communication with the Gemini AI and in-environment actions.
-    *   **`wearable_device.gd`:** Simulates a smartkey device with a camera, microphone, and speaker.
+    *   **`McpClient` & `McpServer`:** Manages the AI interaction, including communication with the Gemini AI, and in-environment actions. It also simulates a wearable device with a camera, microphone, and speaker.
     *   **`locations.json`:** Stores the data collected by the AI agent about the locations of amenities.
 *   **Network Graph Viewer (`viewer/`):** A SvelteKit application to visualize the network graph data.
 *   **Blender Models (`blender/`):** The source `.blend` files for the 3D models used in the simulation.
