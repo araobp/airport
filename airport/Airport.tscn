@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=23 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://scripts/mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://scripts/globals.gd" id="2_slhsa"]
@@ -12,6 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://broru318qspky" path="res://FlightInfo/flight_info.tscn" id="10_vglmr"]
 [ext_resource type="PackedScene" uid="uid://b2ce8swrdu164" path="res://Kiosk/Kiosk.tscn" id="11_1tehv"]
 [ext_resource type="PackedScene" uid="uid://bvqfl5bh1qaut" path="res://CheckIn/check_in.tscn" id="12_qiqb0"]
+[ext_resource type="Texture2D" uid="uid://cvqf65mqw8140" path="res://Images/A_1_1.jpg" id="13_1c1gk"]
+[ext_resource type="Texture2D" uid="uid://b3l6frdsi24x5" path="res://Images/B_16_9.jpg" id="14_r0grm"]
+[ext_resource type="Texture2D" uid="uid://bhboy8sfl31b5" path="res://Images/C_1_1.jpg" id="15_5omxl"]
+[ext_resource type="Texture2D" uid="uid://bdys3iodlw11v" path="res://Images/D_16_9.jpg" id="16_kdhq5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
 content_margin_left = 10.0
@@ -144,10 +148,10 @@ transform = Transform3D(0.999975, 0, -0.00710343, 0, 1, 0, 0.00710343, 0, 0.9999
 transform = Transform3D(1, 0, 0.000366519, 0, 1, 0, -0.000366519, 0, 1, -22.6891, 0.189, 6.516)
 
 [node name="2F-E-11-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, -72.819)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7813, 5.04467, -72.819)
 
 [node name="2F-E-11-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 5.04467, -59.6324)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7829, 5.04467, -59.5211)
 
 [node name="1F-E-2-ew-1" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7123, 0.18877, -59.6324)
@@ -727,93 +731,131 @@ text = "Restroom
 font_size = 64
 outline_size = 0
 
-[node name="Node" type="Node" parent="."]
+[node name="CheckInKiosks" type="Node3D" parent="Airport"]
 
-[node name="CheckInKiosks" type="Node3D" parent="."]
-
-[node name="Set1" type="Node3D" parent="CheckInKiosks"]
+[node name="Set1" type="Node3D" parent="Airport/CheckInKiosks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 5.041, 46.1181)
 
-[node name="check_in_1" parent="CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
+[node name="check_in_1" parent="Airport/CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 4)
 
-[node name="check_in_2" parent="CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
+[node name="check_in_2" parent="Airport/CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-0.99999, 0.00441567, -8.74219e-08, 0.00441567, 0.99999, 3.8603e-10, 8.74228e-08, 0, -1, 2, 0, 4)
 
-[node name="check_in_3" parent="CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
+[node name="check_in_3" parent="Airport/CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 4)
 
-[node name="check_in_4" parent="CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
+[node name="check_in_4" parent="Airport/CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="check_in_5" parent="CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
+[node name="check_in_5" parent="Airport/CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
 
-[node name="check_in_6" parent="CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
+[node name="check_in_6" parent="Airport/CheckInKiosks/Set1" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
 
-[node name="Set2" type="Node3D" parent="CheckInKiosks"]
+[node name="Set2" type="Node3D" parent="Airport/CheckInKiosks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 5.041, 32.4572)
 
-[node name="check_in_1" parent="CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
+[node name="check_in_1" parent="Airport/CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 4)
 
-[node name="check_in_2" parent="CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
+[node name="check_in_2" parent="Airport/CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-0.99999, 0.00441567, -8.74219e-08, 0.00441567, 0.99999, 3.8603e-10, 8.74228e-08, 0, -1, 2, 0, 4)
 
-[node name="check_in_3" parent="CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
+[node name="check_in_3" parent="Airport/CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 4)
 
-[node name="check_in_4" parent="CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
+[node name="check_in_4" parent="Airport/CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="check_in_5" parent="CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
+[node name="check_in_5" parent="Airport/CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
 
-[node name="check_in_6" parent="CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
+[node name="check_in_6" parent="Airport/CheckInKiosks/Set2" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
 
-[node name="Set3" type="Node3D" parent="CheckInKiosks"]
+[node name="Set3" type="Node3D" parent="Airport/CheckInKiosks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 5.041, -5.9365)
 
-[node name="check_in_1" parent="CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
+[node name="check_in_1" parent="Airport/CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 4)
 
-[node name="check_in_2" parent="CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
+[node name="check_in_2" parent="Airport/CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-0.99999, 0.00441567, -8.74219e-08, 0.00441567, 0.99999, 3.8603e-10, 8.74228e-08, 0, -1, 2, 0, 4)
 
-[node name="check_in_3" parent="CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
+[node name="check_in_3" parent="Airport/CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 4)
 
-[node name="check_in_4" parent="CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
+[node name="check_in_4" parent="Airport/CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="check_in_5" parent="CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
+[node name="check_in_5" parent="Airport/CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
 
-[node name="check_in_6" parent="CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
+[node name="check_in_6" parent="Airport/CheckInKiosks/Set3" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
 
-[node name="Set4" type="Node3D" parent="CheckInKiosks"]
+[node name="Set4" type="Node3D" parent="Airport/CheckInKiosks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 5.041, -20.0364)
 
-[node name="check_in_1" parent="CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
+[node name="check_in_1" parent="Airport/CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 4)
 
-[node name="check_in_2" parent="CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
+[node name="check_in_2" parent="Airport/CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-0.99999, 0.00441567, -8.74219e-08, 0.00441567, 0.99999, 3.8603e-10, 8.74228e-08, 0, -1, 2, 0, 4)
 
-[node name="check_in_3" parent="CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
+[node name="check_in_3" parent="Airport/CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 4)
 
-[node name="check_in_4" parent="CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
+[node name="check_in_4" parent="Airport/CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="check_in_5" parent="CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
+[node name="check_in_5" parent="Airport/CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
 
-[node name="check_in_6" parent="CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
+[node name="check_in_6" parent="Airport/CheckInKiosks/Set4" instance=ExtResource("12_qiqb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="Posters" type="Node3D" parent="Airport"]
+
+[node name="PosterA-2" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, -19.322, 6.5, 0.209)
+texture = ExtResource("13_1c1gk")
+
+[node name="PosterA-1" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(-0.08, 0, -6.99382e-09, 0, 0.08, 0, 6.99382e-09, 0, -0.08, -19.322, 6.5, 25.785)
+texture = ExtResource("13_1c1gk")
+
+[node name="PosterA-4" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, -19.322, 6.5, -79.1949)
+texture = ExtResource("13_1c1gk")
+
+[node name="PosterA-3" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(-0.08, 0, -6.99382e-09, 0, 0.08, 0, 6.99382e-09, 0, -0.08, -19.322, 6.5, -53.1332)
+texture = ExtResource("13_1c1gk")
+
+[node name="PosterB-1" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, -22.6028, 6.5, 12.9823)
+texture = ExtResource("14_r0grm")
+
+[node name="PosterB-2" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, -22.6028, 6.5, -66.2323)
+texture = ExtResource("14_r0grm")
+
+[node name="PosterC-1" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(-0.0700621, 0.000219049, 0.0386167, 0, 0.0799987, -0.000453783, -0.0386173, -0.000397413, -0.070061, 19.9129, 6.5, -163.898)
+texture = ExtResource("15_5omxl")
+
+[node name="PosterC-2" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(0.0700371, -0.000202436, -0.038662, 0, 0.0799989, -0.000418877, 0.0386626, 0.000366712, 0.0700362, 31.2851, 6.36804, -184.53)
+texture = ExtResource("15_5omxl")
+
+[node name="PosterD-1" type="Sprite3D" parent="Airport/Posters"]
+transform = Transform3D(0.0481402, -0.000243235, 0.0876496, -2.91038e-11, 0.0999996, 0.000277507, -0.08765, -0.000133592, 0.04814, 22.927, 6.5, -175.614)
+texture = ExtResource("16_kdhq5")
+
+[node name="Node" type="Node" parent="."]
 
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-5-1"]
