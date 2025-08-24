@@ -1,10 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=20 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://scripts/mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://scripts/globals.gd" id="2_slhsa"]
-[ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://scripts/mcp_client.gd" id="3_vglmr"]
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://scripts/chat_window.gd" id="4_1tehv"]
-[ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://scripts/wearable_device.gd" id="5_qiqb0"]
 [ext_resource type="PackedScene" uid="uid://1fcc5lv0tfl8" path="res://Terminal/Terminal.tscn" id="6_1c1gk"]
 [ext_resource type="Script" uid="uid://dbd71s1f42m8t" path="res://scripts/airport_services.gd" id="6_slhsa"]
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="7_r0grm"]
@@ -16,21 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b3l6frdsi24x5" path="res://Images/B_16_9.jpg" id="14_r0grm"]
 [ext_resource type="Texture2D" uid="uid://bhboy8sfl31b5" path="res://Images/C_1_1.jpg" id="15_5omxl"]
 [ext_resource type="Texture2D" uid="uid://bdys3iodlw11v" path="res://Images/D_16_9.jpg" id="16_kdhq5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
-content_margin_left = 10.0
-content_margin_top = 10.0
-content_margin_right = 10.0
-content_margin_bottom = 10.0
-bg_color = Color(0.099986, 0.099986, 0.099986, 0.501961)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hh24k"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh24k"]
-radius = 0.2
-height = 1.6
+[ext_resource type="PackedScene" uid="uid://ngclygxdokj4" path="res://McpClient.tscn" id="17_kdhq5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -49,77 +33,30 @@ ssr_enabled = true
 ssao_enabled = true
 sdfgi_read_sky_light = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.099986, 0.099986, 0.099986, 0.501961)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
 [node name="McpServer" type="Node3D"]
 script = ExtResource("1_fgr6k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.887866, 0.403194, -0.221651, 0.262786, 0.839816, 0.475028, 0.377675, 0.363515, -0.851598, 0, 0, -868.151)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6uqi0")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 timeout = 20.0
 
 [node name="Globals" type="Node" parent="."]
 script = ExtResource("2_slhsa")
-
-[node name="McpClient" type="Node" parent="." node_paths=PackedStringArray("visitor")]
-script = ExtResource("3_vglmr")
-visitor = NodePath("../SubViewportContainer/SubViewport/Visitor1")
-camera_resolution_height = 256
-gemini_model = "gemini-2.0-flash"
-
-[node name="HTTPRequest" type="HTTPRequest" parent="McpClient"]
-timeout = 20.0
-
-[node name="CanvasLayer" type="CanvasLayer" parent="McpClient"]
-
-[node name="ChatWindow" type="TextEdit" parent="McpClient/CanvasLayer"]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 384.0
-offset_top = -376.0
-offset_right = -384.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_v3stw")
-wrap_mode = 1
-caret_blink = true
-script = ExtResource("4_1tehv")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-offset_right = 1920.0
-offset_bottom = 1080.0
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-handle_input_locally = false
-size = Vector2i(1920, 1080)
-render_target_update_mode = 4
-
-[node name="Visitor1" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.36298, 5.04603, -6.92037)
-script = ExtResource("5_qiqb0")
-fov = 40.0
-fov_wide = 80.0
-
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Visitor1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
-fov = 60.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Visitor1"]
-transform = Transform3D(0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.4, 0, 0.8, 0)
-mesh = SubResource("CapsuleMesh_hh24k")
-skeleton = NodePath("../../../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Visitor1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("CapsuleShape3D_hh24k")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.887866, 0.403194, -0.221651, 0.262786, 0.839817, 0.475029, 0.377675, 0.363515, -0.851598, 0, 0, -868.151)
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_6uqi0")
 
 [node name="Airport" type="Node3D" parent="."]
 script = ExtResource("6_slhsa")
@@ -854,6 +791,41 @@ texture = ExtResource("15_5omxl")
 [node name="PosterD-1" type="Sprite3D" parent="Airport/Posters"]
 transform = Transform3D(0.0481402, -0.000243235, 0.0876496, -2.91038e-11, 0.0999996, 0.000277507, -0.08765, -0.000133592, 0.04814, 22.927, 6.5, -175.614)
 texture = ExtResource("16_kdhq5")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
+
+[node name="ChatWindow" type="TextEdit" parent="SubViewportContainer/SubViewport/CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 384.0
+offset_top = -376.0
+offset_right = -384.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_v3stw")
+wrap_mode = 1
+caret_blink = true
+script = ExtResource("4_1tehv")
+
+[node name="Visitors" type="Node" parent="SubViewportContainer/SubViewport"]
+
+[node name="McpClient1" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("chat_window", "mcp_server") instance=ExtResource("17_kdhq5")]
+visitor_id = "Visitor2"
+chat_window = NodePath("../../CanvasLayer/ChatWindow")
+mcp_server = NodePath("../../../..")
 
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-5-1"]

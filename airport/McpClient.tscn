@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://ngclygxdokj4"]
+
+[ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://scripts/mcp_client.gd" id="1_6wiaj"]
+[ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://scripts/wearable_device.gd" id="2_np03c"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hh24k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh24k"]
+radius = 0.2
+height = 1.6
+
+[node name="McpClient1" type="Node"]
+script = ExtResource("1_6wiaj")
+gemini_model = "gemini-2.0-flash"
+camera_resolution_height = 256
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+timeout = 20.0
+
+[node name="WearableDevice" type="CharacterBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -41.5063, 5.04603, -67.2689)
+script = ExtResource("2_np03c")
+fov = 40.0
+fov_wide = 80.0
+
+[node name="Camera3D" type="Camera3D" parent="WearableDevice"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+fov = 60.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WearableDevice"]
+transform = Transform3D(0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.4, 0, 0.8, 0)
+mesh = SubResource("CapsuleMesh_hh24k")
+skeleton = NodePath("../../../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WearableDevice"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_hh24k")

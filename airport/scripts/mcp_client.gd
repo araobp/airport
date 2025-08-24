@@ -1,16 +1,18 @@
 extends Node
 
-@export var visitor : CharacterBody3D
-@export var camera_resolution_height: int = 360
-
+@export var visitor_id = "Visitor1"
 @export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
+@export var camera_resolution_height: int = 360
 @export var delta_steps_threshold: int = 3
 @export var delta_rotation_threshold: float = 20.0
 
+@export var chat_window: TextEdit = null
+
 var utilities = load("res://scripts/utilities.gd").new()
 
-@onready var	 mcp_server = get_node("/root/McpServer")
-@onready var chat_window: TextEdit = $CanvasLayer/ChatWindow
+@onready var wearable_device : CharacterBody3D = $WearableDevice
+@export var mcp_server: Node3D
+#@onready var chat_window: TextEdit = $WearableDevice/CanvasLayer/ChatWindow
 
 # Gemini API Key
 const GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
@@ -65,14 +67,11 @@ func list_tools():
 	return tools
 
 func capture_image_local():
-	return await visitor.capture_image(camera_resolution_height, false)
+	return await wearable_device.capture_image(camera_resolution_height, false)
 
-func take_surroundings(args):
-	print(args)
-	var visitor_id = args["visitor_id"]
-	
-	var base64_image = await visitor.capture_image(camera_resolution_height, false)
-	var base64_image_wide = await visitor.capture_image(camera_resolution_height, true)
+func take_surroundings(_args):
+	var base64_image = await wearable_device.capture_image(camera_resolution_height, false)
+	var base64_image_wide = await wearable_device.capture_image(camera_resolution_height, true)
 	
 	var query = """
 	I am {visitor_id}, which is also my Visitor ID.
@@ -161,7 +160,7 @@ func output_text(response_text):
 var mcp_servers
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready() -> void:	
 	gemini_api_key = utilities.get_environment_variable(GEMINI_API_KEY_FILE_PATH)
 	
 	# Share Gemini API key with other scripts
@@ -215,7 +214,7 @@ var delta_rotation_degrees_y = 0
 var caret_pos_limit = [0, 0]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(_delta: float) -> void:		
 	if Input.is_action_just_pressed("ui_text_indent"):
 		chat_window.visible = not chat_window.visible
 		if chat_window.visible:
@@ -231,18 +230,18 @@ func _process(_delta: float) -> void:
 		print("You: " + query)
 		
 		# Calculate Delta steps
-		delta_steps = visitor.steps - previous_steps
-		previous_steps = visitor.steps
+		delta_steps = wearable_device.steps - previous_steps
+		previous_steps = wearable_device.steps
 		
 		# Calculate Delta rotation
-		var delta_rotation_degrees = visitor.rotation_degrees - previous_rotation_degrees
-		previous_rotation_degrees = visitor.rotation_degrees
+		var delta_rotation_degrees = wearable_device.rotation_degrees - previous_rotation_degrees
+		previous_rotation_degrees = wearable_device.rotation_degrees
 		delta_rotation_degrees_y = delta_rotation_degrees.y  # Y-axis rotation
 		
 		var system_instruction = """
-		You are the ABC Airport Concierge AI. You manage airport amenities and services in partnership with the visitor's wearable device.
+		You are the ABC Airport Concierge AI. You manage airport amenities and services in partnership with the wearable_device's wearable device.
 
-		Your visitor ID is {visitor_id}.
+		Your wearable_device ID is {visitor_id}.
 
 		Your primary goal is to assist me. If you don't know the answer to a question, first get a visual of my surroundings by taking a picture, then respond.
 
@@ -252,7 +251,7 @@ func _process(_delta: float) -> void:
 
 		Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
 		""".format({
-				"visitor_id": visitor.name
+				"visitor_id": visitor_id
 			})
 			
 		print("delta steps:" + str(delta_steps), ", delta rotation: ", str(delta_rotation_degrees_y))

@@ -1,6 +1,6 @@
 # Airport: A Smart Airport Simulation
 
-[![Godot Engine](https://img.shields.io/badge/Godot-4.4.1-blue.svg)](https://godotengine.org)
+[![Godot Engine](https://img.shields.io/badge/Godot-4.4-blue.svg)](https://godotengine.org)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-purple.svg)](https://ai.google.dev/)
 
 This project is a work-in-progress simulation of a "smart airport" environment, showcasing the power of AI, particularly Google's Gemini model, to create interactive and intelligent experiences. The simulation is built using the Godot Engine.
@@ -27,7 +27,9 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
 ## Table of Contents
 
 - [Inspiration](#inspiration)
+- [Features](#features)
 - [Core Components](#core-components)
+- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [API Key Management](#api-key-management)
@@ -35,8 +37,13 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
   - [Chat History and Multimodal Input](#chat-history-and-multimodal-input)
   - [Function Calling](#function-calling)
 - [Model Context Protocol (MCP)](#model-context-protocol-mcp)
+- [Network Graph](#network-graph)
+  - [Generation](#generation)
+  - [Visualization](#visualization)
 - [Context Engineering](#context-engineering)
 - [Development Notes](#development-notes)
+- [Contributing](#contributing)
+- [Future Work](#future-work)
 - [License](#license)
 
 ## Inspiration
@@ -58,22 +65,46 @@ The inspiration for this project comes from a past experiment with an AI Drive R
 
 I believe the current boom in AI agents in the IT world will not last long, and its focus will be shifting to the OT (Operational Technology) world, where there is a serious labor shortage and a strong demand for increased efficiency. Originally, DX (Digital Transformation) was supposed to be focused on OT (Operational Technology) in the first place.
 
+## Features
+
+*   **AI-Powered Chat:** Interact with the airport environment using natural language through a chat interface powered by the Gemini AI model.
+*   **Multimodal Input:** The AI can "see" and understand the environment through image captures from the player's viewpoint.
+*   **Function Calling:** The AI can interact with the simulation by calling functions to perform actions like opening doors.
+*   **Dynamic Location Learning:** The AI learns the locations of amenities in the airport through visual-based interaction and data logging.
+*   **Network Graph Generation:** Generate a network graph to visualize the relationships between visitors, zones, and amenities.
+*   **Web-Based Visualization:** View the generated network graph in an interactive web-based viewer built with SvelteKit.
+
 ## Core Components
 
--   **Main Scene (`airport/Airport.tscn`):** The central scene that orchestrates the entire airport simulation.
--   **McpClient (`airport/mcp_client.gd`):** The heart of the AI interaction, managing the UI, communication with the Gemini AI, and in-environment actions.
--   **Airport Services (`airport/airport_services.gd`):** A centralized script for managing airport services like door control.
--   **Wearable Device (Smartkey):** A conceptual smartkey device with a camera, microphone, and speaker, serving as the primary interface with the AI agent.
--   **Location Data (`airport/locations.json`):** A JSON file that stores the data collected by the AI agent about the locations of amenities in the airport.
+*   **Godot Simulation (`airport/`):** The main airport simulation built with the Godot Engine.
+    *   **`Airport.tscn`:** The main scene of the simulation.
+    *   **`McpClient` & `McpServer`:** Manages the AI interaction, including communication with the Gemini AI and in-environment actions.
+    *   **`wearable_device.gd`:** Simulates a smartkey device with a camera, microphone, and speaker.
+    *   **`locations.json`:** Stores the data collected by the AI agent about the locations of amenities.
+*   **Network Graph Viewer (`viewer/`):** A SvelteKit application to visualize the network graph data.
+*   **Blender Models (`blender/`):** The source `.blend` files for the 3D models used in the simulation.
+*   **Documentation (`docs/`):** Contains project documentation, including the MCP specification and context engineering notes.
 
-<img src="./docs/smartkey.png" width="200">
+## Project Structure
+
+```
+.
+├── airport/              # Godot project
+├── blender/              # Blender source files
+├── data/                 # Generated data (e.g., network graph)
+├── docs/                 # Project documentation
+├── images/               # Gemini generated images
+├── viewer/               # SvelteKit network graph viewer
+└── README.md
+```
 
 ## Getting Started
 
 ### Prerequisites
 
--   Godot Engine (version 4.x)
--   A Gemini API key
+*   Godot Engine (version 4.4 or later)
+*   A Gemini API key
+*   Node.js and npm (for the viewer)
 
 ### API Key Management
 
@@ -147,27 +178,21 @@ The underlying specification for the AI's interaction with the airport environme
 
 **Note:** The current implementation mimics MCP, as the Gemini API only partially supports the MCP specification. This implementation uses direct API calls rather than STDIO or HTTP to access MCP services.
 
-## Context Engineering
+## Network Graph
 
-This project is a practical example of context engineering, demonstrating how to build a complex AI agent that interacts with its environment. For more information on the concept of context engineering, please see the [CONTEXT_ENGINEERING.md](docs/CONTEXT_ENGINEERING.md) file.
-
-## Development Notes
-
-I am using https://github.com/Coding-Solo/godot-mcp with Gemini CLI for code review.
-
-## Network Graph Generation
+### Generation
 
 A network graph generation feature has been added to visualize the relationships between amenities in the airport. It makes use of Gemini for network graph generation from a log file. This feature outputs the generated graph in the `data` folder.
 
 To initiate the management function, you can use the chat UI and ask something like "initiate management function".
 
-## Network Graph Visualization
+### Visualization
 
 The generated network graph data can be visualized using a SvelteKit application in the `viewer` directory. This provides a visual representation of the connections between visitors, zones, and amenities.
 
 <img src="./docs/network_graph.jpg" width=600>
 
-### Running the Viewer
+#### Running the Viewer
 
 To run the SvelteKit application:
 
@@ -187,6 +212,25 @@ To run the SvelteKit application:
     ```
 
 This will start the SvelteKit development server, and you can view the network graph in your browser at the address provided.
+
+## Context Engineering
+
+This project is a practical example of context engineering, demonstrating how to build a complex AI agent that interacts with its environment. For more information on the concept of context engineering, please see the [CONTEXT_ENGINEERING.md](docs/CONTEXT_ENGINEERING.md) file.
+
+## Development Notes
+
+I am using https://github.com/Coding-Solo/godot-mcp with Gemini CLI for code review.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
+
+## Future Work
+
+*   Expand the set of tools and resources available to the AI agent.
+*   Implement more complex scenarios and interactions in the simulation.
+*   Enhance the network graph visualization with more features and data.
+*   Integrate with other AI services and APIs.
 
 ## License
 
