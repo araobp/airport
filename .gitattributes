@@ -1,2 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Explicitly mark .gd files as GDScript
+*.gd linguist-language=GDScript
+
+# Exclude the viewer directory from language statistics
+viewer/** linguist-vendored
