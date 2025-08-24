@@ -4,7 +4,6 @@ var visitor_id = ""
 
 @export var mcp_server: Node3D
 @export var chat_window: TextEdit
-@export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
 @export var camera_resolution_height: int = 360
 @export var delta_steps_threshold: int = 3
 @export var delta_rotation_threshold: float = 20.0

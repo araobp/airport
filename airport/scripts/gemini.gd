@@ -2,8 +2,7 @@ class_name Gemini
 
 extends Node
 
-# Gemini 2.5 Flash Model endpoint
-var _model
+# Gemini API
 var _api
 
 # Reference to HTTPRequest node
@@ -19,10 +18,9 @@ func _output_text(text):
 	print("default output: " + text)
 
 # Constructor	
-func _init(http_request, gemini_api_key, model="gemini-2.0-flash", enable_history=false):
-	_model = model
-	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": _model})
-	_api = api + "?key=" + gemini_api_key
+func _init(http_request, gemini_props, enable_history=false):
+	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": gemini_props.gemini_model})
+	_api = api + "?key=" + gemini_props.gemini_api_key
 	_http_request = http_request
 	_enable_history = enable_history
 	# print(model)

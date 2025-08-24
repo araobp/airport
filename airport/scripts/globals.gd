@@ -1,8 +1,10 @@
 extends Node
 
-enum MODE {CHAT, CONTROL}
+var utilities = load("res://scripts/utilities.gd").new()
 
+enum MODE {CHAT, CONTROL}
 var mode: MODE = MODE.CHAT
 
-var gemini_api_key: String = ""
-var gemini_model: String = ""
+@export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
+const GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
+var gemini_api_key = utilities.get_environment_variable(GEMINI_API_KEY_FILE_PATH)

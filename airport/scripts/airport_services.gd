@@ -1,7 +1,5 @@
 extends Node3D
 
-@export var LAST_N = 128
-
 @onready var doors = $Doors.get_children()
 
 var utilities = load("res://scripts/utilities.gd").new()

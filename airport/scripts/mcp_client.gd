@@ -5,12 +5,17 @@ var utilities = load("res://scripts/utilities.gd").new()
 @onready var visitor: CharacterBody3D = $"../"
 @onready var wearable_device : Node3D = $"../WearableDevice"
 
-# Gemini API Key
-const GEMINI_API_KEY_FILE_PATH = "res://gemini_api_key_env.txt"
-var gemini_api_key = ""
-
-var gemini  # for AI Agent processing
-var gemini2  # for McpClient local tools
+@onready var	 gemini = load("res://scripts/gemini.gd").new(
+			$HTTPRequest,
+			Globals,
+			true  # enable history
+		)
+		
+@onready var gemini2 = load("res://scripts/gemini.gd").new(
+			$HTTPRequest,
+			Globals,
+			false  # disable history
+		)
 
 ##### Local tools #####
 const SURROUNDINGS_TOOL = {
@@ -152,13 +157,6 @@ var mcp_servers
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
-	gemini_api_key = utilities.get_environment_variable(GEMINI_API_KEY_FILE_PATH)
-	
-	# Share Gemini API key with other scripts
-	# Note: sharing a secret key is not normal in a real case.
-	Globals.gemini_api_key = gemini_api_key
-	Globals.gemini_model = visitor.gemini_model
-
 	# List all the tools	
 	var mcp_server = visitor.mcp_server
 
@@ -179,19 +177,6 @@ func _ready() -> void:
 		]
 	}
 	
-	gemini = load("res://scripts/gemini.gd").new(
-			$HTTPRequest,
-			gemini_api_key,
-			visitor.gemini_model,
-			true  # enable history
-		)
-	gemini2 = load("res://scripts/gemini.gd").new(
-			$HTTPRequest,
-			gemini_api_key,
-			visitor.gemini_model,
-			false  # disable history
-		)
-
 	visitor.chat_window.grab_focus()
 	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
 	#chat_window.insert_text_at_caret(WELCOME_MESSAGE)

@@ -5,13 +5,9 @@ var utilities = load("res://scripts/utilities.gd").new()
 
 @export var network_graph_output_path = "../data/network_graph.js"
 
-var gemini: Gemini = null
-
-func _ready() -> void:	
-	gemini = load("res://scripts/gemini.gd").new(
+@onready var gemini: Gemini = load("res://scripts/gemini.gd").new(
 		$HTTPRequest,
-		Globals.gemini_api_key,
-		Globals.gemini_model
+		Globals
 	)
 
 const GREETING_TOOL = {
