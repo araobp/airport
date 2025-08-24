@@ -1,5 +1,7 @@
 # Airport: A Smart Airport Simulation
 
+(Work in progress)
+
 [![Godot Engine](https://img.shields.io/badge/Godot-4.4-blue.svg)](https://godotengine.org)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-purple.svg)](https://ai.google.dev/)
 
@@ -220,10 +222,6 @@ This project is a practical example of context engineering, demonstrating how to
 ## Development Notes
 
 I am using https://github.com/Coding-Solo/godot-mcp with Gemini CLI for code review.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
 
 ## Future Work
 
