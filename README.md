@@ -155,8 +155,11 @@ This project is a practical example of context engineering, demonstrating how to
 
 I am using https://github.com/Coding-Solo/godot-mcp with Gemini CLI for code review.
 
-## Future Development
-We plan to automatically generate a network graph representing the amenities and their positional relationships within the airport from automatically collected user data.
+## Network Graph Generation
+
+A network graph generation feature has been added to visualize the relationships between amenities in the airport. This feature outputs the generated graph in the `data` folder.
+
+To initiate the management function, you can use the chat UI and ask something like "initiate management function".
 
 ## License
 

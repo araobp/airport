@@ -233,7 +233,6 @@ func _process(_delta: float) -> void:
 		# Calculate Delta steps
 		delta_steps = visitor.steps - previous_steps
 		previous_steps = visitor.steps
-		print(delta_steps)
 		
 		# Calculate Delta rotation
 		var delta_rotation_degrees = visitor.rotation_degrees - previous_rotation_degrees
@@ -256,7 +255,7 @@ func _process(_delta: float) -> void:
 				"visitor_id": visitor.name
 			})
 			
-		print(delta_steps, " ", delta_rotation_degrees_y)
+		print("delta steps:" + str(delta_steps), ", delta rotation: ", str(delta_rotation_degrees_y))
 		
 		if abs(delta_steps) > delta_steps_threshold or abs(delta_rotation_degrees_y) > delta_rotation_threshold:
 			query = """
@@ -292,7 +291,6 @@ func _input(event):
 # Prevents the user from editing the previous conversation history by checking the caret position.
 # If the caret is in a read-only area, it moves it to the beginning of the editable area.
 func _check_caret_position():
-	var column_limit = caret_pos_limit[0]
 	var line_limit = caret_pos_limit[1]
 	var current_line = chat_window.get_caret_line()
 	var current_column = chat_window.get_caret_column()

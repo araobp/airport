@@ -1,0 +1,282 @@
+{
+  "edges": [
+    {
+      "from": "Visitor1",
+      "to": "2F-D-9-w",
+      "label": "2025-08-17T15:18:54"
+    },
+    {
+      "from": "2F-D-9-w",
+      "to": "Kiosk",
+      "label": "2025-08-17T15:18:54"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-17T15:20:57"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-17T15:20:57"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-7-w",
+      "label": "2025-08-17T15:21:40"
+    },
+    {
+      "from": "2F-D-7-w",
+      "to": "Kiosk",
+      "label": "2025-08-17T15:21:40"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-7-w",
+      "label": "2025-08-17T15:22:27"
+    },
+    {
+      "from": "2F-D-7-w",
+      "to": "Kiosk",
+      "label": "2025-08-17T15:22:27"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-17T15:27:18"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-17T15:27:18"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-17T15:29:27"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-17T15:29:27"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-17T15:32:09"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-17T15:32:09"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-18T08:35:27"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-18T08:35:27"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-18T10:11:50"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-18T10:11:50"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-18T10:12:24"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-18T10:12:24"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-11-w",
+      "label": "2025-08-18T10:24:16"
+    },
+    {
+      "from": "2F-D-11-w",
+      "to": "door",
+      "label": "2025-08-18T10:24:16"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-11-e",
+      "label": "2025-08-18T11:28:32"
+    },
+    {
+      "from": "2F-D-11-e",
+      "to": "flight information display",
+      "label": "2025-08-18T11:28:32"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-18T11:33:07"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "airport",
+      "label": "2025-08-18T11:33:07"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-1-w",
+      "label": "2025-08-18T11:33:42"
+    },
+    {
+      "from": "2F-D-1-w",
+      "to": "room",
+      "label": "2025-08-18T11:33:42"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-18T11:36:46"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-18T11:36:46"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-18T11:54:06"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-18T11:54:06"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-10-w",
+      "label": "2025-08-18T11:56:28"
+    },
+    {
+      "from": "2F-D-10-w",
+      "to": "Kiosk",
+      "label": "2025-08-18T11:56:28"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-7",
+      "label": "2025-08-23T11:16:12"
+    },
+    {
+      "from": "2F-D-7",
+      "to": "Kiosk",
+      "label": "2025-08-23T11:16:12"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-7-w",
+      "label": "2025-08-23T11:41:59"
+    },
+    {
+      "from": "2F-D-7-w",
+      "to": "Kiosk",
+      "label": "2025-08-23T11:41:59"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-6-w",
+      "label": "2025-08-23T19:25:07"
+    },
+    {
+      "from": "2F-D-6-w",
+      "to": "Kiosk",
+      "label": "2025-08-23T19:25:07"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-6-w",
+      "label": "2025-08-23T19:31:36"
+    },
+    {
+      "from": "2F-D-6-w",
+      "to": "Kiosk",
+      "label": "2025-08-23T19:31:36"
+    },
+    {
+      "from": "Visitor1",
+      "to": "2F-D-6-w",
+      "label": "2025-08-24T11:59:56"
+    },
+    {
+      "from": "2F-D-6-w",
+      "to": "Kiosk",
+      "label": "2025-08-24T11:59:56"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Visitor1",
+      "label": "Visitor1"
+    },
+    {
+      "id": "2F-D-9-w",
+      "label": "2F-D-9-w"
+    },
+    {
+      "id": "Kiosk",
+      "label": "Kiosk"
+    },
+    {
+      "id": "2F-D-10-w",
+      "label": "2F-D-10-w"
+    },
+    {
+      "id": "2F-D-7-w",
+      "label": "2F-D-7-w"
+    },
+    {
+      "id": "2F-D-11-w",
+      "label": "2F-D-11-w"
+    },
+    {
+      "id": "door",
+      "label": "door"
+    },
+    {
+      "id": "2F-D-11-e",
+      "label": "2F-D-11-e"
+    },
+    {
+      "id": "flight information display",
+      "label": "flight information display"
+    },
+    {
+      "id": "airport",
+      "label": "airport"
+    },
+    {
+      "id": "2F-D-1-w",
+      "label": "2F-D-1-w"
+    },
+    {
+      "id": "room",
+      "label": "room"
+    },
+    {
+      "id": "2F-D-7",
+      "label": "2F-D-7"
+    },
+    {
+      "id": "2F-D-6-w",
+      "label": "2F-D-6-w"
+    }
+  ]
+}

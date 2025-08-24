@@ -1,3 +1,5 @@
+class_name Gemini
+
 extends Node
 
 # Gemini 2.5 Flash Model endpoint
@@ -89,6 +91,8 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 
 	var response_text = null
 
+	# print(payload)
+
 	while true:
 		# Call Gemini Chat API
 		var err = _http_request.request(
@@ -111,6 +115,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 			candidate = json["candidates"][0]
 			parts = candidate["content"]["parts"]
 		else:
+			print(json)
 			push_error(json)
 			chat_history.clear()
 			return
