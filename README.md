@@ -167,6 +167,27 @@ The generated network graph data can be visualized using a SvelteKit application
 
 <img src="./docs/network_graph.jpg" width=600>
 
+### Running the Viewer
+
+To run the SvelteKit application:
+
+1.  Navigate to the `viewer` directory:
+    ```bash
+    cd viewer
+    ```
+
+2.  Install the dependencies:
+    ```bash
+    npm install
+    ```
+
+3.  Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+This will start the SvelteKit development server, and you can view the network graph in your browser at the address provided.
+
 ## License
 
 This project is licensed under the terms of the MIT license.
