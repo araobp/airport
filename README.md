@@ -94,10 +94,14 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 ├── blender/              # Blender source files
 ├── data/                 # Generated data (e.g., network graph)
 ├── docs/                 # Project documentation
+│   ├── NODE_HIERARCHY.md # Node hierarchy of the main scene
+│   └── ...
 ├── images/               # Gemini generated images
 ├── viewer/               # SvelteKit network graph viewer
 └── README.md
 ```
+
+For a detailed explanation of the node hierarchy in the main `Airport.tscn` scene, please see the [Node Hierarchy](docs/NODE_HIERARCHY.md) document.
 
 ## Getting Started
 
