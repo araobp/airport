@@ -157,7 +157,7 @@ I am using https://github.com/Coding-Solo/godot-mcp with Gemini CLI for code rev
 
 ## Network Graph Generation
 
-A network graph generation feature has been added to visualize the relationships between amenities in the airport. This feature outputs the generated graph in the `data` folder.
+A network graph generation feature has been added to visualize the relationships between amenities in the airport. It makes use of Gemini for network graph generation from a log file. This feature outputs the generated graph in the `data` folder.
 
 To initiate the management function, you can use the chat UI and ask something like "initiate management function".
 
