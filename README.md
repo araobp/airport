@@ -161,6 +161,12 @@ A network graph generation feature has been added to visualize the relationships
 
 To initiate the management function, you can use the chat UI and ask something like "initiate management function".
 
+## Network Graph Visualization
+
+The generated network graph data can be visualized using a SvelteKit application in the `viewer` directory. This provides a visual representation of the connections between visitors, zones, and amenities.
+
+<img src="./docs/network_graph.jpg" width=600>
+
 ## License
 
 This project is licensed under the terms of the MIT license.
