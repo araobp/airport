@@ -58,9 +58,9 @@ timeout = 20.0
 [node name="Globals" type="Node" parent="."]
 script = ExtResource("2_slhsa")
 
-[node name="McpClient" type="Node" parent="." node_paths=PackedStringArray("first_person")]
+[node name="McpClient" type="Node" parent="." node_paths=PackedStringArray("visitor")]
 script = ExtResource("3_vglmr")
-first_person = NodePath("../SubViewportContainer/SubViewport/Visitor1")
+visitor = NodePath("../SubViewportContainer/SubViewport/Visitor1")
 camera_resolution_height = 256
 gemini_model = "gemini-2.0-flash"
 

@@ -14,7 +14,7 @@ const CAMERA_SENS = 0.003
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-# Step counter
+# Step counter (accelerometer simulation)
 var pos: Vector3 = Vector3.ZERO
 var sigma_delta_d: float = 0.0
 var steps: int = 0

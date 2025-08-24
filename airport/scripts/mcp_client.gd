@@ -1,6 +1,6 @@
 extends Node
 
-@export var first_person : CharacterBody3D
+@export var visitor : CharacterBody3D
 @export var camera_resolution_height: int = 360
 
 @export_enum("gemini-2.0-flash", "gemini-2.5-flash") var gemini_model: String = "gemini-2.5-flash"
@@ -65,14 +65,14 @@ func list_tools():
 	return tools
 
 func capture_image_local():
-	return await first_person.capture_image(camera_resolution_height, false)
+	return await visitor.capture_image(camera_resolution_height, false)
 
 func take_surroundings(args):
 	print(args)
 	var visitor_id = args["visitor_id"]
 	
-	var base64_image = await first_person.capture_image(camera_resolution_height, false)
-	var base64_image_wide = await first_person.capture_image(camera_resolution_height, true)
+	var base64_image = await visitor.capture_image(camera_resolution_height, false)
+	var base64_image_wide = await visitor.capture_image(camera_resolution_height, true)
 	
 	var query = """
 	I am {visitor_id}, which is also my Visitor ID.
@@ -204,11 +204,11 @@ func _ready() -> void:
 	_insert_text(WELCOME_MESSAGE)
 	last_text = WELCOME_MESSAGE
 
-# Steps of the first person
+# Steps of the visitor (accelerometer simulation)
 var previous_steps = 0
 var delta_steps = 0
 
-# Rotation of the first person
+# Rotation of the visitor (gyrometer simulation)
 var previous_rotation_degrees = Vector3(0, 90, 0)
 var delta_rotation_degrees_y = 0
 
@@ -231,13 +231,13 @@ func _process(_delta: float) -> void:
 		print("You: " + query)
 		
 		# Calculate Delta steps
-		delta_steps = first_person.steps - previous_steps
-		previous_steps = first_person.steps
+		delta_steps = visitor.steps - previous_steps
+		previous_steps = visitor.steps
 		print(delta_steps)
 		
 		# Calculate Delta rotation
-		var delta_rotation_degrees = first_person.rotation_degrees - previous_rotation_degrees
-		previous_rotation_degrees = first_person.rotation_degrees
+		var delta_rotation_degrees = visitor.rotation_degrees - previous_rotation_degrees
+		previous_rotation_degrees = visitor.rotation_degrees
 		delta_rotation_degrees_y = delta_rotation_degrees.y  # Y-axis rotation
 		
 		var system_instruction = """
@@ -253,7 +253,7 @@ func _process(_delta: float) -> void:
 
 		Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
 		""".format({
-				"visitor_id": first_person.name
+				"visitor_id": visitor.name
 			})
 			
 		print(delta_steps, " ", delta_rotation_degrees_y)
