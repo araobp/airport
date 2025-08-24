@@ -3,6 +3,17 @@ extends Node
 var utilities = load("res://scripts/utilities.gd").new()
 @onready var airport_services = $Airport
 
+var _gemini = null
+
+func get_gemini():
+	if not _gemini:
+		_gemini = load("res://scripts/gemini.gd").new(
+			$HTTPRequest,
+			Globals.gemini_api_key,
+			Globals.gemini_model
+		)
+	return _gemini
+
 const GREETING_TOOL = {
 	"name": "greeting",
 	"description": """
@@ -157,19 +168,69 @@ func door_control(args):
 	var control = args["control"]
 	return await airport_services.door_control(zone_id, control)
 
+const LOG_FILE_PATH = "res://locations.json"
+
+var user_data = []
+
 func record_log(args):
 	var visitor_id = args["visitor_id"]
 	var zone_id = args["zone_id"]
 	var amenities = args["amenities"]
-	return await airport_services.record_log(visitor_id, zone_id, amenities)
+	
+	var current_time_string = Time.get_datetime_string_from_system()
+	var record = {"time": current_time_string, "visitor_id": visitor_id, "zone_id": zone_id, "amenities": amenities}
+	user_data.append(record)
+	print(record)
+	
+	var file = FileAccess.open(LOG_FILE_PATH, FileAccess.READ_WRITE)
+	if file:
+		file.seek_end()
+		file.store_line(JSON.stringify(record) + ",")  # Append record
+		file.close()
+	else:
+		push_error("Cannot open locations.json")
 
 const LAST_N = 128
+
 func list_amenities_nearby(args):
 	var visitor_id = args["visitor_id"]
-	
 	var zone_id = args["zone_id"] if "args_id" in args else "unknown"
 	var amenity = args["amenity"] if "amenity" in args else "unknown"
-	return await airport_services.list_amenities_nearby(visitor_id, zone_id, amenity)
+
+	var log_data = utilities.get_last_n_lines(LOG_FILE_PATH, LAST_N)
+	if log_data:
+		var query = """
+		An airport visitor (Visitor ID: {visitor_id}) is currently near Zone {zone_id}.
+		Please guide the visitor to the {amenity} category, referring to the log data.
+		- If both the zone and category are unknown, please list all amenities.
+		- If the zone is unknown, please list all amenities within that category.
+		- If the category is unknown, please list all amenities near that zone.
+		"""
+				
+		query = query.format({"visitor_id": visitor_id, "zone_id": zone_id, "amenity": amenity})
+		query += """
+		## Log data
+		
+		{log_data}
+		""".format({"log_data": log_data})
+		
+		const system_instruction = """
+		You are an AI assistant serving as an information desk at an airport.
+		Please DO NOT include visitor_id in your response, since visitor_id is private.
+		"""
+		
+		var result = await get_gemini().chat(
+			query,
+			system_instruction
+		)
+			
+		print("AMENITIES: ", result)
+		return result
+
+	else:
+		push_error("Cannot open " + LOG_FILE_PATH)
+		return "System error"
+
 
 func get_product_info(args):
 	var visitor_id = args["visitor_id"]

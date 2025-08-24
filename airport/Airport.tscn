@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://scripts/globals.gd" id="2_slhsa"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://scripts/mcp_client.gd" id="3_vglmr"]
 [ext_resource type="Script" uid="uid://c7a6m32rlgshs" path="res://scripts/chat_window.gd" id="4_1tehv"]
-[ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://scripts/first_person.gd" id="5_qiqb0"]
+[ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://scripts/wearable_device.gd" id="5_qiqb0"]
 [ext_resource type="PackedScene" uid="uid://1fcc5lv0tfl8" path="res://Terminal/Terminal.tscn" id="6_1c1gk"]
 [ext_resource type="Script" uid="uid://dbd71s1f42m8t" path="res://scripts/airport_services.gd" id="6_slhsa"]
 [ext_resource type="PackedScene" uid="uid://bdgwujl16y7ca" path="res://Terminal/Levels.tscn" id="7_r0grm"]
@@ -51,6 +51,9 @@ sdfgi_read_sky_light = false
 
 [node name="McpServer" type="Node3D"]
 script = ExtResource("1_fgr6k")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+timeout = 20.0
 
 [node name="Globals" type="Node" parent="."]
 script = ExtResource("2_slhsa")
@@ -710,9 +713,6 @@ text = "2F-D-9 Kiosk"
 font_size = 64
 outline_size = 1
 
-[node name="HTTPRequest" type="HTTPRequest" parent="Airport"]
-timeout = 20.0
-
 [node name="Restrooms" type="Node3D" parent="Airport"]
 
 [node name="Restroom-1" type="Label3D" parent="Airport/Restrooms"]
@@ -854,8 +854,6 @@ texture = ExtResource("15_5omxl")
 [node name="PosterD-1" type="Sprite3D" parent="Airport/Posters"]
 transform = Transform3D(0.0481402, -0.000243235, 0.0876496, -2.91038e-11, 0.0999996, 0.000277507, -0.08765, -0.000133592, 0.04814, 22.927, 6.5, -175.614)
 texture = ExtResource("16_kdhq5")
-
-[node name="Node" type="Node" parent="."]
 
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-5-1"]
