@@ -3,7 +3,7 @@ extends Node
 var utilities = load("res://scripts/utilities.gd").new()
 @onready var airport_services = $Airport
 
-@export var network_graph_output_path = "../data/network_graph.json"
+@export var network_graph_output_path = "../data/network_graph.js"
 
 var gemini: Gemini = null
 
@@ -273,7 +273,7 @@ func initiate_management(args):
 	- 'zone_id' nodes should represent the location.
 	- 'amenities' nodes should represent the type of amenity. For these nodes, summarize the name to a single, concise term (e.g., "Kiosk in ..." should become "Kiosk").
 	- Create edges to show the flow: 'visitor_id' -> 'zone_id' -> 'amenities'.
-	- The 'label' for edges can be the 'time' of the interaction.
+	- Do not include the 'time' in the output.
 	"""
 
 	var query = """
@@ -359,6 +359,8 @@ func initiate_management(args):
 		null,
 		json_schema
 	)
+	
+	network_graph_for_vis = "export const data = {network_graph_for_vis};".format({"network_graph_for_vis": network_graph_for_vis})
 
 	var file = FileAccess.open(network_graph_output_path, FileAccess.WRITE)
 	if file != null:
