@@ -226,7 +226,7 @@ This project is a practical example of context engineering, demonstrating how to
 
 ## Development Notes
 
-I am using https://github.com/Coding-Solo/godot-mcp with Gemini CLI for code review.
+This project leverages the Gemini CLI for various development tasks, including code review and updating markdown documentation files like this README.
 
 ## Future Work
 
