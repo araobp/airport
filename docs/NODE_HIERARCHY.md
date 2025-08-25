@@ -29,7 +29,7 @@ The direct children of the root node are the core components of the simulation:
 *   **`HTTPRequest`:** Used for making HTTP requests to the Gemini API.
 *   **`Globals`:** A singleton script that stores global variables and settings.
 *   **`Airport`:** A `Node3D` that contains all the physical elements of the airport environment.
-*   **`SubViewportContainer`:** A container for the sub-viewport that renders the 3D scene.
+*   **`SubViewportContainer`:** A container for the sub-viewport that renders the 3D scene, including the UI and visitor management.
 
 ## Airport Node
 
@@ -72,7 +72,7 @@ The `Airport` node contains the physical environment of the airport, including t
 
 ## Visitor Nodes
 
-The `Visitors` node contains the user-controlled characters in the simulation.
+The `Visitors` node is a new addition that manages multiple `Visitor` instances. It dynamically adds and removes `Visitor` nodes based on a selection from an `OptionButton` in the UI.
 
 ```
 - SubViewportContainer
@@ -82,7 +82,9 @@ The `Visitors` node contains the user-controlled characters in the simulation.
       - Visitor2 (PackedScene)
 ```
 
-*   **`Visitor1` and `Visitor2`:** Instances of the `Visitor.tscn` packed scene, which represents a user-controlled character.
+*   **`Visitors`:** A new node that uses the `visitors.gd` script to manage multiple `Visitor` instances.
+*   **`Visitor1` and `Visitor2`:** Instances of the `Visitor.tscn` packed scene, which represents a user-controlled character. These are dynamically added/removed by `visitors.gd`.
+*   **`OptionButton`:** A UI element that allows the user to switch between different `Visitor` instances.
 
 ## UI Nodes
 
