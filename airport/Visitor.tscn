@@ -27,7 +27,7 @@ shape = SubResource("CapsuleShape3D_hh24k")
 script = ExtResource("2_lp8ge")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="AiAgent"]
-timeout = 20.0
+timeout = 60.0
 
 [node name="WearableDevice" type="Node3D" parent="."]
 script = ExtResource("3_ficbt")
