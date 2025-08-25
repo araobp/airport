@@ -3,7 +3,6 @@ extends CharacterBody3D
 var visitor_id = ""
 
 @export var mcp_server: Node3D
-@export var chat_window: TextEdit
 @export var camera_resolution_height: int = 360
 @export var delta_steps_threshold: int = 3
 @export var delta_rotation_threshold: float = 20.0
@@ -18,7 +17,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	visitor_id = self.name
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		
+	
 func _input(event):
 	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:
 		rotation.y -= event.relative.x * CAMERA_SENS

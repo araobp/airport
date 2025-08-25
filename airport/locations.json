@@ -27,3 +27,7 @@
 {"amenities":"waiting area","time":"2025-08-25T00:26:56","visitor_id":"Visitor2","zone_id":"2F-D-11-w"},
 {"amenities":"waiting area","time":"2025-08-25T00:27:23","visitor_id":"Visitor2","zone_id":"2F-D-11-w"},
 {"amenities":"airport entrance","time":"2025-08-25T01:12:00","visitor_id":"Visitor1","zone_id":"2F-E-1"},
+{"amenities":"restrooms","time":"2025-08-26T00:57:11","visitor_id":"Visitor2","zone_id":"2F-D-11"},
+{"amenities":"airport entrance","time":"2025-08-26T00:57:48","visitor_id":"Visitor1","zone_id":"2F-C-11"},
+{"amenities":"soft drink","time":"2025-08-26T01:38:44","visitor_id":"Visitor2","zone_id":"2F-D-7-w"},
+{"amenities":"self-checkout","time":"2025-08-26T01:39:58","visitor_id":"Visitor2","zone_id":"2F-D-6-w"},

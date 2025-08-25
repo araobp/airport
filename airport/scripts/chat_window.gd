@@ -2,7 +2,8 @@ extends TextEdit
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
+	insert_text_at_caret(WELCOME_MESSAGE, -1)
 
 # Called every frame. 'delta' is the elapsed time since the evious frame.
 func _process(_delta: float) -> void:

@@ -105,6 +105,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 
 		var res = await _http_request.request_completed
 		var body = res[3]
+		# print(body.get_string_from_utf8())
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		
 		var candidate

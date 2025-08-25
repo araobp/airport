@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=21 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://scripts/mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://scripts/globals.gd" id="2_slhsa"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b3l6frdsi24x5" path="res://Images/B_16_9.jpg" id="14_r0grm"]
 [ext_resource type="PackedScene" uid="uid://cyi1xyqt6sxxg" path="res://Visitor.tscn" id="15_2bi0w"]
 [ext_resource type="Texture2D" uid="uid://bhboy8sfl31b5" path="res://Images/C_1_1.jpg" id="15_5omxl"]
+[ext_resource type="Script" uid="uid://kmpenk6um8q0" path="res://visitors.gd" id="15_kdhq5"]
 [ext_resource type="Texture2D" uid="uid://bdys3iodlw11v" path="res://Images/D_16_9.jpg" id="16_kdhq5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
@@ -53,7 +54,7 @@ shadow_enabled = true
 environment = SubResource("Environment_6uqi0")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
-timeout = 20.0
+timeout = 60.0
 
 [node name="Globals" type="Node" parent="."]
 script = ExtResource("2_slhsa")
@@ -820,18 +821,41 @@ wrap_mode = 1
 caret_blink = true
 script = ExtResource("4_1tehv")
 
-[node name="Visitors" type="Node" parent="SubViewportContainer/SubViewport"]
+[node name="OptionButton" type="OptionButton" parent="SubViewportContainer/SubViewport/CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -1064.0
+offset_right = -16.0
+offset_bottom = -1000.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+flat = true
 
-[node name="Visitor1" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server", "chat_window") instance=ExtResource("15_2bi0w")]
+[node name="Visitors" type="Node" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("chat_window", "visitors_menu")]
+script = ExtResource("15_kdhq5")
+chat_window = NodePath("../CanvasLayer/ChatWindow")
+visitors_menu = NodePath("../CanvasLayer/OptionButton")
+
+[node name="Visitor1" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -41.5063, 5.04603, -67.2689)
 mcp_server = NodePath("../../../..")
-chat_window = NodePath("../../CanvasLayer/ChatWindow")
 
-[node name="Visitor2" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server", "chat_window") instance=ExtResource("15_2bi0w")]
-process_mode = 4
+[node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor1" index="2" node_paths=PackedStringArray("chat_window")]
+chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+
+[node name="Visitor2" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -17.5105, 5.04603, -67.2689)
 mcp_server = NodePath("../../../..")
-chat_window = NodePath("../../CanvasLayer/ChatWindow")
+
+[node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor2" index="2" node_paths=PackedStringArray("chat_window")]
+chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+
+[connection signal="item_selected" from="SubViewportContainer/SubViewport/CanvasLayer/OptionButton" to="SubViewportContainer/SubViewport/Visitors" method="_on_option_button_item_selected"]
 
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-5-1"]

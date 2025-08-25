@@ -1,5 +1,7 @@
 extends Node
 
+@export var chat_window: TextEdit
+
 var utilities = load("res://scripts/utilities.gd").new()
 
 @onready var visitor: CharacterBody3D = $"../"
@@ -138,11 +140,11 @@ var last_text = ""
 
 # Insert text at caret in TextEdit
 func _insert_text(text):
-	visitor.chat_window.insert_text_at_caret(text, -1)
-	visitor.chat_window.scroll_vertical = 10000
-	last_text = visitor.chat_window.text
-	var column = visitor.chat_window.get_caret_column()
-	var line = visitor.chat_window.get_caret_line()
+	chat_window.insert_text_at_caret(text, -1)
+	chat_window.scroll_vertical = 10000
+	last_text = chat_window.text
+	var column = chat_window.get_caret_column()
+	var line = chat_window.get_caret_line()
 	caret_pos_limit = [column, line]
 
 # Callback function to output response text from Gemini
@@ -177,11 +179,8 @@ func _ready() -> void:
 		]
 	}
 	
-	visitor.chat_window.grab_focus()
-	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
-	#chat_window.insert_text_at_caret(WELCOME_MESSAGE)
-	_insert_text(WELCOME_MESSAGE)
-	last_text = WELCOME_MESSAGE
+	chat_window.grab_focus()
+	last_text = chat_window.text
 
 # Steps of the visitor (accelerometer simulation)
 var previous_steps = 0
@@ -196,17 +195,17 @@ var caret_pos_limit = [0, 0]
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:		
 	if Input.is_action_just_pressed("ui_text_indent"):
-		visitor.chat_window.visible = not visitor.chat_window.visible
-		if visitor.chat_window.visible:
-			visitor.chat_window.grab_focus()
+		chat_window.visible = not chat_window.visible
+		if chat_window.visible:
+			chat_window.grab_focus()
 			Globals.mode = Globals.MODE.CHAT
 		else:
 			Globals.mode = Globals.MODE.CONTROL
 			
-	if !processing and Input.is_key_pressed(KEY_ENTER) and visitor.chat_window.text != "":
+	if !processing and Input.is_key_pressed(KEY_ENTER) and chat_window.text != "":
 		processing = true
 
-		var query = visitor.chat_window.text.replace(last_text, "")
+		var query = chat_window.text.replace(last_text, "")
 		print("You: " + query)
 		
 		# Calculate Delta steps
@@ -271,16 +270,16 @@ func _input(event):
 # If the caret is in a read-only area, it moves it to the beginning of the editable area.
 func _check_caret_position():
 	var line_limit = caret_pos_limit[1]
-	var current_line = visitor.chat_window.get_caret_line()
-	var current_column = visitor.chat_window.get_caret_column()
+	var current_line = chat_window.get_caret_line()
+	var current_column = chat_window.get_caret_column()
 
 	var corrected = false
 		
 	if current_line < line_limit:
-		visitor.chat_window.set_caret_line(caret_pos_limit[1])
+		chat_window.set_caret_line(caret_pos_limit[1])
 		corrected = true
 	elif current_line == caret_pos_limit[1] and current_column <= caret_pos_limit[0]:
-		visitor.chat_window.set_caret_column(caret_pos_limit[0])
+		chat_window.set_caret_column(caret_pos_limit[0])
 		corrected = true
 
 	if corrected:
