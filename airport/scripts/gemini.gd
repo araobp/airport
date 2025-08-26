@@ -75,16 +75,21 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	if _enable_history:
 		chat_history.append(content_)
 	# print("chat history: " + str(chat_history))
+
+	# Thinking	
+	payload["generation_config"] = {
+		"thinking_config": {
+			"thinking_budget": -1
+		}
+	}
 	
 	# Request JSON Output
 	if json_schema:
-		payload["generation_config"] = {
-		"response_mime_type": "application/json",
-		"response_schema": json_schema
-		}
+		payload["generation_config"]["response_mime_type"] = "application/json"
+		payload["generation_config"]["response_schema"] = json_schema
 	
 	# Function calling
-	if mcp_servers:		
+	if mcp_servers:
 		payload["tools"] = mcp_servers["tools"]
 
 	var response_text = null

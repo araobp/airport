@@ -46,6 +46,10 @@ corner_radius_top_right = 10
 [node name="McpServer" type="Node3D"]
 script = ExtResource("1_fgr6k")
 
+[node name="Globals" type="Node" parent="."]
+script = ExtResource("2_slhsa")
+gemini_model = "gemini-2.0-flash"
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.887866, 0.403194, -0.221651, 0.262786, 0.839816, 0.475028, 0.377675, 0.363515, -0.851598, 0, 0, -868.151)
 shadow_enabled = true
@@ -55,9 +59,6 @@ environment = SubResource("Environment_6uqi0")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 timeout = 60.0
-
-[node name="Globals" type="Node" parent="."]
-script = ExtResource("2_slhsa")
 
 [node name="Airport" type="Node3D" parent="."]
 script = ExtResource("6_slhsa")
@@ -848,18 +849,12 @@ mcp_server = NodePath("../../../..")
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor1" index="2" node_paths=PackedStringArray("chat_window")]
 chat_window = NodePath("../../../CanvasLayer/ChatWindow")
 
-[node name="HTTPRequest" parent="SubViewportContainer/SubViewport/Visitors/Visitor1/AiAgent" index="0"]
-timeout = 60.0
-
 [node name="Visitor2" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -17.5105, 5.04603, -67.2689)
 mcp_server = NodePath("../../../..")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor2" index="2" node_paths=PackedStringArray("chat_window")]
 chat_window = NodePath("../../../CanvasLayer/ChatWindow")
-
-[node name="HTTPRequest" parent="SubViewportContainer/SubViewport/Visitors/Visitor2/AiAgent" index="0"]
-timeout = 60.0
 
 [connection signal="item_selected" from="SubViewportContainer/SubViewport/CanvasLayer/OptionButton" to="SubViewportContainer/SubViewport/Visitors" method="_on_option_button_item_selected"]
 

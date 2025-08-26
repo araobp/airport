@@ -31,3 +31,4 @@
 {"amenities":"airport entrance","time":"2025-08-26T00:57:48","visitor_id":"Visitor1","zone_id":"2F-C-11"},
 {"amenities":"soft drink","time":"2025-08-26T01:38:44","visitor_id":"Visitor2","zone_id":"2F-D-7-w"},
 {"amenities":"self-checkout","time":"2025-08-26T01:39:58","visitor_id":"Visitor2","zone_id":"2F-D-6-w"},
+{"amenities":"airport","time":"2025-08-26T23:09:34","visitor_id":"Visitor1","zone_id":"2F-E-11"},
