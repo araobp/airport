@@ -48,7 +48,6 @@ script = ExtResource("1_fgr6k")
 
 [node name="Globals" type="Node" parent="."]
 script = ExtResource("2_slhsa")
-gemini_model = "gemini-2.0-flash"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.887866, 0.403194, -0.221651, 0.262786, 0.839816, 0.475028, 0.377675, 0.363515, -0.851598, 0, 0, -868.151)

@@ -28,6 +28,8 @@ func _init(http_request, gemini_props, enable_history=false):
 # Chat with Gemini
 func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text, locals=null):
 	
+	var thought_signature = null
+
 	const headers = [
 		"Content-Type: application/json",
 		"Accept-Encoding: identity"
@@ -79,7 +81,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	# Thinking	
 	payload["generation_config"] = {
 		"thinking_config": {
-			"thinking_budget": -1
+			"thinking_budget": -1  # Turn on dynamic thinking
 		}
 	}
 	
@@ -142,7 +144,10 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				# Output text via callback
 				callback.call(response_text)
 				# print(response_text)
-								
+			if "thoughtSignature" in part:
+				thought_signature = part["thoughtSignature"]
+				print("thought_signature: ", thought_signature)
+				
 			# Function calling case
 			if "functionCall" in part:
 				var function_call = part["functionCall"]
@@ -170,14 +175,22 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 						"result": result
 					}
 				}
-				
-				var content_func_res = {
-					"role": "user",
-					"parts": [
+
+				var func_res_parts = [
+					{
+						"functionResponse": function_response_part,
+					}					
+				]
+				if thought_signature:
+					print("thought_signature in func res: ", thought_signature)
+					func_res_parts.append(
 						{
-							"functionResponse": function_response_part,
+							"thought_signature": thought_signature
 						}
-					]
+					)			
+				var content_func_res = {
+					"role": "tool",
+					"parts": func_res_parts
 				}
 				
 				if _enable_history:
