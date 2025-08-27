@@ -46,9 +46,6 @@ corner_radius_top_right = 10
 [node name="McpServer" type="Node3D"]
 script = ExtResource("1_fgr6k")
 
-[node name="Globals" type="Node" parent="."]
-script = ExtResource("2_slhsa")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.887866, 0.403194, -0.221651, 0.262786, 0.839816, 0.475028, 0.377675, 0.363515, -0.851598, 0, 0, -868.151)
 shadow_enabled = true
@@ -58,6 +55,9 @@ environment = SubResource("Environment_6uqi0")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 timeout = 60.0
+
+[node name="Globals" type="Node" parent="."]
+script = ExtResource("2_slhsa")
 
 [node name="Airport" type="Node3D" parent="."]
 script = ExtResource("6_slhsa")
@@ -794,10 +794,12 @@ transform = Transform3D(0.0481402, -0.000243235, 0.0876496, -2.91038e-11, 0.0999
 texture = ExtResource("16_kdhq5")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+physics_interpolation_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+physics_interpolation_mode = 0
 handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4

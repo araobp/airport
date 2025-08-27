@@ -213,8 +213,8 @@ func _process(_delta: float) -> void:
 		previous_steps = wearable_device.steps
 		
 		# Calculate Delta rotation
-		var delta_rotation_degrees = wearable_device.rotation_degrees - previous_rotation_degrees
-		previous_rotation_degrees = wearable_device.rotation_degrees
+		var delta_rotation_degrees = wearable_device.global_rotation_degrees - previous_rotation_degrees
+		previous_rotation_degrees = wearable_device.global_rotation_degrees
 		delta_rotation_degrees_y = delta_rotation_degrees.y  # Y-axis rotation
 		
 		var system_instruction = """

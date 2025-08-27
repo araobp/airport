@@ -13,6 +13,8 @@ var chat_history = []
 var _enable_history
 const MAX_CHAT_HISTORY_LENGTH = 32
 
+const INCLUDE_THOUGHTS = false
+
 # Default callback function
 func _output_text(text):
 	print("default output: " + text)
@@ -24,7 +26,7 @@ func _init(http_request, gemini_props, enable_history=false):
 	_http_request = http_request
 	_enable_history = enable_history
 	# print(model)
-
+	
 # Chat with Gemini
 func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text, locals=null):
 	
@@ -81,7 +83,8 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	# Thinking	
 	payload["generation_config"] = {
 		"thinking_config": {
-			"thinking_budget": -1  # Turn on dynamic thinking
+			"thinking_budget": -1,  # Turn on dynamic thinking
+			"include_thoughts": INCLUDE_THOUGHTS
 		}
 	}
 	
@@ -119,6 +122,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		var parts
 		if json and "candidates" in json and len(json["candidates"]) > 0:
 			candidate = json["candidates"][0]
+			print(candidate)
 			parts = candidate["content"]["parts"]
 		else:
 			print(json)
@@ -143,10 +147,10 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				response_text = part["text"]
 				# Output text via callback
 				callback.call(response_text)
-				# print(response_text)
+				
 			if "thoughtSignature" in part:
 				thought_signature = part["thoughtSignature"]
-				print("thought_signature: ", thought_signature)
+				# print("thought_signature: ", thought_signature)
 				
 			# Function calling case
 			if "functionCall" in part:
@@ -182,7 +186,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 					}					
 				]
 				if thought_signature:
-					print("thought_signature in func res: ", thought_signature)
+					# print("thought_signature in func res: ", thought_signature)
 					func_res_parts.append(
 						{
 							"thought_signature": thought_signature

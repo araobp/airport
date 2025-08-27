@@ -18,9 +18,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Delta distance
-	var delta_d = (pos - position).length()
+	
+	var delta_d = (pos - global_position).length()
 	sigma_delta_d += delta_d
-	pos = position
+	pos = global_position
 	# Step
 	if sigma_delta_d > stride:
 		steps += 1
