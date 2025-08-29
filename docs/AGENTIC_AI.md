@@ -42,18 +42,18 @@ The system implements a **ReAct (Reason-Act)** loop, enabling the agent to perfo
 ## High-Level Architecture
 
 ```text
-+-----------------+   (Direct Node Reference)   +-----------------+   (HTTP Request)   +----------------+
-|   Chat Window   |---------------------------->|  Gemini Script  |------------------->|   Gemini API   |
++-------------------+   (Direct Node Reference)   +-----------------+   (HTTP Request)   +----------------+
+|   Chat Window     |---------------------------->|  Gemini Script  |------------------->|   Gemini API   |
 | (gets user input) |                             |  (MCP Client)   |                    |   (External)   |
-+-----------------+                             +-----------------+                    +----------------+
++-------------------+                             +-----------------+                    +----------------+
                                                           |
                                                           | (Executes Tool via Callable)
                                                           v
-                                                  +-------------------------+
-                                                  |   Any Tool Provider     |
+                                                  +----------------------------+
+                                                  |   Any Tool Provider        |
                                                   | (e.g. airport_services.gd) |
-                                                  | (Conceptual MCP Server) |
-                                                  +-------------------------+
+                                                  | (Conceptual MCP Server)    |
+                                                  +----------------------------+
 ```
 
 ## Data Flow: Step-by-Step
