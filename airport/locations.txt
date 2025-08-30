@@ -1,0 +1,3 @@
+time,visitor_id,zone_id,amenities
+2025-08-30T12:43:20,Visitor1,2F-E-11,Entrance
+2025-08-30T12:43:57,Visitor1,2F-E-11-e,Entrance

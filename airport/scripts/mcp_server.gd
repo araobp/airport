@@ -183,9 +183,9 @@ func door_control(args):
 	var control = args["control"]
 	return await airport_services.door_control(zone_id, control)
 
-const LOG_FILE_PATH = "res://locations.json"
+const LOG_FILE_PATH = "res://locations.txt"
 
-var user_data = []
+#var user_data = []
 
 func record_log(args):
 	var visitor_id = args["visitor_id"]
@@ -193,17 +193,27 @@ func record_log(args):
 	var amenities = args["amenities"]
 	
 	var current_time_string = Time.get_datetime_string_from_system()
-	var record = {"time": current_time_string, "visitor_id": visitor_id, "zone_id": zone_id, "amenities": amenities}
-	user_data.append(record)
-	print(record)
+	#var record = {"time": current_time_string, "visitor_id": visitor_id, "zone_id": zone_id, "amenities": amenities}
+	#user_data.append(record)
+	#print(record)
+	
+	var record = "{time},{visitor_id},{zone_id},{amenities}".format({
+		"time": current_time_string,
+		"visitor_id": visitor_id,
+		"zone_id": zone_id,
+		"amenities": amenities
+		}
+	)
 	
 	var file = FileAccess.open(LOG_FILE_PATH, FileAccess.READ_WRITE)
 	if file:
+		if file.get_length() == 0:
+			file.store_line("time,visitor_id,zone_id,amenities")
 		file.seek_end()
-		file.store_line(JSON.stringify(record) + ",")  # Append record
+		file.store_line(record)  # Append record
 		file.close()
 	else:
-		push_error("Cannot open locations.json")
+		push_error("Cannot open ", LOG_FILE_PATH)
 
 const LAST_N = 128
 
