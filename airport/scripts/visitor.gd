@@ -47,3 +47,12 @@ func _physics_process(delta):
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 
 		move_and_slide()
+
+func enable(enabled):
+	$WearableDevice/Camera3D.current = enabled
+	var children = get_children()	
+	children.append(self)
+	for c in children:
+		c.set_process(enabled)
+		c.set_physics_process(enabled)
+		c.set_process_input(enabled)

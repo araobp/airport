@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bhboy8sfl31b5" path="res://Images/C_1_1.jpg" id="15_5omxl"]
 [ext_resource type="Script" uid="uid://kmpenk6um8q0" path="res://visitors.gd" id="15_kdhq5"]
 [ext_resource type="Texture2D" uid="uid://bdys3iodlw11v" path="res://Images/D_16_9.jpg" id="16_kdhq5"]
+[ext_resource type="PackedScene" uid="uid://dmlk1qanh1l26" path="res://SecurityRobot/SecurityRobot.tscn" id="17_kdhq5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -43,8 +44,6 @@ bg_color = Color(0.099986, 0.099986, 0.099986, 0.501961)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_5omxl"]
-
 [node name="McpServer" type="Node3D"]
 script = ExtResource("1_fgr6k")
 
@@ -60,6 +59,7 @@ timeout = 60.0
 
 [node name="Globals" type="Node" parent="."]
 script = ExtResource("2_slhsa")
+gemini_model = "gemini-2.0-flash"
 
 [node name="Airport" type="Node3D" parent="."]
 script = ExtResource("6_slhsa")
@@ -860,14 +860,14 @@ mcp_server = NodePath("../../../..")
 chat_window = NodePath("../../../CanvasLayer/ChatWindow")
 
 [node name="Visitor3" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -41.5063, 5.04603, -67.2689)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.55514, 5.04603, -31.5469)
 mcp_server = NodePath("../../../..")
-
-[node name="MeshInstance3D" parent="SubViewportContainer/SubViewport/Visitors/Visitor3" index="0"]
-mesh = SubResource("ArrayMesh_5omxl")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor3" index="2" node_paths=PackedStringArray("chat_window")]
 chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+
+[node name="SecurityRobot" parent="SubViewportContainer/SubViewport" instance=ExtResource("17_kdhq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9035, 5.04814, -27.2123)
 
 [connection signal="item_selected" from="SubViewportContainer/SubViewport/CanvasLayer/OptionButton" to="SubViewportContainer/SubViewport/Visitors" method="_on_option_button_item_selected"]
 
@@ -883,3 +883,4 @@ chat_window = NodePath("../../../CanvasLayer/ChatWindow")
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor1"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor2"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor3"]
+[editable path="SubViewportContainer/SubViewport/SecurityRobot"]
