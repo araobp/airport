@@ -27,7 +27,7 @@ The agent utilizes both short-term and long-term memory to maintain context and 
 
 ### Long-Term Memory (Knowledge Base)
 
-*   **Implementation:** The `locations.json` file.
+*   **Implementation:** The `locations.txt` file.
 *   **Function:** This file acts as a static, long-term knowledge base for the agent, specifically focused on Location-Based Services (LBS). It provides the agent with persistent information about points of interest within the airport (e.g., gates, shops, restrooms). The agent can reference this data to answer questions about locations without needing to discover them dynamically.
 
 ## ReAct Loop Implementation

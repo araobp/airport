@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=22 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://scripts/mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="Script" uid="uid://drpmm5o5fc7wd" path="res://scripts/globals.gd" id="2_slhsa"]
@@ -42,6 +42,8 @@ content_margin_bottom = 10.0
 bg_color = Color(0.099986, 0.099986, 0.099986, 0.501961)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_5omxl"]
 
 [node name="McpServer" type="Node3D"]
 script = ExtResource("1_fgr6k")
@@ -857,6 +859,16 @@ mcp_server = NodePath("../../../..")
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor2" index="2" node_paths=PackedStringArray("chat_window")]
 chat_window = NodePath("../../../CanvasLayer/ChatWindow")
 
+[node name="Visitor3" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -41.5063, 5.04603, -67.2689)
+mcp_server = NodePath("../../../..")
+
+[node name="MeshInstance3D" parent="SubViewportContainer/SubViewport/Visitors/Visitor3" index="0"]
+mesh = SubResource("ArrayMesh_5omxl")
+
+[node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor3" index="2" node_paths=PackedStringArray("chat_window")]
+chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+
 [connection signal="item_selected" from="SubViewportContainer/SubViewport/CanvasLayer/OptionButton" to="SubViewportContainer/SubViewport/Visitors" method="_on_option_button_item_selected"]
 
 [editable path="Airport/Terminal"]
@@ -870,3 +882,4 @@ chat_window = NodePath("../../../CanvasLayer/ChatWindow")
 [editable path="Airport/FlightInfo/Display5"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor1"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor2"]
+[editable path="SubViewportContainer/SubViewport/Visitors/Visitor3"]

@@ -83,7 +83,7 @@ I believe the current boom in AI agents in the IT world will not last long, and 
     *   **`Airport.tscn`:** The main scene of the simulation.
     *   **`McpClient` & `McpServer`:** Manages the AI interaction, including communication with the Gemini AI, and in-environment actions. `McpClient` also simulates a wearable device with a camera, microphone, and speaker.
     *   **`visitors.gd`:** Manages multiple visitor instances and their interactions with the simulation.
-    *   **`locations.json`:** Stores the data collected by the AI agent about the locations of amenities.
+    *   **`locations.txt`:** Stores the data collected by the AI agent about the locations of amenities in CSV format.
 *   **Network Graph Viewer (`viewer/`):** A SvelteKit application to visualize the network graph data.
 *   **Blender Models (`blender/`):** The source `.blend` files for the 3D models used in the simulation.
 *   **Documentation (`docs/`):** Contains project documentation, including the MCP specification and context engineering notes.
@@ -170,15 +170,13 @@ This innovative approach allows the airport environment to be "self-mapping," wh
 
 #### Sample Data
 
-Here is an example of what the `locations.json` file looks like after a visitor has explored the airport and interacted with a few amenities:
+Here is an example of what the `locations.txt` file looks like after a visitor has explored the airport and interacted with a few amenities:
 
-```json
-{"amenities":"Kiosk","time":"2025-08-16T23:42:44","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
-{"amenities":"self-service kiosk","time":"2025-08-16T23:42:57","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
-{"amenities":"Zone 2F-D-10-w","time":"2025-08-16T23:43:16","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
-{"amenities":"a kiosk and airport zone signs","time":"2025-08-17T00:08:44","visitor_id":"Visitor1","zone_id":"2F-D-10-w"},
-{"amenities":"snack shop","time":"2025-08-17T00:22:27","visitor_id":"Visitor1","zone_id":"2F-D-9-w"},
-{"amenities":"self-checkout kiosk and refrigerators","time":"2025-08-17T00:23:58","visitor_id":"Visitor1","zone_id":"2F-E-1"},
+```csv
+time,visitor_id,zone_id,amenities
+2025-08-30T10:00:00,Visitor1,2F-D-10-w,Kiosk
+2025-08-30T10:05:00,Visitor1,2F-D-9-w,snack shop
+2025-08-30T10:10:00,Visitor2,2F-E-1,self-checkout
 ```
 
 ## Model Context Protocol (MCP)
