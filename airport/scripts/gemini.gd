@@ -8,29 +8,30 @@ var _api
 # Reference to HTTPRequest node
 var _http_request
 
-# Chat history
+# Chat history per instance of this class
+var _enable_history: bool
 var chat_history = []
-var _enable_history
 const MAX_CHAT_HISTORY_LENGTH = 32
 
-const INCLUDE_THOUGHTS = false
+const INCLUDE_THOUGHTS = true
+
+const MEMORY_PATH = "res://memory.txt"
 
 # Default callback function
 func _output_text(text):
-	print("default output: " + text)
+	print("DEFAULT OUTPUT: ", text, "\n\n")
 
 # Constructor	
 func _init(http_request, gemini_props, enable_history=false):
 	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": gemini_props.gemini_model})
 	_api = api + "?key=" + gemini_props.gemini_api_key
 	_http_request = http_request
-	_enable_history = enable_history
-	# print(model)
 	
 # Chat with Gemini
 func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text, locals=null):
 	
 	var thought_signature = null
+	var chat_session_history = []
 
 	const headers = [
 		"Content-Type: application/json",
@@ -42,6 +43,10 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 			{"text": system_instruction}
 		]
 	}
+	
+	# Sometimes, Gemini stops chat by just sending a thought and not a full response. 
+	# This is a workaround.
+	query += "\n\nAfter you have thought through the problem, please provide a concise final answer only when you have not provided it yet."
 		
 	var content = {
 			"role": "user",
@@ -51,7 +56,6 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	  			},
 			],
   		}
-	var content_ = content.duplicate(true)
 	
 	if base64_images:
 		for image in base64_images:
@@ -62,44 +66,39 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				}
 			})
 
-	# payload to be sent to Gemini Chat API
-	if len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
+	if _enable_history:
+		chat_history.append(content)
+	
+	if _enable_history and (chat_history) > MAX_CHAT_HISTORY_LENGTH:
 		# Calculate the starting index
 		var start_index = max(0, chat_history.size() - MAX_CHAT_HISTORY_LENGTH)
 		# Use slice() to get the last n elements
 		chat_history = chat_history.slice(start_index)
 
+	# Payload
 	var contents = chat_history + [content]
 	var payload = {
 		"system_instruction": system_instruction_,
-		"contents": contents
-	}
-
-	# Note: Base64 image data is not appended to the chat history
-	if _enable_history:
-		chat_history.append(content_)
-	# print("chat history: " + str(chat_history))
-
-	# Thinking	
-	payload["generation_config"] = {
-		"thinking_config": {
-			"thinking_budget": -1,  # Turn on dynamic thinking
-			"include_thoughts": INCLUDE_THOUGHTS
+		"contents": contents,
+		"generation_config": {
+			"thinking_config": {
+				"thinking_budget": -1,  # Turn on dynamic thinking
+				"include_thoughts": INCLUDE_THOUGHTS
+			}
 		}
 	}
 	
 	# Request JSON Output
 	if json_schema:
-		payload["generation_config"]["response_mime_type"] = "application/json"
-		payload["generation_config"]["response_schema"] = json_schema
+		var generationConfig = payload["generation_config"]
+		generationConfig["response_mime_type"] = "application/json"
+		generationConfig["response_schema"] = json_schema
 	
 	# Function calling
 	if mcp_servers:
 		payload["tools"] = mcp_servers["tools"]
 
 	var response_text = null
-
-	# print(payload)
 
 	while true:
 		# Call Gemini Chat API
@@ -122,15 +121,18 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		var parts
 		if json and "candidates" in json and len(json["candidates"]) > 0:
 			candidate = json["candidates"][0]
-			print(candidate)
-			parts = candidate["content"]["parts"]
+			#print(candidate)
+			if "content" in candidate:
+				parts = candidate["content"]["parts"]
+			else:
+				push_error("No content in Gemini response: ", candidate)
 		else:
 			print(json)
 			push_error(json)
 			chat_history.clear()
 			return
 
-		var functionCalled = false
+		var finishChatSession = true
 		
 		var content_in_res = {
 			"role": "model",
@@ -140,13 +142,13 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		if _enable_history:
 			chat_history.append(content_in_res)
 		contents.append(content_in_res)
-		#print(chat_history)
 		
 		for part in parts:
 			if "text" in part:
 				response_text = part["text"]
 				# Output text via callback
-				callback.call(response_text)
+				if not response_text.begins_with("**"):  # not "thought" from LLM
+					callback.call(response_text)
 				
 			if "thoughtSignature" in part:
 				thought_signature = part["thoughtSignature"]
@@ -161,7 +163,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				function.remove_at(0)
 				var func_name = ("_").join(function)
 				var args = function_call["args"]
-				print(func_name, "(", args, ")")	
+				print(func_name, "(", args, ")", "\n\n")	
 				
 				# Outputs from local functions
 				for k in args:
@@ -172,40 +174,45 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				var ref = mcp_servers["ref"][mcp_server_name]
 				var callable = Callable(ref, func_name)
 				var result = await callable.call(args)
+				var content_from_func = null
 				
-				var function_response_part = {
-					"name": function_call["name"],
-					"response": {
-						"result": result
-					}
-				}
+				if "as_content" in args and args["as_content"] == true:
+					content_from_func = result["content"]	
+					result = result["result"]
 
-				var func_res_parts = [
+				var content_func_res = [
 					{
-						"functionResponse": function_response_part,
-					}					
-				]
-				if thought_signature:
-					# print("thought_signature in func res: ", thought_signature)
-					func_res_parts.append(
-						{
-							"thought_signature": thought_signature
+						"role": "function",
+						"parts": {
+							"functionResponse": {
+								"name": function_call["name"],
+								"response": result
+							}
 						}
-					)			
-				var content_func_res = {
-					"role": "tool",
-					"parts": func_res_parts
-				}
+					}
+				]
+				
+				if content_from_func:
+					content_func_res.append(content_from_func)
 				
 				if _enable_history:
-					chat_history.append(content_func_res)
-				contents.append(content_func_res)
+					chat_history = chat_history + content_func_res
 				
-				functionCalled = true
+				contents.append_array(content_func_res)
+				
+				finishChatSession = false
 					
-		if not functionCalled:
+		if finishChatSession:
 			break
-	
+
+	var file = FileAccess.open(MEMORY_PATH, FileAccess.READ_WRITE)
+	if file:
+		file.seek_end()
+		file.store_line(JSON.stringify(contents))
+		file.close()
+	else:
+		push_error("Cannot open ", MEMORY_PATH)
+
 	if callback == _output_text:	
 		return response_text
 	else:  # response_text already returned via callback

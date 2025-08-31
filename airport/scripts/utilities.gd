@@ -33,3 +33,15 @@ func get_last_n_lines(path: String, n: int):
 		last_n_lines.append(lines[i])
 		
 	return last_n_lines
+	
+
+func get_all_children_recursive(node):
+	var all_children = []
+	
+	# Add the immediate children of the current node
+	for child in node.get_children():
+		all_children.append(child)
+		# Recursively call the function to get the children's children
+		all_children = all_children + get_all_children_recursive(child)
+
+	return all_children

@@ -12,20 +12,19 @@ var utilities = load("res://scripts/utilities.gd").new()
 			Globals,
 			true  # enable history
 		)
-		
-@onready var gemini2 = load("res://scripts/gemini.gd").new(
-			$HTTPRequest,
-			Globals,
-			false  # disable history
-		)
 
 ##### Local tools #####
 const SURROUNDINGS_TOOL = {
 	"name": "take_surroundings",
 	"description": """
-	This function analyzes a picture of a visitor's surroundings to extract a zone ID.
-	Upon successful recognition of both the zone and its surroundings, it calls a data logging function to record the user's visit.
-	If they are not clear, output the most recent zone ID and the type of amenity from our chat history.
+	This function takes a picture of the visitor's surroundings from an onboard camera of the visitor's wearable device, and outputs a Base64-encoded image URL.
+	This function outputs two images:
+	- Normal Field-of-View image
+	- Wide Field-of-View image
+
+	How to analyze the images:
+	- If you identify an alphanumeric string with three hyphen-connected sections in the image, extract it and output that string as the zone ID. Additionally, if the string's color is green, append "-e" to the end and mention that . If the string's color is orange, append "-w". For example, if the extracted string is "2F-E-1" and the string is green, the output should be "2F-E-1-e"; if the string is orange, the output should be "2F-E-1-w".
+	- If you identify multiple zone IDs in the image, please select the one in the center if you are confident in its accuracy. If there is no zone ID in the center, select the one that is closest (the largest) if you are confident in its accuracy. Do not mention any other node IDs.
 	""",
 	"parameters": {
 		"type": "object",
@@ -34,6 +33,10 @@ const SURROUNDINGS_TOOL = {
 				"type": "string",
 				"description": "Visitor ID"
 			},
+			"as_content": {
+				"type": "boolean",
+				"description": "this value MUST be always true"
+			}
 		},
 		"required": ["visitor_id"],
 	}
@@ -71,63 +74,33 @@ func take_surroundings(_args):
 	var base64_image = await wearable_device.capture_image(visitor.camera_resolution_height, false)
 	var base64_image_wide = await wearable_device.capture_image(visitor.camera_resolution_height, true)
 	
-	var query = """
-	I am {visitor_id}, which is also my Visitor ID.
-
-	Please analyze the image from my wearable device's onboard camera. The analysis should provide a detailed description of my surroundings.
-
-	If you identify an alphanumeric string with three hyphen-connected sections in the image, extract it and output that string as the zone ID.
-
-	Additionally, if the string's color is green, append "-e" to the end and mention that . If the string's color is orange, append "-w". For example, if the extracted string is "2F-E-1" and the string is green, the output should be "2F-E-1-e"; if the string is orange, the output should be "2F-E-1-w".
-
-	Output the final result in the following JSON format.
-
-	If you do not identify such an alphanumeric string in the image, output "unknown" in the JSON format.
-
-	If you identify multiple zone IDs in the image, please select the one in the center if you are confident in its accuracy. If there is no zone ID in the center, select the one that is closest (the largest) if you are confident in its accuracy. Do not mention any other node IDs.
-
-	Output "zone_id_description_for_human" for a visitor to identify the ID on the wall. For example, "2F-D-11 in orange printed on the wall".
-
-	You should output only the JSON data with no additional explanations.
-	""".format({"visitor_id": visitor.visitor_id})
-	
-	const json_schema = {
-		"type": "object",
-		"properties": {
-			"visitor_id": {
-				"type": "string"
+	var content = { 
+		"role": "user",
+		"parts": [
+	  		{
+				"text": "Here are the images you requested, and the first one is normal FOV image, and the second one is wider FOV image. Go on to the next step as you planned before.",
+	  		},
+			{
+				"inline_data": {
+					"mime_type":"image/jpeg",
+					"data": base64_image
+				}
 			},
-			"zone_id": {
-				"type": "string"
-			},
-			"zone_id_description_for_human": {
-				"type": "string"				
-			},
-			"surroundings": {
-				"type": "string"
+			{
+				"inline_data": {
+					"mime_type":"image/jpeg",
+					"data": base64_image_wide
+				}
 			}
-		},
-		"required": ["visitor_id", "zone_id", "zone_id_description_for_human", "surroundings"]
+		]
 	}
-	
-	var system_instruction = "You are an AI assistant good at image recognition."
-	
-	var result = await gemini2.chat(
-		query,
-		system_instruction,
-		[ base64_image, base64_image_wide ],
-		null,
-		json_schema
-		)
 
-	# Remove the code block notation: ```json{...}```
-	result = result.replace("```json", "").replace("```", "")
-	print(result)
-	var json = JSON.parse_string(result)
-	if json:
-		return JSON.stringify(json)
-	else:  # JSON parse failed
-		return "unknown"
+	return {
+		"result": {
+			"result": "Took a picutre, analyze the following content which is a Base64-encoded image URL as you requested."
+		},
+		"content": content
+	}
 
 
 func quit(_args):
@@ -149,7 +122,7 @@ func _insert_text(text):
 
 # Callback function to output response text from Gemini
 func output_text(response_text):
-	print("AI: " + response_text)
+	# print("AI: " + response_text)
 	# To make sure that the string ends with "\n\n" always
 	response_text = response_text.strip_edges() + "\n"
 	_insert_text("AI: " + response_text)
@@ -206,7 +179,7 @@ func _process(_delta: float) -> void:
 		processing = true
 
 		var query = chat_window.text.replace(last_text, "")
-		print("You: " + query)
+		# print("You: " + query)
 		
 		# Calculate Delta steps
 		delta_steps = wearable_device.steps - previous_steps
@@ -241,7 +214,7 @@ func _process(_delta: float) -> void:
 				
 			""" + query
 	
-		print(query)
+		#print(query)
 
 		await gemini.chat(
 			query,

@@ -7,7 +7,7 @@ var utilities = load("res://scripts/utilities.gd").new()
 func greeting(visitor_id):
 	var message = visitor_id + ", welcome to ABC Airport!"
 	# print(message)
-	return message
+	return {"message": message}
 
 func door_control(zone_id, control):
 	if zone_id.ends_with("-w"):
@@ -21,10 +21,10 @@ func door_control(zone_id, control):
 			await door.door_control(control)
 			doors_found = true
 	if doors_found:
-		return "Operation completed"
+		return {"result": "Operation completed"}
 	else:
-		return "Door not found"
+		return {"result": "Door not found"}
 
 
 func get_product_info(visitor_id, zone_id, amenity, base64_image):
-		return "$3"
+		return {"price": "$3"}

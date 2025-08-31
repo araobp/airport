@@ -1,4 +1,7 @@
 time,visitor_id,zone_id,amenities
-2025-08-30T12:43:20,Visitor1,2F-E-11,Entrance
-2025-08-30T12:43:57,Visitor1,2F-E-11-e,Entrance
-2025-08-30T23:26:57,Visitor2,2F-C-11,airport building
+2025-08-31T19:06:33,Visitor1,2F-D-10-w,kiosk
+2025-08-31T19:24:31,Visitor1,2F-D-11-e,Flight Information Display
+2025-08-31T19:27:12,Visitor1,2F-D-9-e,Kiosk
+2025-08-31T19:31:22,Visitor3,2F-D-7-e,kiosks
+2025-08-31T19:31:49,Visitor3,2F-D-7-w,kiosk
+2025-08-31T19:33:02,Visitor2,2F-D-1-w,doors

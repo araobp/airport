@@ -48,9 +48,11 @@ func _physics_process(delta):
 
 		move_and_slide()
 
+var utilities = load("res://scripts/utilities.gd").new()
+
 func enable(enabled):
 	$WearableDevice/Camera3D.current = enabled
-	var children = get_children()	
+	var children = utilities.get_all_children_recursive(self)
 	children.append(self)
 	for c in children:
 		c.set_process(enabled)

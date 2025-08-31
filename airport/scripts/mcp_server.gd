@@ -66,7 +66,11 @@ const TIMER_TOOL = {
 
 const LOGGING_TOOL = {
 	"name": "record_log",
-	"description": "Records the location of an amenity identified from a visitor's wearable device. This function is automatically called when the AI successfully identifies a 'zone_id' and an 'amenities' name from an image.",
+	"description": """
+	This function is called to log the zone ID and amenities when they are recognized from images captured by a visitor's wearable device's camera.
+	Please be sure to call this function every when the zone ID and amenities are recognized confidently.
+	The zone ID must contain an -e or -w suffix. If it does not, this function should not be called.
+	""",
 	"parameters": {
 		"type": "object",
 		"properties": {
@@ -182,7 +186,7 @@ func door_control(args):
 	var zone_id = args["zone_id"]
 	var control = args["control"]
 	return await airport_services.door_control(zone_id, control)
-
+	
 const LOG_FILE_PATH = "res://locations.txt"
 
 #var user_data = []
@@ -212,8 +216,10 @@ func record_log(args):
 		file.seek_end()
 		file.store_line(record)  # Append record
 		file.close()
+		return {"result": "logging completed"}
 	else:
 		push_error("Cannot open ", LOG_FILE_PATH)
+		return {"result": "logging failed due to a system error"}		
 
 const LAST_N = 128
 
@@ -250,11 +256,11 @@ func list_amenities_nearby(args):
 		)
 			
 		print("AMENITIES: ", result)
-		return result
+		return {"result": result}
 
 	else:
 		push_error("Cannot open " + LOG_FILE_PATH)
-		return "System error"
+		return {"result": "Could not get any info due to a system error"}
 
 
 func get_product_info(args):
@@ -374,8 +380,9 @@ func initiate_management(args):
 		file.close()
 
 	print("MANAGEMENT: ", network_graph_for_vis)
-	return "management processes completed"
+	return {"result": "management processes completed"}
 	
 
 func timer(args):
-	return await utilities.timer(get_tree(), args["seconds"])
+	await utilities.timer(get_tree(), args["seconds"])
+	return {"result": "timer expired"}

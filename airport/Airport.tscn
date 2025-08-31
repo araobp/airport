@@ -795,20 +795,9 @@ texture = ExtResource("15_5omxl")
 transform = Transform3D(0.0481402, -0.000243235, 0.0876496, -2.91038e-11, 0.0999996, 0.000277507, -0.08765, -0.000133592, 0.04814, 22.927, 6.5, -175.614)
 texture = ExtResource("16_kdhq5")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-physics_interpolation_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-physics_interpolation_mode = 0
-handle_input_locally = false
-size = Vector2i(1920, 1080)
-render_target_update_mode = 4
-
-[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
-
-[node name="ChatWindow" type="TextEdit" parent="SubViewportContainer/SubViewport/CanvasLayer"]
+[node name="ChatWindow" type="TextEdit" parent="CanvasLayer"]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -825,7 +814,7 @@ wrap_mode = 1
 caret_blink = true
 script = ExtResource("4_1tehv")
 
-[node name="OptionButton" type="OptionButton" parent="SubViewportContainer/SubViewport/CanvasLayer"]
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -840,36 +829,47 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 flat = true
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+physics_interpolation_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+physics_interpolation_mode = 0
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
 [node name="Visitors" type="Node" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("chat_window", "visitors_menu")]
 script = ExtResource("15_kdhq5")
-chat_window = NodePath("../CanvasLayer/ChatWindow")
-visitors_menu = NodePath("../CanvasLayer/OptionButton")
+chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+visitors_menu = NodePath("../../../CanvasLayer/OptionButton")
 
 [node name="Visitor1" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -41.5063, 5.04603, -67.2689)
 mcp_server = NodePath("../../../..")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor1" index="2" node_paths=PackedStringArray("chat_window")]
-chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+chat_window = NodePath("../../../../../CanvasLayer/ChatWindow")
 
 [node name="Visitor2" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -17.5105, 5.04603, -67.2689)
 mcp_server = NodePath("../../../..")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor2" index="2" node_paths=PackedStringArray("chat_window")]
-chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+chat_window = NodePath("../../../../../CanvasLayer/ChatWindow")
 
 [node name="Visitor3" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.55514, 5.04603, -31.5469)
 mcp_server = NodePath("../../../..")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor3" index="2" node_paths=PackedStringArray("chat_window")]
-chat_window = NodePath("../../../CanvasLayer/ChatWindow")
+chat_window = NodePath("../../../../../CanvasLayer/ChatWindow")
 
 [node name="SecurityRobot" parent="SubViewportContainer/SubViewport" instance=ExtResource("17_kdhq5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9035, 5.04814, -27.2123)
 
-[connection signal="item_selected" from="SubViewportContainer/SubViewport/CanvasLayer/OptionButton" to="SubViewportContainer/SubViewport/Visitors" method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="CanvasLayer/OptionButton" to="SubViewportContainer/SubViewport/Visitors" method="_on_option_button_item_selected"]
 
 [editable path="Airport/Terminal"]
 [editable path="Airport/Doors/2F-E-5-1"]
