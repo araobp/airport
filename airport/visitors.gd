@@ -16,3 +16,4 @@ func _ready() -> void:
 func _on_option_button_item_selected(index: int) -> void:
 	for i in range(children.size()):
 		children[i].enable(index == i)
+	chat_window.grab_focus()

@@ -108,25 +108,6 @@ func quit(_args):
 
 var processing = false
 
-######
-var last_text = ""
-
-# Insert text at caret in TextEdit
-func _insert_text(text):
-	chat_window.insert_text_at_caret(text, -1)
-	chat_window.scroll_vertical = 10000
-	last_text = chat_window.text
-	var column = chat_window.get_caret_column()
-	var line = chat_window.get_caret_line()
-	caret_pos_limit = [column, line]
-
-# Callback function to output response text from Gemini
-func output_text(response_text):
-	# print("AI: " + response_text)
-	# To make sure that the string ends with "\n\n" always
-	response_text = response_text.strip_edges() + "\n"
-	_insert_text("AI: " + response_text)
-
 # MCP servers (mimicked)
 var mcp_servers
 
@@ -152,9 +133,6 @@ func _ready() -> void:
 		]
 	}
 	
-	chat_window.grab_focus()
-	last_text = chat_window.text
-
 # Steps of the visitor (accelerometer simulation)
 var previous_steps = 0
 var delta_steps = 0
@@ -178,8 +156,7 @@ func _process(_delta: float) -> void:
 	if !processing and Input.is_key_pressed(KEY_ENTER) and chat_window.text != "":
 		processing = true
 
-		var query = chat_window.text.replace(last_text, "")
-		# print("You: " + query)
+		var query = chat_window.query
 		
 		# Calculate Delta steps
 		delta_steps = wearable_device.steps - previous_steps
@@ -222,38 +199,10 @@ func _process(_delta: float) -> void:
 			null,
 			mcp_servers,
 			null,
-			output_text,
+			chat_window.output_message,
 			self
 			)
 		
-		_insert_text("\nYou: ")
+		chat_window.insert_message("\nYou: ")
 		
 		processing = false
-
-
-func _input(event):
-	if event is InputEventMouseButton or event is InputEventKey:
-		call_deferred("_check_caret_position")
-	
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_BACKSPACE:
-			_check_caret_position()
-
-# Prevents the user from editing the previous conversation history by checking the caret position.
-# If the caret is in a read-only area, it moves it to the beginning of the editable area.
-func _check_caret_position():
-	var line_limit = caret_pos_limit[1]
-	var current_line = chat_window.get_caret_line()
-	var current_column = chat_window.get_caret_column()
-
-	var corrected = false
-		
-	if current_line < line_limit:
-		chat_window.set_caret_line(caret_pos_limit[1])
-		corrected = true
-	elif current_line == caret_pos_limit[1] and current_column <= caret_pos_limit[0]:
-		chat_window.set_caret_column(caret_pos_limit[0])
-		corrected = true
-
-	if corrected:
-		get_viewport().set_input_as_handled()

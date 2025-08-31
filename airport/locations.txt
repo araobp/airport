@@ -5,3 +5,4 @@ time,visitor_id,zone_id,amenities
 2025-08-31T19:31:22,Visitor3,2F-D-7-e,kiosks
 2025-08-31T19:31:49,Visitor3,2F-D-7-w,kiosk
 2025-08-31T19:33:02,Visitor2,2F-D-1-w,doors
+2025-08-31T19:51:27,Visitor2,2F-D-11-e,restroom
