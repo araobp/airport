@@ -1,13 +1,18 @@
-You: What amenities does the airport lack?
-AI: Based on the image, this area of the airport appears to lack many common amenities. I don't see any:
+# TODO
 
-*   Seating for passengers
-*   Information desks or clear signage
-*   Shops or restaurants
-*   Baggage claim carousels
-*   Security checkpoints
-*   Restrooms
-*   Departure or arrival boards
-*   Any decorative elements or plants to make the space feel more inviting.
+## Phase 1: Core Functionality
+- [x] Implement basic agent with ReAct loop
+- [x] Implement short-term and long-term memory
+- [x] Implement tool use for navigation and information retrieval
 
-It looks like a very stark and empty space, suggesting a lack of functional airport facilities within this particular view.
+## Phase 2: Advanced Agentic AI
+- [ ] Implement more complex multi-step tasks
+- [ ] Improve context engineering for better situational awareness
+- [x] Refactor emotion analysis to a more generic user feedback system
+
+## Phase 3: Viewer and Visualization
+- [ ] Improve network graph visualization
+- [ ] Add more interactive elements to the viewer
+
+## Bugs
+- [ ] Zone ID with blue color is not handled correctly.
