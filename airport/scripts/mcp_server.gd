@@ -9,6 +9,9 @@ var utilities = load("res://scripts/utilities.gd").new()
 		$HTTPRequest,
 		Globals
 	)
+	
+# Long-term memory file
+const USER_FEEDBACK_PATH = "res://mcp_server_memory/user_feedback.txt"
 
 const GREETING_TOOL = {
 	"name": "greeting",
@@ -162,15 +165,26 @@ const MANAGEMENT_TOOL = {
 	}
 }
 
+var USER_FEEDBACK_TOOL = {
+	"name": "register_user_feedback",
+	"description": """
+	This function saves user feedback, previously analyzed by another program, to a database.
+	""",
+	"parameters": utilities.JSON_SCHEMA_FOR_USER_FEEDBACK
+}
 
-const TOOLS = [
+func register_user_feedback(args):
+	utilities.save_it_as_long_term_memory(USER_FEEDBACK_PATH, JSON.stringify(args))
+
+var TOOLS = [
 	GREETING_TOOL,
 	DOOR_CONTROL_TOOL,
 	TIMER_TOOL,
 	LOGGING_TOOL,
 	AMENITIES_TOOL,
 	SHOPS_TOOL,
-	MANAGEMENT_TOOL
+	MANAGEMENT_TOOL,
+	USER_FEEDBACK_TOOL
 ]
 
 func list_tools():
@@ -209,17 +223,7 @@ func record_log(args):
 		}
 	)
 	
-	var file = FileAccess.open(LOCATIONS_PATH, FileAccess.READ_WRITE)
-	if file:
-		if file.get_length() == 0:
-			file.store_line("time,visitor_id,zone_id,amenities")
-		file.seek_end()
-		file.store_line(record)  # Append record
-		file.close()
-		return {"result": "logging completed"}
-	else:
-		push_error("Cannot open ", LOCATIONS_PATH)
-		return {"result": "logging failed due to a system error"}		
+	utilities.save_it_as_long_term_memory(LOCATIONS_PATH, record, "time,visitor_id,zone_id,amenities")
 
 const LAST_N = 128
 
@@ -386,3 +390,4 @@ func initiate_management(args):
 func timer(args):
 	await utilities.timer(get_tree(), args["seconds"])
 	return {"result": "timer expired"}
+	

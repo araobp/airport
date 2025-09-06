@@ -19,10 +19,9 @@ var utilities = load("res://scripts/utilities.gd").new()
 			Globals,
 			true  # enable history
 		)		
-# Long-term memory file
-const CHAT_ANALYSIS_PATH = "res://mcp_client_memory/chat_analysis.txt"
 
-##### Local tools #####
+##### Local tools ##################################################################################
+
 const SURROUNDINGS_TOOL = {
 	"name": "take_surroundings",
 	"description": """
@@ -47,128 +46,9 @@ const SURROUNDINGS_TOOL = {
 				"description": "this value MUST be always true"
 			}
 		},
-		"required": ["visitor_id"],
+		"required": ["visitor_id", "as_content"],
 	}
 }
-
-const QUIT_TOOL = {
-	"name": "quit",
-	"description": """
-	A function to quit this journey.
-	Note: before calling this function, output some goodbye message in text, wait for three seconds then call this function to quit this journey."
-	""",
-	"parameters": {
-		"type": "object",
-		"properties": {},
-		"required": [],
-	}
-}
-
-const EMOTION_TOOL = {
-	"name": "analyze_emotion",
-	"description": """
-	If a query contains an emotional expression (a complaint or praise) regarding the result of a generative AI's processing, call this function.
-	The analysis result is saved in a separate file as long-term memory for later use.
-	""",
-	"parameters": {
-		"type": "object",
-		"properties": {},
-		"required": []
-	}
-}
-
-func analyze_emotion(args):
-	
-	var system_instruction = """
-		You are the ABC Airport Concierge AI. You manage airport amenities and services in partnership with the wearable_device's wearable device.
-
-		My Visitor ID is {visitor_id}. Your primary goal is to assist me.
-		""".format({
-				"visitor_id": visitor.visitor_id
-			})
-	
-	const prompt = """
-	If a query contains an emotional expression (a complaint or praise) regarding the result of a generative AI's processing, extract which part of the chat history the expression is directed at.
-	Furthermore, in the case of a complaint, consider how the processing could be improved to work more effectively. In the case of praise, summarize the successful processing steps.
-	Output the results in JSON data following the JSON schema.
-	"""
-
-	const json_schema = {
-		"type": "object",
-		"properties": {
-			"visitor_id": {
-				"type": "string",
-				"description": "Vistor ID"
-			},
-			"request": {
-				"type": "string",
-				"description": "Summary of the user's request from the chat history that the emotional expression refers to."
-			},
-			"response": {
-				"type": "string",
-				"description": "Summary of the AI's response from the chat history that the emotional expression refers to."
-			},
-			"emotion": {
-				"type": "string",
-				"description": "The user's emotional state regarding the AI's response.",
-				"enum": [
-					"good",
-					"bad"
-				]
-			},
-			"points": {
-				"type": "string",
-				"description": "A summary of the specific points the user highlighted emotionally."
-			},
-			"ideal_processing_steps": {
-				"type": "string",
-				"description": "The ideal processing steps to maximize user satisfaction, based on the user's emotional feedback."
-			}
-		},
-		"required": [
-			"visitor_id",
-			"request",
-			"response",
-			"emotion",
-			"points",
-			"ideal_processing_steps"
-		]
-	}
-	
-	var chat_history = gemini.chat_history
-	var this_func_result = {"result": "emotional analyisis completed"} 
-
-	# Set chat history for emotinal analysis on this visitor	
-	var content_func_res = [
-		{
-			"role": "function",
-			"parts": {
-				"functionResponse": {
-					"name": "analyze_emotion",
-					"response": this_func_result
-				}
-			}
-		}
-	]
-	chat_history.append(content_func_res)
-	gemini2.chat_history = chat_history
-	print("++++", gemini2.chat_history)
-	var result = await gemini2.chat(prompt, system_instruction,null,null,json_schema)
-	result = JSON.parse_string(result)
-	print(result)
-	return this_func_result
-
-const LOCAL_TOOLS = [
-	SURROUNDINGS_TOOL,
-	EMOTION_TOOL,
-	QUIT_TOOL,
-]
-
-func list_tools():
-	var tools = LOCAL_TOOLS.duplicate(true)
-	for tool in tools:
-		tool["name"] = "{server_name}_{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
-	return tools
 
 func capture_image_local():
 	return await wearable_device.capture_image(visitor.camera_resolution_height, false)
@@ -200,14 +80,102 @@ func take_surroundings(_args):
 
 	return {
 		"result": {
-			"result": "Took a picutre, analyze the following content which is a Base64-encoded image URL as you requested."
+			"reulst":
+			"Took a picutre, analyze the following content which is a Base64-encoded image URL as you requested."
 		},
 		"content": content
 	}
 
+const QUIT_TOOL = {
+	"name": "quit",
+	"description": """
+	A function to quit this journey.
+	Note: before calling this function, output some goodbye message in text, wait for three seconds then call this function to quit this journey."
+	""",
+	"parameters": {
+		"type": "object",
+		"properties": {},
+		"required": [],
+	}
+}
 
 func quit(_args):
 	return await utilities.quit(get_tree())
+
+const USER_FEEDBACK_TOOL = {
+	"name": "analyze_user_feedback",
+	"description": """
+	If a query contains a user feedback or an emotional expression (a complaint or praise) regarding the result of a generative AI's processing on the airport services, call this function.
+	The analysis result will be saved in a separate file as long-term memory for later use.
+	If some sort of user feed back registration service is available in the context of where I am now, call the service after having received the result from this tool.
+	""",
+	"parameters": {
+		"type": "object",
+		"properties": {
+			"query": {
+				"type": "string",
+				"description": "A query containing a user feedback or an emotinal expression."
+			}
+		},
+		"required": ["query"]
+	}
+}
+
+func analyze_user_feedback(args):
+	
+	var previous_query = args["query"]
+	
+	var system_instruction = """
+		You are the ABC Airport Concierge AI. You manage airport amenities and services in partnership with the wearable_device's wearable device.
+
+		My Visitor ID is {visitor_id}. Your primary goal is to assist me.
+		""".format({
+				"visitor_id": visitor.visitor_id
+			})
+	
+	var prompt = """
+	The previous query contains a user feedback or an emotional expression (a complaint or praise).
+	Extract which part of the chat history the expression is directed at.
+	In the case of a complaint, consider how the processing could be improved to work more effectively.
+	In the case of praise, summarize the successful processing steps.
+	Output the results in JSON data following the JSON schema.
+	
+	## Previous query
+	{previous_query}
+	
+	""".format({
+		"previous_query": previous_query
+	})
+	
+	# Set chat history for emotinal analysis on this visitor	
+	var content_func_res = [
+		{
+			"role": "function",
+			"parts": {
+				"functionResponse": {
+					"name": "analyze_user_feedback",
+					"response": {"result": "user feedback analyisis completed"}
+				}
+			}
+		}
+	]
+	
+	# Copy the chat history to another gemini instance for user feedback analysis
+	gemini2.chat_history = gemini.chat_history.duplicate(true)
+	# Request for user feedback analysis
+	var json = await gemini2.chat(
+		prompt,
+		system_instruction,
+		null,
+		null,
+		utilities.JSON_SCHEMA_FOR_USER_FEEDBACK
+	)
+	
+	print("**********", json)
+	return JSON.parse_string(json)
+
+
+################################################################################
 
 var processing = false
 
@@ -309,3 +277,15 @@ func _process(_delta: float) -> void:
 		chat_window.insert_message("\nYou: ")
 		
 		processing = false
+
+const LOCAL_TOOLS = [
+	SURROUNDINGS_TOOL,
+	QUIT_TOOL,
+	USER_FEEDBACK_TOOL
+]
+
+func list_tools():
+	var tools = LOCAL_TOOLS.duplicate(true)
+	for tool in tools:
+		tool["name"] = "{server_name}_{tool_name}".format({"server_name": self.name, "tool_name": tool["name"]}) 
+	return tools

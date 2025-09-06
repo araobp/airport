@@ -33,7 +33,7 @@ func _check_caret_position():
 	var line_limit = caret_pos_limit[1]
 	var current_line = get_caret_line()
 	var current_column = get_caret_column()
-	print("caret", current_line, ",", current_column)
+	# print("caret", current_line, ",", current_column)
 	
 	var corrected = false
 		

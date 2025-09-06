@@ -7,6 +7,49 @@ func timer(tree, seconds):
 func quit(tree):
 	tree.quit()
 
+const JSON_SCHEMA_FOR_USER_FEEDBACK = {
+	"type": "object",
+	"properties": {
+		"visitor_id": {
+			"type": "string",
+			"description": "Vistor ID"
+		},
+		"request": {
+			"type": "string",
+			"description": "Summary of the user's request from the chat history that the user feedback or emotional expression refers to."
+		},
+		"response": {
+			"type": "string",
+			"description": "Summary of the AI's response from the chat history that the user feedback or emotional expression refers to."
+		},
+		"feedback": {
+			"type": "string",
+			"description": "The user feedback or emotional state regarding the AI's response.",
+			"enum": [
+				"good",
+				"bad"
+			]
+		},
+		"points": {
+			"type": "string",
+			"description": "A summary of the specific points the user highlighted."
+		},
+		"ideal_processing_steps": {
+			"type": "string",
+			"description": "The ideal processing steps to maximize user satisfaction, based on the user's feedback or emotion."
+		}
+	},
+	"required": [
+		"visitor_id",
+		"request",
+		"response",
+		"feedback",
+		"points",
+		"ideal_processing_steps"
+	]
+}
+
+
 # Get an environment variable in the file
 func get_environment_variable(file_path):
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -45,3 +88,16 @@ func get_all_children_recursive(node):
 		all_children = all_children + get_all_children_recursive(child)
 
 	return all_children
+	
+func save_it_as_long_term_memory(path, it, header=null):
+	var file = FileAccess.open(path, FileAccess.READ_WRITE)
+	if file:
+		if file.get_length() == 0 and header:
+			file.store_line(header)
+		file.seek_end()
+		file.store_line(it)  # Append it
+		file.close()
+		return {"result": "logging completed"}
+	else:
+		push_error("Cannot open ", path)
+		return {"result": "logging failed due to a system error"}		
