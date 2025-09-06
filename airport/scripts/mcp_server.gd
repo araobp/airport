@@ -187,7 +187,7 @@ func door_control(args):
 	var control = args["control"]
 	return await airport_services.door_control(zone_id, control)
 	
-const LOG_FILE_PATH = "res://locations.txt"
+const LOCATIONS_PATH = "res://mcp_server_memory/locations.txt"
 
 #var user_data = []
 
@@ -209,7 +209,7 @@ func record_log(args):
 		}
 	)
 	
-	var file = FileAccess.open(LOG_FILE_PATH, FileAccess.READ_WRITE)
+	var file = FileAccess.open(LOCATIONS_PATH, FileAccess.READ_WRITE)
 	if file:
 		if file.get_length() == 0:
 			file.store_line("time,visitor_id,zone_id,amenities")
@@ -218,7 +218,7 @@ func record_log(args):
 		file.close()
 		return {"result": "logging completed"}
 	else:
-		push_error("Cannot open ", LOG_FILE_PATH)
+		push_error("Cannot open ", LOCATIONS_PATH)
 		return {"result": "logging failed due to a system error"}		
 
 const LAST_N = 128
@@ -228,7 +228,7 @@ func list_amenities_nearby(args):
 	var zone_id = args["zone_id"] if "args_id" in args else "unknown"
 	var amenity = args["amenity"] if "amenity" in args else "unknown"
 
-	var log_data = utilities.get_last_n_lines(LOG_FILE_PATH, LAST_N)
+	var log_data = utilities.get_last_n_lines(LOCATIONS_PATH, LAST_N)
 	if log_data:
 		var query = """
 		An airport visitor (Visitor ID: {visitor_id}) is currently near Zone {zone_id}.
@@ -259,7 +259,7 @@ func list_amenities_nearby(args):
 		return {"result": result}
 
 	else:
-		push_error("Cannot open " + LOG_FILE_PATH)
+		push_error("Cannot open " + LOCATIONS_PATH)
 		return {"result": "Could not get any info due to a system error"}
 
 
@@ -273,7 +273,7 @@ func get_product_info(args):
 
 func initiate_management(args):
 	
-	var log_data = utilities.get_last_n_lines(LOG_FILE_PATH, LAST_N)
+	var log_data = utilities.get_last_n_lines(LOCATIONS_PATH, LAST_N)
 
 	const system_instruction = """
 	You are a data processing assistant. Your task is to convert the provided log data into a JSON object suitable for vis.js network visualization.

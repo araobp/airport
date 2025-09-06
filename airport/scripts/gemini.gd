@@ -9,13 +9,15 @@ var _api
 var _http_request
 
 # Chat history per instance of this class
-var _enable_history: bool
+var _enable_history: bool = false
 var chat_history = []
-const MAX_CHAT_HISTORY_LENGTH = 32
+
+const MAX_CHAT_HISTORY_LENGTH = 16
 
 const INCLUDE_THOUGHTS = true
 
-const MEMORY_PATH = "res://memory.txt"
+# Chat history log flie path (for debug purposes)
+const CHAT_HISTORY_LOG_PATH = "res://log/chat_history.txt"
 
 # Default callback function
 func _output_text(text):
@@ -26,12 +28,12 @@ func _init(http_request, gemini_props, enable_history=false):
 	var api = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent".format({"model": gemini_props.gemini_model})
 	_api = api + "?key=" + gemini_props.gemini_api_key
 	_http_request = http_request
-	
+	_enable_history = enable_history
+		
 # Chat with Gemini
 func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text, locals=null):
 	
 	var thought_signature = null
-	var chat_session_history = []
 
 	const headers = [
 		"Content-Type: application/json",
@@ -47,15 +49,15 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	# Sometimes, Gemini stops chat by just sending a thought and not a full response. 
 	# This is a workaround.
 	query += "\n\nAfter you have thought through the problem, please provide a concise final answer only when you have not provided it yet."
-		
+	
 	var content = {
 			"role": "user",
 			"parts": [
-	  			{
+				{
 					"text": query,
-	  			},
+				},
 			],
-  		}
+		}
 	
 	if base64_images:
 		for image in base64_images:
@@ -69,7 +71,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 	if _enable_history:
 		chat_history.append(content)
 	
-	if _enable_history and (chat_history) > MAX_CHAT_HISTORY_LENGTH:
+	if _enable_history and len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
 		# Calculate the starting index
 		var start_index = max(0, chat_history.size() - MAX_CHAT_HISTORY_LENGTH)
 		# Use slice() to get the last n elements
@@ -116,7 +118,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		var body = res[3]
 		# print(body.get_string_from_utf8())
 		var json = JSON.parse_string(body.get_string_from_utf8())
-		
+		print(json)
 		var candidate
 		var parts
 		if json and "candidates" in json and len(json["candidates"]) > 0:
@@ -205,13 +207,13 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		if finishChatSession:
 			break
 
-	var file = FileAccess.open(MEMORY_PATH, FileAccess.READ_WRITE)
+	var file = FileAccess.open(CHAT_HISTORY_LOG_PATH, FileAccess.READ_WRITE)
 	if file:
 		file.seek_end()
 		file.store_line(JSON.stringify(contents))
 		file.close()
 	else:
-		push_error("Cannot open ", MEMORY_PATH)
+		push_error("Cannot open ", CHAT_HISTORY_LOG_PATH)
 
 	if callback == _output_text:	
 		return response_text
