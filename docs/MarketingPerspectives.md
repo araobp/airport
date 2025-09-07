@@ -1,4 +1,4 @@
-# Marketing Perspective
+# Marketing Perspectives
 
 ### What I have learned through this project
 
