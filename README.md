@@ -3,6 +3,8 @@
 [![Godot Engine](https://img.shields.io/badge/Godot-4.4-blue.svg)](https://godotengine.org)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-purple.svg)](https://ai.google.dev/)
 
+As a MVP developer for marketing, I am learning a lot of things through this project => [Marketing Perspective](docs/MarketingPerspectives.md)
+
 (Work in progress)
 
 This project is a work-in-progress simulation of a "smart airport" environment, showcasing the power of AI, particularly Google's Gemini model, to create interactive and intelligent experiences. The simulation is built using the Godot Engine.
