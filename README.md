@@ -56,10 +56,10 @@ The inspiration for this project comes from a past experiment with an AI Drive R
 <table>
   <tr>
     <td>
-      <img src="./docs/prototype.jpg" width="400">
+      <img src="./docs/prototype.jpg" width="600">
     </td>
     <td>
-      <img src="./docs/ar_app.jpg" width="400">
+      <img src="./docs/ar_app.jpg" width="600">
     </td>
   </tr>
 </table>
