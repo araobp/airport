@@ -224,6 +224,10 @@ This will start the SvelteKit development server, and you can view the network g
 
 This project is a practical example of context engineering, demonstrating how to build a complex AI agent that interacts with its environment. For more information on the concept of context engineering, please see the [CONTEXT_ENGINEERING.md](docs/CONTEXT_ENGINEERING.md) file.
 
+Refer also this YouTube video: https://youtu.be/ugc1lBBgqwI
+
+Context engineering is required to improve the performance of Large Language Models (LLMs) by providing them with relevant information in a structured way. This is especially important for applications like AI assistants, as it enhances the model's reasoning and accuracy without the need for fine-tuning.
+
 ## Development Notes
 
 This project leverages the Gemini CLI for various development tasks, including code review and updating markdown documentation files like this README.
