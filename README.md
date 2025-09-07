@@ -44,7 +44,7 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
   - [Visualization](#visualization)
 - [Context Engineering](#context-engineering)
 - [Development Notes](#development-notes)
-- [The Problems I Have Learned on MCP Through This Project](#the-problems-i-have-learned-on-mcp-through-this-project)
+- [MCP Limitations](#mcp-limitations)
 - [Contributing](#contributing)
 - [Future Work](#future-work)
 - [License](#license)
@@ -229,9 +229,9 @@ Refer also this YouTube video: https://youtu.be/ugc1lBBgqwI
 
 Context engineering is required to improve the performance of Large Language Models (LLMs) by providing them with relevant information in a structured way. This is especially important for applications like AI assistants, as it enhances the model's reasoning and accuracy without the need for fine-tuning.
 
-## The Problems I Have Learned on MCP Through This Project
+## MCP Limitations
 
-For a summary of the problems I have learned on MCP through this project, please see the [document](docs/What_I_Have_Learned.md).
+For a summary of the limitations on MCP through this project, please see the [document](docs/MCP_Limitations.md).
 
 ## Development Notes
 

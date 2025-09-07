@@ -1,4 +1,6 @@
-# The Problems I Have Learned on MCP Through This Project
+#  MCP Limitations
+
+I have learned several limitations on MCP through implementing this project.
 
 ## Limitations for Server-to-Server Interoperability
 
@@ -38,3 +40,7 @@ In this project, the client and server cooperate through a common data format ba
 ```
 
 This structured data format, based on an implicit JSON schema, allows the client and server to communicate effectively, even though they might have different internal implementations. This is an example of "Standardizing interface data" as a workaround for the limitations of MCP.
+
+## Conclusion
+
+These examples highlight the AI client's crucial role as a central orchestrator in a multi-server MCP environment and the necessity of standardized data formats for interoperability.
