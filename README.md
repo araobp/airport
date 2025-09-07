@@ -5,7 +5,7 @@
 
 (As a MVP developer for marketing, I am learning a lot of things through this project => [Marketing Perspectives](docs/MarketingPerspectives.md))
 
-(Work in progress)
+***Work in progress***
 
 This project is a work-in-progress simulation of a "smart airport" environment, showcasing the power of AI, particularly Google's Gemini model, to create interactive and intelligent experiences. The simulation is built using the Godot Engine.
 
