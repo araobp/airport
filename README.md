@@ -3,7 +3,9 @@
 [![Godot Engine](https://img.shields.io/badge/Godot-4.4-blue.svg)](https://godotengine.org)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-purple.svg)](https://ai.google.dev/)
 
-(Work in progress)
+(As a MVP developer for marketing, I am learning a lot of things through this project => [Marketing Perspectives](docs/MarketingPerspectives.md))
+
+***Work in progress***
 
 This project is a work-in-progress simulation of a "smart airport" environment, showcasing the power of AI, particularly Google's Gemini model, to create interactive and intelligent experiences. The simulation is built using the Godot Engine.
 
@@ -13,7 +15,7 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
       <img src="docs/airport_smartkeys.jpg" width="600">
     </td>
     <td>
-      <img src="docs/Airport Services.jpg" width="600">
+      <img src="docs/airport_smartglasses2.jpg" width="600">
     </td>
   </tr>
     <tr>
@@ -56,10 +58,10 @@ The inspiration for this project comes from a past experiment with an AI Drive R
 <table>
   <tr>
     <td>
-      <img src="./docs/prototype.jpg" width="400">
+      <img src="./docs/prototype.jpg" width="600">
     </td>
     <td>
-      <img src="./docs/ar_app.jpg" width="400">
+      <img src="./docs/ar_app.jpg" width="600">
     </td>
   </tr>
 </table>
@@ -78,6 +80,10 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 *   **Web-Based Visualization:** View the generated network graph in an interactive web-based viewer built with SvelteKit.
 *   **Support for Multiple Visitors:** Switch between different visitor perspectives and interact with the AI from each.
 *   **Dynamic Guideline Generation:** The AI can generate guidelines on how to handle complex user requests, enhancing its problem-solving capabilities.
+
+## Architecture
+
+<img src="docs/Airport Services.jpg" width="700">
 
 ## Core Components
 
