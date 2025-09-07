@@ -18,4 +18,4 @@
   });
 </script>
 
-<div bind:this={container} style="width: 100%; height: 500px;"></div>
+<div bind:this={container} style="width: 100vw; height: 100vh;"></div>

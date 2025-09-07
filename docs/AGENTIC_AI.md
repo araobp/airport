@@ -1,69 +1,45 @@
-# Agentic AI Implementation (Schematic)
+# Agentic AI Implementation
 
-This document outlines the architecture of the agentic AI implemented in the Godot Airport project. The system uses direct node references, function calls, a ReAct loop, and distinct memory systems to allow a Gemini-based agent to interact with the simulation.
+This document outlines the implementation of the agentic AI in the Smart Airport simulation. The agent's architecture is based on the **ReAct (Reasoning and Acting)** framework, which enables the AI to reason about its tasks, create plans, and execute them by interacting with the environment.
 
-## The Roles of MCP Client and MCP Server
+## Core Components
 
-In this project, `MCP Client` and `MCP Server` are **conceptual roles**, not literal network components. They define a clear separation between the AI's decision-making logic and the game's action-execution logic.
+*   **Gemini AI Model:** The core of the agent's intelligence, responsible for natural language understanding, reasoning, and decision-making.
+*   **McpServer (`mcp_server.gd`):** The "brain" of the agent in the Godot simulation. It hosts the Gemini client, manages the conversation history, and defines the tools (functions) that the AI can use to interact with the environment.
+*   **McpClient (`mcp_client.gd`):** Represents the user-facing interface to the AI. It captures user input (text and images), sends it to the `McpServer`, and displays the AI's responses. It simulates a wearable device.
+*   **Tools:** A set of functions that the AI can call to perform actions or retrieve information. These are defined in `mcp_server.gd` and exposed to the Gemini model through the function calling feature.
 
-### MCP Server (The Tool Provider)
+## The ReAct Loop
 
-*   **What it is:** An "MCP Server" is any Godot node that groups together a set of related functions (tools) that can be executed by the AI. 
-*   **Example:** The `airport_services.gd` node is a concrete example of a component fulfilling the MCP Server role.
+The agent operates in a continuous loop, similar to the ReAct framework:
 
-### MCP Client (The Tool Consumer)
+1.  **Observe:** The `McpClient` captures the user's input (text and/or image) and sends it to the `McpServer`.
+2.  **Think:** The `McpServer` sends the user's input, along with the conversation history, to the Gemini model. The model analyzes the input, reasons about the user's intent, and decides on a course of action. This might involve generating a text response, calling one or more tools, or a combination of both.
+3.  **Act:** If the model decides to call a tool, the `McpServer` executes the corresponding function and sends the result back to the model. If the model generates a text response, the `McpServer` sends it to the `McpClient` to be displayed to the user.
 
-*   **What it is:** The "MCP Client" is the single entity that consumes the tools provided by all MCP Servers. 
-*   **Example:** The `gemini.gd` node is the component that fulfills the MCP Client role.
+This iterative process of action, observation, and thought allows the agent to learn from its interactions with the environment and refine its behavior over time.
 
-## Memory Implementation
+## Dynamic Guideline Generation
 
-The agent utilizes both short-term and long-term memory to maintain context and access knowledge.
+A key challenge for AI agents is handling complex, multi-step user requests that may not have a pre-defined tool or function. To address this, this project implements a dynamic guideline generation service.
 
-### Short-Term Memory (Conversational History)
+### Motivation
 
-*   **Implementation:** A `chat_history` array within the `gemini.gd` script.
-*   **Function:** This array stores a running log of the current conversation, including user queries, model text responses, tool calls, and the results (observations) from those tool calls. It provides the immediate context necessary for the agent to understand follow-up questions and the results of its own actions within a ReAct loop.
+Instead of hard-coding the logic for every possible complex request, the agent can be prompted to generate its own guidelines for how to approach the problem. This is a form of meta-cognition, where the agent reasons about its own problem-solving process.
 
-### Long-Term Memory (Knowledge Base)
+### Implementation
 
-*   **Implementation:** The `locations.txt` and `user_feedback.txt` files.
-*   **Function:** These files act as a static, long-term knowledge base for the agent.
-    *   `locations.txt`: Focused on Location-Based Services (LBS), it provides the agent with persistent information about points of interest within the airport (e.g., gates, shops, restrooms).
-    *   `user_feedback.txt`: This file stores user feedback for the agent to learn from. The agent can analyze this feedback to improve its performance and adapt to user needs.
+The `mcp_server.gd` script includes a `generate_guidelines` tool. When the user asks the AI to generate guidelines for a specific request, this tool is called. The current implementation uses a dummy function that returns a pre-defined set of guidelines. However, it is designed with the future possibility of calling a "meta-level" AI to generate these guidelines dynamically.
 
-## ReAct Loop Implementation
+The generated guidelines are stored in `airport/mcp_server_memory/guidelines.txt` and loaded into a global variable, making them accessible to the agent for subsequent interactions.
 
-The system implements a **ReAct (Reason-Act)** loop, enabling the agent to perform multi-step tasks.
+### Example Workflow
 
-1.  **Reason:** The `Gemini Script` sends the user's query and the short-term memory (chat history) to the Gemini model.
-2.  **Act:** If a tool is needed, the model's API response includes a `functionCall`. The `Gemini Script` executes this function.
-3.  **Observe:** The executed function returns a result, which is the "Observation".
-4.  **Repeat:** The observation is added to the short-term memory, and the loop repeats by sending the updated history back to the model.
+1.  **User:** "I want to book a flight, find a hotel, and arrange for a rental car. Can you help me with that?"
+2.  **AI (to itself):** This is a complex request. I should generate guidelines to handle it.
+3.  **AI (calls tool):** `generate_guidelines(request="Book a flight, find a hotel, and arrange for a rental car.")`
+4.  **System:** Generates and stores guidelines (e.g., 1. Find flights, 2. Find hotels, 3. Find rental cars, 4. Confirm with user).
+5.  **AI (to user):** "I can help with that. I will first search for flights. What is your destination and travel dates?"
+...and so on, following the generated guidelines.
 
-## High-Level Architecture
-
-```text
-+-------------------+   (Direct Node Reference)   +-----------------+   (HTTP Request)   +----------------+
-|   Chat Window     |---------------------------->|  Gemini Script  |------------------->|   Gemini API   |
-| (gets user input) |                             |  (MCP Client)   |                    |   (External)   |
-+-------------------+                             +-----------------+                    +----------------+
-                                                          |
-                                                          | (Executes Tool via Callable)
-                                                          v
-                                                  +----------------------------+
-                                                  |   Any Tool Provider        |
-                                                  | (e.g. airport_services.gd) |
-                                                  | (Conceptual MCP Server)    |
-                                                  +----------------------------+
-```
-
-## Data Flow: Step-by-Step
-
-1.  **USER INPUT:** User types a command in the `Chat Window`.
-2.  **SEND COMMAND:** A controller calls the `gemini.chat()` function on the `Gemini Script` (the MCP Client).
-3.  **INVOKE API (Reason):** The `Gemini Script` sends the command and the short-term memory to the Gemini API.
-4.  **AGENT DECISION (Act):** The Gemini API returns a `functionCall`.
-5.  **PARSE & EXECUTE (Observe):** The `Gemini Script` (MCP Client) parses the function call, looks up the correct MCP Server node, and executes the function using a `Callable`. The return value is the observation.
-6.  **SIMULATION UPDATE:** The function on the MCP Server node runs, manipulating the Godot scene.
-7.  **REPEAT or FINISH:** The observation is added to short-term memory. If the task requires more steps, the script repeats from step 3. Otherwise, the model returns a final text response.
+This capability significantly enhances the agent's autonomy and flexibility, allowing it to tackle a wider range of complex tasks.

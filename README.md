@@ -77,6 +77,7 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 *   **Network Graph Generation:** Generate a network graph to visualize the relationships between visitors, zones, and amenities.
 *   **Web-Based Visualization:** View the generated network graph in an interactive web-based viewer built with SvelteKit.
 *   **Support for Multiple Visitors:** Switch between different visitor perspectives and interact with the AI from each.
+*   **Dynamic Guideline Generation:** The AI can generate guidelines on how to handle complex user requests, enhancing its problem-solving capabilities.
 
 ## Core Components
 
@@ -140,6 +141,10 @@ The agent maintains a conversation history, allowing for contextual understandin
 The AI uses Gemini's function calling feature to interact with the simulation. The `McpServer` and `McpClient` nodes define a set of tools (functions) that the AI can call to perform actions (e.g., opening doors) or retrieve information. When the AI decides to use a tool, it generates a `functionCall` in its response, which is then executed by the system.
 
 Since the Gemini API does not fully support the Model Context Protocol (MCP) at this time, this implementation relies on Gemini's function calling capability as a temporary measure. We anticipate that full MCP support will be available in the near future.
+
+### Dynamic Guideline Generation
+
+To better handle complex or ambiguous user requests, the AI agent can be instructed to generate a set of guidelines for itself. This is achieved through a `generate_guidelines` function call. When invoked, the agent formulates a plan to tackle the request, which is then stored in `airport/mcp_server_memory/guidelines.txt`. This mechanism allows the agent to break down complex problems into smaller, manageable steps, showcasing a meta-cognitive ability to reason about its own problem-solving process.
 
 ### AI Agents and Location-Based Services
 
