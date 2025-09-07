@@ -13,7 +13,7 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
       <img src="docs/airport_smartkeys.jpg" width="600">
     </td>
     <td>
-      <img src="docs/Airport Services.jpg" width="600">
+      <img src="docs/airport_smartglasses2.jpg" width="600">
     </td>
   </tr>
     <tr>
@@ -77,6 +77,10 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 *   **Network Graph Generation:** Generate a network graph to visualize the relationships between visitors, zones, and amenities.
 *   **Web-Based Visualization:** View the generated network graph in an interactive web-based viewer built with SvelteKit.
 *   **Support for Multiple Visitors:** Switch between different visitor perspectives and interact with the AI from each.
+
+## Architecture
+
+<img src="docs/Airport Services.jpg" width="700">
 
 ## Core Components
 
