@@ -3,7 +3,7 @@
 [![Godot Engine](https://img.shields.io/badge/Godot-4.4-blue.svg)](https://godotengine.org)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-purple.svg)](https://ai.google.dev/)
 
-As a MVP developer for marketing, I am learning a lot of things through this project => [Marketing Perspectives](docs/MarketingPerspectives.md)
+(As a MVP developer for marketing, I am learning a lot of things through this project => [Marketing Perspectives](docs/MarketingPerspectives.md))
 
 (Work in progress)
 
