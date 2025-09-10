@@ -31,7 +31,8 @@ func _init(http_request, gemini_props, enable_history=false):
 	_enable_history = enable_history
 		
 # Chat with Gemini
-func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text, locals=null):
+#func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text, locals=null):
+func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_schema=null, callback:Callable=_output_text):
 	
 	var thought_signature = null
 
@@ -68,17 +69,19 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				}
 			})
 
+	var contents
 	if _enable_history:
 		chat_history.append(content)
+		if len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
+			# Calculate the starting index
+			var start_index = max(0, chat_history.size() - MAX_CHAT_HISTORY_LENGTH)
+			# Use slice() to get the last n elements
+			chat_history = chat_history.slice(start_index)
+		contents = chat_history + [content]
+	else:
+		contents = [content]
 	
-	if _enable_history and len(chat_history) > MAX_CHAT_HISTORY_LENGTH:
-		# Calculate the starting index
-		var start_index = max(0, chat_history.size() - MAX_CHAT_HISTORY_LENGTH)
-		# Use slice() to get the last n elements
-		chat_history = chat_history.slice(start_index)
-
 	# Payload
-	var contents = chat_history + [content]
 	var payload = {
 		"system_instruction": system_instruction_,
 		"contents": contents,
@@ -168,9 +171,9 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 				print(func_name, "(", args, ")", "\n\n")	
 				
 				# Outputs from local functions
-				for k in args:
-					if k.ends_with("_local"):
-						args[k] = await Callable(locals, k).call()
+				#for k in args:
+				#	if k.ends_with("_local"):
+				#		args[k] = await Callable(locals, k).call()
 				
 				# Call function via Callable
 				var ref = mcp_servers["ref"][mcp_server_name]

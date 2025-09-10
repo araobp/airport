@@ -1,6 +1,8 @@
 # This class extends TextEdit into a chat UI for GenAI.
 extends TextEdit
 
+var disable_input := false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	const WELCOME_MESSAGE = "Hit Tab key to hide or show this chat window. Ctrl-q to quit this simulator.\nWelcome to ABC Airport! What can I help you?\n\nYou: "
@@ -68,3 +70,15 @@ func output_message(response_text):
 var query: String = "":
 	get:
 		return text.replace(last_text, "")
+		
+func _input(event):
+	if disable_input:
+		if event is InputEventKey or event is InputEventAction:
+			# Mark the event as handled to prevent the TextEdit from processing it
+			get_viewport().set_input_as_handled()
+
+func disable_ime():
+	disable_input = true
+	
+func enable_ime():
+	disable_input = false

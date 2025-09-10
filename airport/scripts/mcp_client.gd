@@ -271,7 +271,7 @@ func _process(_delta: float) -> void:
 			mcp_servers,
 			null,
 			chat_window.output_message,
-			self
+#			self
 			)
 		
 		chat_window.insert_message("\nYou: ")
