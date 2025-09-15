@@ -18,7 +18,7 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
       <img src="docs/airport_smartglasses2.jpg" width="600">
     </td>
   </tr>
-    <tr>
+  <tr>
     <td>
       <img src="docs/screenshots/Screenshot 2025-09-15 at 22.12.50.jpg" width="600">
     </td>
@@ -76,6 +76,7 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 *   **Multimodal Input:** The AI can "see" and understand the environment through image captures from the player's viewpoint.
 *   **Function Calling:** The AI can interact with the simulation by calling functions to perform actions like opening doors.
 *   **Dynamic Location Learning:** The AI learns the locations of amenities in the airport through visual-based interaction and data logging.
+*   **Security Robot:** A security robot patrols the airport, providing an additional layer of security and interaction.
 *   **Network Graph Generation:** Generate a network graph to visualize the relationships between visitors, zones, and amenities.
 *   **Web-Based Visualization:** View the generated network graph in an interactive web-based viewer built with SvelteKit.
 *   **Support for Multiple Visitors:** Switch between different visitor perspectives and interact with the AI from each.
@@ -91,6 +92,7 @@ I believe the current boom in AI agents in the IT world will not last long, and 
     *   **`Airport.tscn`:** The main scene of the simulation.
     *   **`McpClient` & `McpServer`:** Manages the AI interaction, including communication with the Gemini AI, and in-environment actions. `McpClient` also simulates a wearable device with a camera, microphone, and speaker.
     *   **`visitors.gd`:** Manages multiple visitor instances and their interactions with the simulation.
+    *   **`security_robot.gd`:** Defines the behavior of the security robot.
     *   **`locations.txt`:** Stores the data collected by the AI agent about the locations of amenities in CSV format.
 *   **Network Graph Viewer (`viewer/`):** A SvelteKit application to visualize the network graph data.
 *   **Blender Models (`blender/`):** The source `.blend` files for the 3D models used in the simulation.
@@ -101,6 +103,9 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 ```
 .
 ├── airport/              # Godot project
+│   ├── SecurityRobot/      # Security robot assets
+│   ├── Visitors/           # Visitor assets
+│   └── WearableDevice/     # Wearable device assets
 ├── blender/              # Blender source files
 ├── data/                 # Generated data (e.g., network graph)
 ├── docs/                 # Project documentation
@@ -151,6 +156,10 @@ Since the Gemini API does not fully support the Model Context Protocol (MCP) at 
 ### Dynamic Guideline Generation
 
 To better handle complex or ambiguous user requests, the AI agent can be instructed to generate a set of guidelines for itself. This is achieved through a `generate_guidelines` function call. When invoked, the agent formulates a plan to tackle the request, which is then stored in `airport/mcp_server_memory/guidelines.txt`. This mechanism allows the agent to break down complex problems into smaller, manageable steps, showcasing a meta-cognitive ability to reason about its own problem-solving process.
+
+## Security Robot
+
+A new security robot has been added to the airport simulation. The robot patrols the airport and can be interacted with. The robot is an example of an autonomous agent in the simulation, with its own behavior and functions. The `security_robot.gd` script defines the robot's behavior, and it can be extended with more advanced features in the future.
 
 ### AI Agents and Location-Based Services
 
@@ -246,7 +255,7 @@ For a summary of the limitations on MCP through this project, please see the [do
 
 ## Development Notes
 
-This project leverages the Gemini CLI for various development tasks, including code review and updating markdown documentation files like this README.
+This project leverages the Gemini CLI for various development tasks, including code review and updating markdown documentation files like this README. The AI is also used to generate commit messages and to help with the overall development process.
 
 ## Future Work
 

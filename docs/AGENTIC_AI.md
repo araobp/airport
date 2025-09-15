@@ -8,6 +8,7 @@ This document outlines the implementation of the agentic AI in the Smart Airport
 *   **McpServer (`mcp_server.gd`):** The "brain" of the agent in the Godot simulation. It hosts the Gemini client, manages the conversation history, and defines the tools (functions) that the AI can use to interact with the environment.
 *   **McpClient (`mcp_client.gd`):** Represents the user-facing interface to the AI. It captures user input (text and images), sends it to the `McpServer`, and displays the AI's responses. It simulates a wearable device.
 *   **Tools:** A set of functions that the AI can call to perform actions or retrieve information. These are defined in `mcp_server.gd` and exposed to the Gemini model through the function calling feature.
+*   **Security Robot:** The security robot is another agent in the simulation, with its own set of behaviors and functions. It demonstrates how multiple agents can coexist and interact in the same environment.
 
 ## The ReAct Loop
 

@@ -9,10 +9,12 @@
 - [ ] Implement more complex multi-step tasks
 - [ ] Improve context engineering for better situational awareness
 - [x] Refactor emotion analysis to a more generic user feedback system
+- [ ] Implement security robot patrols
 
 ## Phase 3: Viewer and Visualization
 - [ ] Improve network graph visualization
 - [ ] Add more interactive elements to the viewer
+- [ ] Add security robot data to the network graph
 
 ## Bugs
 - [ ] Zone ID with blue color is not handled correctly.

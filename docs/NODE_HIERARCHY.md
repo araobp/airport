@@ -68,6 +68,7 @@ The `Airport` node contains the physical environment of the airport, including t
   - Posters (Node3D)
     - PosterA-2 (Sprite3D)
     - ...
+  - SecurityRobot (PackedScene)
 ```
 
 ## Visitor Nodes
@@ -78,12 +79,12 @@ The `Visitors` node is a new addition that manages multiple `Visitor` instances.
 - SubViewportContainer
   - SubViewport
     - Visitors (Node)
-      - Visitor1 (PackedScene)
-      - Visitor2 (PackedScene)
+      - Man (PackedScene)
+      - Woman (PackedScene)
 ```
 
 *   **`Visitors`:** A new node that uses the `visitors.gd` script to manage multiple `Visitor` instances.
-*   **`Visitor1` and `Visitor2`:** Instances of the `Visitor.tscn` packed scene, which represents a user-controlled character. These are dynamically added/removed by `visitors.gd`.
+*   **`Man` and `Woman`:** Instances of the `Man.tscn` and `Woman.tscn` packed scenes, which represent user-controlled characters. These are dynamically added/removed by `visitors.gd`.
 *   **`OptionButton`:** A UI element that allows the user to switch between different `Visitor` instances.
 
 ## UI Nodes

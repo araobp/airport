@@ -50,12 +50,14 @@ Here's how MCP could be applied at ABC International Airport:
 -   `lock_door(door_id: str)`: In an emergency, an AI system can trigger lockdown protocols for specific areas.
 -   `activate_alarm(alarm_zone: str)`: Trigger alarms in response to detected threats.
 -   `deploy_emergency_response(team_type: str, location: str)`: AI can assist in coordinating emergency response teams.
+-   `patrol(area: str)`: Instructs a security robot to patrol a specific area.
 
 **Resources:**
 
 -   `security_feed://{camera_id}/live`: Real-time, anonymized video streams from security cameras (with privacy safeguards) for AI-driven anomaly detection.
 -   `access_logs://{area_id}/last_hour}`: Logs of access control systems to monitor unauthorized entries.
 -   `sensor_data://{sensor_type}/realtime`: Readings from smoke detectors, chemical sensors, or structural health monitors.
+-   `security_robot_status://{robot_id}`: Real-time status of a security robot, including its location, battery level, and current activity.
 
 ### 4. Predictive Maintenance and Infrastructure Management:
 
