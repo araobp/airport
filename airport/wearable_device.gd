@@ -33,7 +33,7 @@ func _input(event):
 	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:
 		#rotation.y -= event.relative.x * CAMERA_SENS
 		rotation.x -= event.relative.y * CAMERA_SENS
-		rotation.x = clamp(rotation.x, -0.5, 1.2)
+		rotation.x = clamp(rotation.x, -1.0, 1.2)
 
 func capture_image(camera_resolution_height, enable_wide_fov=false):
 

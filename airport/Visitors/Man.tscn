@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ghyan0ic0bur"]
+[gd_scene load_steps=3 format=3 uid="uid://ghyan0ic0bur"]
 
 [ext_resource type="PackedScene" uid="uid://ehggwtlhqbqt" path="res://Visitors/man/man_rigged_with_bag.glb" id="1_68y05"]
+[ext_resource type="PackedScene" uid="uid://c81b1niy7h1nn" path="res://WearableDevice/smartkey.glb" id="2_al033"]
 
 [node name="Man" instance=ExtResource("1_68y05")]
 
@@ -668,40 +669,48 @@ bones/949/position = Vector3(-0.0175653, 1.57684, 0.153612)
 bones/950/rotation = Quaternion(1.42109e-14, 0.707107, 0.707107, -5.41043e-15)
 
 [node name="Backpack" parent="Human_rigify/Skeleton3D" index="0"]
-transform = Transform3D(-1, 0, -1.49012e-07, 0, 1, 0, 1.3411e-07, 0, -1, -0.000234323, 1.20922, -0.151352)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 1.49012e-08, 0, 1, 1.16415e-10, 0, -1.58325e-08)
 
 [node name="Cube_001" parent="Human_rigify/Skeleton3D" index="1"]
-transform = Transform3D(0.132819, 1.75552, 1.0029e-07, -1.75552, 0.132819, 1.50253e-07, 1.44238e-07, -8.51801e-08, 1.76053, 0.166204, 1.19113, -0.165136)
+transform = Transform3D(0.132819, 1.75552, 0, -1.75552, 0.132819, 0, 1.97916e-09, 2.61592e-08, 1.76053, 0.166204, 1.19113, -0.165136)
 
 [node name="Cube_002" parent="Human_rigify/Skeleton3D" index="2"]
-transform = Transform3D(0.823749, -4.06998e-07, 1.08925, -1.08925, 8.13995e-08, 0.823749, -3.13972e-07, -1.36566, -2.27479e-07, 0.122555, 1.15522, -0.239993)
+transform = Transform3D(0.823749, 8.13995e-08, 1.08925, -1.08925, 5.69797e-07, 0.823749, -3.13323e-07, -1.36566, 4.23229e-07, 0.122555, 1.15522, -0.239993)
 
 [node name="Cube_003" parent="Human_rigify/Skeleton3D" index="3"]
-transform = Transform3D(1.36566, -3.04082e-07, 1.00583e-07, -1.00583e-07, -1.62799e-07, 1.36566, -2.83732e-07, -1.36566, -2.44199e-07, 0.119795, 1.15569, -0.23726)
+transform = Transform3D(1.36566, 0, 0, 0, 4.88397e-07, 1.36566, 2.03499e-08, -1.36566, 4.88397e-07, 0.119795, 1.15569, -0.23726)
 
 [node name="Cube_004" parent="Human_rigify/Skeleton3D" index="4"]
-transform = Transform3D(-0.00275414, 1.75513, -0.143702, -1.76076, -0.000383118, 0.0290683, 0.02894, 0.143728, 1.75489, 0.169739, 1.18657, -0.16509)
+transform = Transform3D(-0.00275404, 1.75512, -0.143702, -1.76076, -0.000382908, 0.0290683, 0.02894, 0.143728, 1.75489, 0.169739, 1.18657, -0.16509)
 
 [node name="FastnerR_001" parent="Human_rigify/Skeleton3D" index="5"]
-transform = Transform3D(-1, 1.9857e-08, -1.47683e-07, 0, 0.991081, 0.133258, 1.3411e-07, 0.133258, -0.991081, -0.0401253, 1.20882, -0.181587)
+transform = Transform3D(-1, 9.72366e-09, -1.45286e-07, -9.72366e-09, 0.991081, 0.133258, 1.30385e-07, 0.133258, -0.991081, -0.0401253, 1.20882, -0.181587)
 
 [node name="FastnerR_002" parent="Human_rigify/Skeleton3D" index="6"]
-transform = Transform3D(-1, 2.38916e-08, -1.47084e-07, 0, 0.987063, 0.160334, 1.3411e-07, 0.160334, -0.987063, -0.0448892, 1.21035, -0.181295)
+transform = Transform3D(-1, 1.14224e-08, -1.41561e-07, -1.14224e-08, 0.987063, 0.160334, 1.2666e-07, 0.160334, -0.987063, -0.0448892, 1.21035, -0.181295)
 
 [node name="FastnerR_003" parent="Human_rigify/Skeleton3D" index="7"]
-transform = Transform3D(-1.88354, 2.20571e-07, 1.73561e-07, 0, -1.16475, 1.48023, 2.52602e-07, 1.48023, 1.16475, -0.00472569, 1.20642, -0.151119)
+transform = Transform3D(-1.88354, 1.11759e-07, -5.42694e-08, -1.11759e-07, -1.16475, 1.48023, 2.62025e-08, 1.48023, 1.16475, -0.00472569, 1.20642, -0.151119)
 
 [node name="FastnerR_004" parent="Human_rigify/Skeleton3D" index="8"]
-transform = Transform3D(-1.88354, 2.79956e-07, -1.99894e-08, 0, 0.134147, 1.87875, 2.52602e-07, 1.87875, -0.134147, -0.00314677, 1.20714, -0.149301)
+transform = Transform3D(-1.88354, 1.34849e-07, -1.44821e-07, -1.34849e-07, 0.134146, 1.87875, 1.16754e-07, 1.87875, -0.134146, -0.00314677, 1.20714, -0.149301)
 
 [node name="Plane" parent="Human_rigify/Skeleton3D" index="9"]
-transform = Transform3D(-1, 2.54045e-08, -1.4683e-07, 0, 0.98536, 0.170486, 1.3411e-07, 0.170486, -0.98536, -0.000468606, 1.05236, -0.0852829)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 1.49012e-08, 0, 1, 1.16415e-10, 0, -1.58325e-08)
 
 [node name="Plane_001" parent="Human_rigify/Skeleton3D" index="10"]
-transform = Transform3D(-1, -1.06178e-07, 5.32907e-14, 0, -2.54827e-07, -1, 1.3411e-07, -0.712547, 3.57628e-07, -0.000468644, 1.45572, -0.0917986)
+transform = Transform3D(-1, -5.21541e-08, -7.31938e-08, 7.31939e-08, -2.54827e-07, -1, 5.82927e-08, -0.712547, 3.57628e-07, -0.000468643, 1.45572, -0.0917987)
 
 [node name="Plane_002" parent="Human_rigify/Skeleton3D" index="11"]
-transform = Transform3D(-0.923513, 0.383568, -1.67428e-07, 0.383568, 0.923513, 0, 1.23853e-07, -5.14405e-08, -1.12359, -0.0482113, 1.40361, 0.290249)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 1.49012e-08, 0, 1, 1.16415e-10, 0, -1.58325e-08)
 
 [node name="Plane_003" parent="Human_rigify/Skeleton3D" index="12"]
-transform = Transform3D(-0.94219, -0.335079, -1.7199e-07, -0.335079, 0.94219, 0, 1.26358e-07, 4.49376e-08, -1.15421, 0.0477428, 1.40361, 0.296011)
+transform = Transform3D(-0.94219, -0.335079, -1.59352e-07, -0.335079, 0.94219, -2.74925e-08, 1.24022e-07, 1.88263e-08, -1.15421, 0.0477428, 1.40361, 0.296011)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Human_rigify/Skeleton3D" index="22"]
+transform = Transform3D(0.996777, 0.0801591, -0.00328467, 0.0032938, 1.81794e-05, 0.999995, 0.0801587, -0.996782, -0.000245929, -0.0125598, 1.29358, 0.12964)
+bone_name = "MCH-breast-parent"
+bone_idx = 4
+
+[node name="SmartKey" parent="Human_rigify/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource("2_al033")]
+transform = Transform3D(-1, 8.69573e-08, -9.00918e-09, 0, 0.103053, 0.994676, 8.74228e-08, 0.994676, -0.103053, -2.13615e-08, -0.0497425, -0.0936814)
