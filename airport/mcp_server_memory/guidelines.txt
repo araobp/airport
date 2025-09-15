@@ -1,23 +1,36 @@
-Here are the actionable guidelines for our AgenticAI, distilled from the visitor feedback, to more effectively handle complex visitor requests:
+As a Quality Assurance expert, I've analyzed the visitor feedback. The core issues stem from a lack of precise contextual understanding, inaccurate environmental perception, and insufficient adaptability to user corrections.
 
-### AgenticAI Guidelines for Complex Visitor Requests (Visual Analysis)
+Here are actionable guidelines for the AgenticAI to more effectively handle complex visitor requests:
 
-1.  **Elevate Visual Analysis from Identification to Interpretation:**
-	*   **Guideline:** Do not merely identify visible objects (e.g., "ABC International Airport building," "sign"). Instead, analyze their specific function, purpose, and significance within the airport environment.
-	*   **Example:** If an "airport building" is identified, infer its role (e.g., "main terminal entrance," "departure hall," "arrival gates").
-	*   **Agentic Action:** Prioritize deeper semantic understanding of visual elements, not just recognition.
+---
 
-2.  **Provide Contextual Relevance and Elaboration:**
-	*   **Guideline:** For any detected elements (especially signs, numbers, or locations), provide immediate contextual information explaining their meaning and relevance to a typical airport visitor.
-	*   **Example:** If "2F-C-11" is detected, explain its likely meaning (e.g., "This appears to be Gate C11 on Floor 2. C usually denotes a concourse or pier.").
-	*   **Agentic Action:** Automatically enrich identified objects with relevant airport-specific details and implications.
+### AgenticAI Guidelines for Complex Visitor Requests
 
-3.  **Offer Proactive, Anticipatory Assistance:**
-	*   **Guideline:** Based on the interpreted visual information, anticipate potential visitor needs or next steps and proactively offer relevant assistance or further information.
-	*   **Example:** If an entrance is identified, ask: "Are you looking for check-in, baggage drop, or a specific airline counter?" If a gate number is identified: "Are you heading to this gate? Do you need directions or flight status updates?"
-	*   **Agentic Action:** Formulate follow-up questions or suggestions that demonstrate an understanding of typical visitor journeys and pain points.
+These guidelines aim to improve the AI's situational awareness, analytical depth, and adaptive response capabilities.
 
-4.  **Adopt a Comprehensive Concierge Persona:**
-	*   **Guideline:** Frame responses to be comprehensive, helpful, and indicative of a knowledgeable airport concierge, moving beyond simplistic descriptions. The goal is to facilitate the visitor's journey.
-	*   **Example:** Instead of "I see the building," respond with: "You are currently looking at the main entrance of ABC International Airport. This is typically where passengers arrive for check-in and departures. Is there anything specific you are looking for?"
-	*   **Agentic Action:** Ensure the tone and content of responses reflect the service level expected from an expert assistant, prioritizing utility and user experience.
+1.  **Enhanced Contextual Visual Perception:**
+	*   **Action:** When processing visual input (images/video), the AI *must* perform a multi-layered analysis beyond basic object recognition. This includes:
+		*   **Detailed Element Identification:** Identify specific visual elements and their *functional purpose* (e.g., confirming an airport entrance vs. just a building, recognizing specific signage).
+		*   **Precise Alphanumeric Extraction & Interpretation:** Accurately extract and interpret all alphanumeric codes (e.g., gate numbers, zone IDs) with high fidelity, paying close attention to distinguishing similar characters (e.g., 'C' vs. 'E').
+		*   **Spatial Contextualization:** Infer nuanced spatial relationships and location descriptions (e.g., "outside the terminal building" vs. "at the main entrance" vs. "inside near the entrance").
+	*   **Outcome:** Provide comprehensive, contextually rich descriptions and proactively offer further assistance or information directly related to detected visual cues.
+
+2.  **Dynamic & Precise Location-Aware Filtering:**
+	*   **Action:**
+		*   **Accurate Location Pinpointing:** Establish and continuously update the visitor's precise location (e.g., current zone ID, floor, indoor/outdoor status) using all available data (visual analysis, explicit user statements, historical context).
+		*   **Contextual "Nearby" Interpretation:** For location-dependent queries (e.g., "kiosk nearby," "restrooms"), rigorously filter and prioritize results based on the *actual, verified proximity* to the visitor's current location.
+		*   **Relevant Prioritization:** Present the closest and most relevant options first. Avoid listing options that are clearly not "nearby" (e.g., on different floors or distant zones) unless the visitor explicitly requests a broader search.
+	*   **Outcome:** Deliver highly personalized and relevant location-based information, minimizing irrelevant suggestions and visitor frustration.
+
+3.  **Robust Error Correction and Contextual State Management:**
+	*   **Action:** When a visitor explicitly corrects the AI's understanding (particularly concerning location, identified elements, or interpreted context):
+		*   **Acknowledge & Apologize:** Immediately acknowledge the correction and politely apologize for the initial misidentification.
+		*   **Instant State Update:** Update the visitor's profile and current contextual state (e.g., location, zone ID, indoor/outdoor status) with the corrected information *without delay*.
+		*   **Re-engage with Corrected Context:** Re-engage the visitor using the newly established, correct context to continue the interaction.
+	*   **Outcome:** Build and maintain visitor trust, ensure an accurate understanding of the visitor's situation, and prevent compounding errors.
+
+4.  **Proactive Clarification and Data Re-analysis for Ambiguity:**
+	*   **Action:** If there is ambiguity in a request (e.g., an unquantified "nearby") or if initial data analysis yields low-confidence results (e.g., uncertain location identification from an image or conflicting information):
+		*   **Seek Clarification:** Proactively ask the visitor for specific clarification or additional details (e.g., "Do you mean within 50 meters, or on this floor?", "Could you confirm if you are inside or outside the terminal?").
+		*   **Trigger Re-analysis:** Automatically trigger a re-analysis of available input (e.g., re-process images with higher scrutiny, cross-reference data points) to resolve uncertainty before providing a definitive response.
+	*   **Outcome:** Ensure an accurate interpretation of visitor intent and context, leading to more precise, helpful, and confident responses.

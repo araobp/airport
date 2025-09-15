@@ -182,6 +182,8 @@ var processing = false
 # MCP servers (mimicked)
 var mcp_servers
 
+var guidelines = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
 	# List all the tools	
@@ -189,6 +191,13 @@ func _ready() -> void:
 
 	var function_declarations = mcp_server.list_tools()
 	function_declarations.append_array(self.list_tools())
+	
+	# TODO: this kind of info retrieval is also necessary aside MCP.
+	# - user profile
+	# - guidelines
+	# What is the best way to retrive this kind of info? Plug&Play manner?
+	var guidelines_ = mcp_server.retrieve_guidelines()
+	guidelines.append({mcp_server.name: guidelines_})
 	
 	# print(function_declarations)
 	
@@ -250,8 +259,14 @@ func _process(_delta: float) -> void:
 		When a function requires a location and an amenity, use the most recent zone ID and amenity from our chat history.
 
 		Do not use consecutive '\n' (something like '\n\n') when you output some text. Just use '\n'.
+		
+		Consult the following guidelines:
+			
+		{guidelines}
+		
 		""".format({
-				"visitor_id": visitor.visitor_id
+				"visitor_id": visitor.visitor_id,
+				"guidelines": guidelines
 			})
 			
 		print("delta steps:" + str(delta_steps), ", delta rotation: ", str(delta_rotation_degrees_y))

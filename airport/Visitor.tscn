@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyi1xyqt6sxxg"]
+[gd_scene load_steps=5 format=3 uid="uid://cyi1xyqt6sxxg"]
 
 [ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://scripts/visitor.gd" id="1_ffyx3"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://scripts/mcp_client.gd" id="2_lp8ge"]
 [ext_resource type="Script" uid="uid://bqaclwo5xhpoq" path="res://wearable_device.gd" id="3_ficbt"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hh24k"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh24k"]
 radius = 0.2
@@ -13,11 +11,6 @@ height = 1.6
 [node name="Visitor" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_ffyx3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.4, 0, 0.8, 0)
-mesh = SubResource("CapsuleMesh_hh24k")
-skeleton = NodePath("../../../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -30,8 +23,9 @@ script = ExtResource("2_lp8ge")
 timeout = 60.0
 
 [node name="WearableDevice" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 script = ExtResource("3_ficbt")
 
 [node name="Camera3D" type="Camera3D" parent="WearableDevice"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 fov = 60.0
+near = 0.2

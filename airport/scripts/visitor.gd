@@ -6,6 +6,7 @@ var visitor_id = ""
 @export var camera_resolution_height: int = 360
 @export var delta_steps_threshold: int = 3
 @export var delta_rotation_threshold: float = 20.0
+@export var visitor: Node3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -14,6 +15,8 @@ const CAMERA_SENS = 0.003
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+var walking = false
+
 func _ready():
 	visitor_id = self.name
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -21,8 +24,8 @@ func _ready():
 func _input(event):
 	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:
 		rotation.y -= event.relative.x * CAMERA_SENS
-		rotation.x -= event.relative.y * CAMERA_SENS
-		rotation.x = clamp(rotation.x, -0.5, 1.2)
+		#rotation.x -= event.relative.y * CAMERA_SENS
+		#rotation.x = clamp(rotation.x, -0.5, 1.2)
 
 func _physics_process(delta):
 	
@@ -45,8 +48,9 @@ func _physics_process(delta):
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
-
+		
 		move_and_slide()
+		
 
 var utilities = load("res://scripts/utilities.gd").new()
 

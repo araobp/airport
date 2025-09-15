@@ -172,6 +172,14 @@ var USER_FEEDBACK_TOOL = {
 
 func register_user_feedback(args):
 	utilities.save_it_as_long_term_memory(USER_FEEDBACK_PATH, JSON.stringify(args))
+	
+func retrieve_guidelines():
+	var file = FileAccess.open(GUIDELINES_PATH, FileAccess.READ)
+	if file:
+		var guidelines = file.get_as_text()
+		return {"guidelines": guidelines}
+	else:
+		return {"guidelines": null}
 
 var TOOLS = [
 	GREETING_TOOL,

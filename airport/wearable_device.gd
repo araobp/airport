@@ -7,6 +7,8 @@ extends Node3D
 
 @onready var camera_3d = $Camera3D
 
+const CAMERA_SENS = 0.003
+
 # Step counter (accelerometer simulation)
 var pos: Vector3 = Vector3.ZERO
 var sigma_delta_d: float = 0.0
@@ -26,6 +28,12 @@ func _physics_process(delta: float) -> void:
 	if sigma_delta_d > stride:
 		steps += 1
 		sigma_delta_d = 0.0
+
+func _input(event):
+	if Globals.mode == Globals.MODE.CONTROL and event is InputEventMouseMotion:
+		#rotation.y -= event.relative.x * CAMERA_SENS
+		rotation.x -= event.relative.y * CAMERA_SENS
+		rotation.x = clamp(rotation.x, -0.5, 1.2)
 
 func capture_image(camera_resolution_height, enable_wide_fov=false):
 

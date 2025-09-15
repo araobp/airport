@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bgti7ln6qyucl"
+path.s3tc="res://.godot/imported/woman_rigged_sss-young_lightskinned_female_diffuse2.png-23685a46e7716af0c61e2c7f79b66796.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "a94b857f19117a11852bf436316d76db"
+}
+
+[deps]
+
+source_file="res://Visitors/woman/woman_rigged_sss-young_lightskinned_female_diffuse2.png"
+dest_files=["res://.godot/imported/woman_rigged_sss-young_lightskinned_female_diffuse2.png-23685a46e7716af0c61e2c7f79b66796.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

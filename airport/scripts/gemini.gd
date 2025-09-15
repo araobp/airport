@@ -121,7 +121,7 @@ func chat(query, system_instruction, base64_images=null, mcp_servers=null, json_
 		var body = res[3]
 		# print(body.get_string_from_utf8())
 		var json = JSON.parse_string(body.get_string_from_utf8())
-		print(json)
+		# print(json)
 		var candidate
 		var parts
 		if json and "candidates" in json and len(json["candidates"]) > 0:
