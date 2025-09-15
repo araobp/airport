@@ -20,10 +20,10 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
   </tr>
     <tr>
     <td>
-      <img src="docs/screenshots/Screenshot 2025-08-23 at 20.26.20.jpg" width="600">
+      <img src="docs/screenshots/Screenshot 2025-09-15 at 22.12.50.jpg" width="600">
     </td>
     <td>
-      <img src="docs/screenshots/Screenshot 2025-08-23 at 20.27.01.jpg" width="600">
+      <img src="docs/screenshots/Screenshot 2025-09-15 at 22.13.45.jpg" width="600">
     </td>
   </tr>
 </table>
