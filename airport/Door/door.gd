@@ -2,14 +2,16 @@ extends Node3D
 
 var forced_open = false
 @onready var state_machine = $AnimationTree["parameters/playback"]
-
+	
 func _process(_delta):
-	var num_boies = len($SensingArea.get_overlapping_bodies())
-
-	if num_boies > 0:
-		if state_machine.get_current_node() != "Open":
-			state_machine.travel("Open")
-	else:
+	var visitors_in_the_area = false
+	for body in $SensingArea.get_overlapping_bodies():
+		if body.is_in_group("Visitors"):
+			visitors_in_the_area = true
+			if state_machine.get_current_node() != "Open":
+				state_machine.travel("Open")
+			
+	if !visitors_in_the_area:
 		if state_machine.get_current_node() == "Open" and not forced_open:
 			state_machine.travel("Close")
 		

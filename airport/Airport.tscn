@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=32 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://scripts/mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="LightmapGIData" uid="uid://bk0jew8eckr6q" path="res://Airport.lmbake" id="2_oh4gc"]
@@ -16,11 +16,12 @@
 [ext_resource type="Texture2D" uid="uid://b3l6frdsi24x5" path="res://Images/B_16_9.jpg" id="14_r0grm"]
 [ext_resource type="PackedScene" uid="uid://cyi1xyqt6sxxg" path="res://Visitor.tscn" id="15_2bi0w"]
 [ext_resource type="Texture2D" uid="uid://bhboy8sfl31b5" path="res://Images/C_1_1.jpg" id="15_5omxl"]
-[ext_resource type="Script" uid="uid://kmpenk6um8q0" path="res://visitors.gd" id="15_kdhq5"]
+[ext_resource type="Script" uid="uid://kmpenk6um8q0" path="res://scripts/visitors.gd" id="15_kdhq5"]
+[ext_resource type="Script" uid="uid://dfu2x6jn6omnn" path="res://scripts/security_robot.gd" id="15_oh4gc"]
 [ext_resource type="Texture2D" uid="uid://bdys3iodlw11v" path="res://Images/D_16_9.jpg" id="16_kdhq5"]
-[ext_resource type="PackedScene" uid="uid://dmlk1qanh1l26" path="res://SecurityRobot/SecurityRobot.tscn" id="17_kdhq5"]
-[ext_resource type="Script" uid="uid://duicatdmwyic0" path="res://SecurityRobot/security_robot.gd" id="18_3s6kk"]
+[ext_resource type="PackedScene" uid="uid://bwf7q0h41bx54" path="res://SecurityRobot/security_robot.glb" id="16_nahyp"]
 [ext_resource type="PackedScene" uid="uid://ghyan0ic0bur" path="res://Visitors/Man.tscn" id="18_nahyp"]
+[ext_resource type="ArrayOccluder3D" uid="uid://brh0v6opv1amb" path="res://Airport.occ" id="22_6tdw3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kdhq5"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -52,6 +53,9 @@ rings = 8
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oh4gc"]
 albedo_color = Color(1, 1, 0, 1)
 roughness = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6tdw3"]
+size = Vector3(0.45, 1.4, 0.6)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
 content_margin_left = 10.0
@@ -984,6 +988,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, 55.2984)
 mesh = SubResource("SphereMesh_4dk7p")
 surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
 
+[node name="SecurityRobot" type="CharacterBody3D" parent="Airport" node_paths=PackedStringArray("markers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3992, 5.03409, 76.7723)
+axis_lock_linear_y = true
+script = ExtResource("15_oh4gc")
+markers = NodePath("../Markers")
+
+[node name="security_robot" parent="Airport/SecurityRobot" instance=ExtResource("16_nahyp")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Airport/SecurityRobot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.710621, 0)
+shape = SubResource("BoxShape3D_6tdw3")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ChatWindow" type="TextEdit" parent="CanvasLayer"]
@@ -991,13 +1007,11 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 384.0
-offset_top = -376.0
-offset_right = -384.0
-offset_bottom = -8.0
+offset_left = 256.0
+offset_top = -240.0
+offset_right = -256.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_v3stw")
 wrap_mode = 1
 caret_blink = true
@@ -1009,24 +1023,24 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -144.0
-offset_top = -1064.0
-offset_right = -16.0
-offset_bottom = -1000.0
+offset_left = -117.0
+offset_top = -632.0
+offset_right = -21.0
+offset_bottom = -600.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_font_sizes/font_size = 20
 flat = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 physics_interpolation_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_right = 1152.0
+offset_bottom = 648.0
+stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 physics_interpolation_mode = 0
 handle_input_locally = false
-size = Vector2i(1920, 1080)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Visitors" type="Node" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("chat_window", "visitors_menu")]
@@ -1034,14 +1048,16 @@ script = ExtResource("15_kdhq5")
 chat_window = NodePath("../../../CanvasLayer/ChatWindow")
 visitors_menu = NodePath("../../../CanvasLayer/OptionButton")
 
-[node name="Visitor1" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
+[node name="Visitor1" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") groups=["Visitors"] instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -41.5063, 5.04603, -67.2689)
 mcp_server = NodePath("../../../..")
+
+[node name="CollisionShape3D" parent="SubViewportContainer/SubViewport/Visitors/Visitor1" index="0" groups=["Visitors"]]
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Visitor1" index="1" node_paths=PackedStringArray("chat_window")]
 chat_window = NodePath("../../../../../CanvasLayer/ChatWindow")
 
-[node name="Visitor2" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
+[node name="Visitor2" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") groups=["Visitors"] instance=ExtResource("15_2bi0w")]
 transform = Transform3D(-0.932235, 0, 0.361852, 0, 1, 0, -0.361852, 0, -0.932235, -9.13142, 5.04603, -21.6384)
 mcp_server = NodePath("../../../..")
 
@@ -1054,7 +1070,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017719, 1.20325, -0.183211)
 [node name="Man" parent="SubViewportContainer/SubViewport/Visitors/Visitor2" instance=ExtResource("18_nahyp")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="Visitor3" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server", "visitor") instance=ExtResource("15_2bi0w")]
+[node name="Visitor3" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server", "visitor") groups=["Visitors"] instance=ExtResource("15_2bi0w")]
 transform = Transform3D(0.914783, 0, 0.403945, 0, 1, 0, -0.403945, 0, 0.914783, -10.9982, 5.04603, -3.84502)
 mcp_server = NodePath("../../../..")
 visitor = NodePath("Woman")
@@ -1439,63 +1455,62 @@ bones/944/position = Vector3(-0.0132655, 1.45393, 0.133359)
 bones/944/rotation = Quaternion(-5.44285e-15, 0.707107, 0.707107, -4.60574e-15)
 
 [node name="Circle" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="0"]
-transform = Transform3D(-0.0868105, -0.0064569, -1.17399, -0.0145438, 1.17711, -0.00539865, 1.17392, 0.0141059, -0.0868828, 0.137354, 1.27412, 0.0110929)
+transform = Transform3D(-0.0868105, -0.0064568967, -1.1739873, -0.01454379, 1.1771084, -0.0053986534, 1.1739155, 0.014105907, -0.08688279, 0.1373541, 1.2741172, 0.011092852)
 
 [node name="Circle_001" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="1"]
-transform = Transform3D(0.0958404, -0.102256, 1.16884, 0.0153269, 1.17274, 0.10134, -1.1732, 0.00696751, 0.0968079, 0.161097, 1.27652, 0.0129676)
+transform = Transform3D(0.09584042, -0.10225567, 1.168838, 0.015326911, 1.1727405, 0.10134037, -1.1732029, 0.0069675073, 0.0968079, 0.1610972, 1.2765224, 0.012967618)
 
 [node name="Circle_002" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="2"]
-transform = Transform3D(-4.52282e-05, -0.0024111, 0.000587939, -1.75069e-05, -0.000587713, -0.00241152, 0.00248169, -4.80879e-05, -6.29685e-06, 0.137328, 1.1427, -0.0569035)
+transform = Transform3D(-4.5228167e-05, -0.002411099, 0.0005879394, -1.7506882e-05, -0.00058771286, -0.0024115157, 0.0024816869, -4.808785e-05, -6.29685e-06, 0.13732763, 1.1426967, -0.056903508)
 
 [node name="Circle_003" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="3"]
-transform = Transform3D(-0.000258433, -0.00245958, 0.000211606, -0.00124014, -5.46222e-05, -0.00214946, 0.00213457, -0.000329517, -0.00122317, 0.171545, 1.13184, -0.0551491)
+transform = Transform3D(-0.00025843323, -0.0024595836, 0.00021160633, -0.0012401362, -5.4622244e-05, -0.0021494648, 0.002134571, -0.00032951712, -0.0012231701, 0.171545, 1.1318448, -0.055149075)
 
 [node name="Circle_004" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="4"]
-transform = Transform3D(-0.00121296, -0.00216491, -5.48667e-05, -3.55286e-06, 6.48761e-05, -0.00248131, 0.0021656, -0.00121247, -3.48019e-05, 0.140754, 1.14056, 0.0860765)
+transform = Transform3D(-0.0012129607, -0.0021649087, -5.4866745e-05, -3.5528574e-06, 6.487612e-05, -0.0024813097, 0.0021656018, -0.0012124674, -3.4801924e-05, 0.14075372, 1.1405634, 0.08607653)
 
 [node name="Circle_005" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="5"]
-transform = Transform3D(-0.00103039, -0.00225321, 0.0001499, -1.11503e-05, -0.000159689, -0.00247699, 0.00225816, -0.00102892, 5.6168e-05, 0.141463, 1.12602, 0.0842634)
+transform = Transform3D(-0.0010303907, -0.0022532062, 0.00014990012, -1.11503105e-05, -0.00015968905, -0.0024769932, 0.0022581606, -0.0010289197, 5.616804e-05, 0.14146312, 1.1260211, 0.0842634)
 
 [node name="Circle_006" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="6"]
-transform = Transform3D(-0.000183231, -0.002454, -0.000324715, -2.95956e-05, 0.000327751, -0.00246025, 0.00247521, -0.000177742, -5.34543e-05, 0.168595, 1.14482, 0.0822727)
+transform = Transform3D(-0.00018323143, -0.002453997, -0.00032471452, -2.9595554e-05, 0.00032775133, -0.002460249, 0.0024752119, -0.00017774233, -5.3454267e-05, 0.16859494, 1.1448224, 0.08227271)
 
 [node name="Circle_007" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="7"]
-transform = Transform3D(-0.000183041, -0.00247507, 4.05704e-05, -3.06657e-05, -3.84109e-05, -0.00248167, 0.00247521, -0.000183506, -2.77457e-05, 0.171448, 1.13015, 0.0800469)
+transform = Transform3D(-0.00018304084, -0.0024750696, 4.057042e-05, -3.066573e-05, -3.841093e-05, -0.002481674, 0.002475213, -0.00018350634, -2.7745704e-05, 0.17144793, 1.1301497, 0.08004687)
 
 [node name="Circle_008" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="8"]
-transform = Transform3D(-0.00039904, -0.00244309, -0.000182147, -2.24091e-05, 0.000188179, -0.00247492, 0.00244977, -0.000396232, -5.23088e-05, 0.168925, 1.14707, -0.055658)
+transform = Transform3D(-0.00039904047, -0.0024430929, -0.00018214669, -2.2409073e-05, 0.00018817942, -0.0024749152, 0.0024497719, -0.0003962316, -5.2308846e-05, 0.16892493, 1.147074, -0.055658024)
 
 [node name="BoneAttachment3D" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="9"]
-transform = Transform3D(0.995058, 0.0992917, -6.27115e-05, 6.1579e-05, 1.44839e-05, 1, 0.0992917, -0.995058, 8.34465e-06, -0.0128491, 1.17704, 0.12955)
+transform = Transform3D(0.99505836, 0.09929174, -6.271154e-05, 6.157905e-05, 1.4483929e-05, 0.99999994, 0.09929174, -0.99505836, 8.34465e-06, -0.0128491, 1.17704, 0.12955)
 
 [node name="Circle_009" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="10"]
-transform = Transform3D(0.000333065, -0.00245738, 0.000107172, -8.32955e-05, -0.000119356, -0.00247789, 0.0024583, 0.000328896, -9.84796e-05, 0.138422, 1.12801, -0.0572585)
+transform = Transform3D(0.00033306514, -0.0024573763, 0.00010717197, -8.3295476e-05, -0.000119356286, -0.0024778896, 0.002458302, 0.00032889575, -9.847959e-05, 0.13842234, 1.1280061, -0.057258483)
 
 [node name="Cube_053" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="11"]
-transform = Transform3D(-0.0868105, -0.102256, -1.16954, -0.0145438, 1.17274, -0.101456, 1.17392, 0.00696751, -0.0877442, 0.166418, 1.028, 0.0101929)
+transform = Transform3D(-0.0868105, -0.10225567, -1.1695433, -0.01454379, 1.1727405, -0.10145572, 1.1739155, 0.0069675073, -0.087744236, 0.16641785, 1.0279977, 0.010192891)
 
 [node name="Cube_054" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="12"]
-transform = Transform3D(-0.0839836, -0.102256, -1.07244, -0.0140702, 1.17274, -0.0930319, 1.13569, 0.00696751, -0.0804589, 0.166418, 1.028, 0.0101929)
+transform = Transform3D(-0.08398357, -0.10225567, -1.0724369, -0.01407018, 1.1727405, -0.09303192, 1.1356877, 0.0069675073, -0.080458894, 0.16641785, 1.0279977, 0.010192891)
 
 [node name="Cube_056" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="13"]
-transform = Transform3D(-0.0868105, -0.990839, 0.629703, -0.0145438, -0.630466, -0.994045, 1.17392, -0.0810831, 0.0342509, 0.178067, 1.03297, -0.114831)
+transform = Transform3D(-0.0868105, -0.99083894, 0.62970304, -0.01454379, -0.63046646, -0.99404496, 1.1739155, -0.08108312, 0.034250915, 0.17806722, 1.0329658, -0.114830546)
 
 [node name="Cube_057" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="14"]
-transform = Transform3D(0.0548738, -0.248901, -1.14929, 0.0540699, 1.14986, -0.246443, 1.17469, -0.0412998, 0.0650308, 0.143413, 1.13761, 0.149137)
+transform = Transform3D(0.054873787, -0.2489012, -1.1492871, 0.054069936, 1.1498554, -0.2464427, 1.1746874, -0.04129985, 0.065030836, 0.14341345, 1.1376144, 0.14913742)
 
 [node name="Cube_058" parent="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman/Human_rigify/Skeleton3D" index="15"]
-transform = Transform3D(0.0548738, -0.248901, -1.14929, 0.0540699, 1.14986, -0.246443, 1.17469, -0.0412998, 0.0650308, 0.142987, 1.1396, 0.149102)
+transform = Transform3D(0.054873787, -0.2489012, -1.1492871, 0.054069936, 1.1498554, -0.2464427, 1.1746874, -0.04129985, 0.065030836, 0.14298666, 1.1395957, 0.14910182)
 
-[node name="Admin" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") instance=ExtResource("15_2bi0w")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.42823, 0.200962, -31.5469)
+[node name="Admin" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") groups=["Visitors"] instance=ExtResource("15_2bi0w")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14.7127, 4.83846, 74.567)
 mcp_server = NodePath("../../../..")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Admin" index="1" node_paths=PackedStringArray("chat_window")]
 chat_window = NodePath("../../../../../CanvasLayer/ChatWindow")
 
-[node name="SecurityRobot" parent="SubViewportContainer/SubViewport" instance=ExtResource("17_kdhq5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9035, 5.04814, 76.7657)
-script = ExtResource("18_3s6kk")
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+occluder = ExtResource("22_6tdw3")
 
 [connection signal="item_selected" from="CanvasLayer/OptionButton" to="SubViewportContainer/SubViewport/Visitors" method="_on_option_button_item_selected"]
 
@@ -1508,9 +1523,9 @@ script = ExtResource("18_3s6kk")
 [editable path="Airport/FlightInfo/Display3"]
 [editable path="Airport/FlightInfo/Display4"]
 [editable path="Airport/FlightInfo/Display5"]
+[editable path="Airport/SecurityRobot/security_robot"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor1"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor2"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor3"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Visitor3/Woman"]
 [editable path="SubViewportContainer/SubViewport/Visitors/Admin"]
-[editable path="SubViewportContainer/SubViewport/SecurityRobot"]

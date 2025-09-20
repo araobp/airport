@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cjkdi1hxunisd" path="res://scripts/visitor.gd" id="1_ffyx3"]
 [ext_resource type="Script" uid="uid://c74tqwh5duaek" path="res://scripts/mcp_client.gd" id="2_lp8ge"]
-[ext_resource type="Script" uid="uid://bqaclwo5xhpoq" path="res://wearable_device.gd" id="3_ficbt"]
+[ext_resource type="Script" uid="uid://bqaclwo5xhpoq" path="res://scripts/wearable_device.gd" id="3_ficbt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh24k"]
 radius = 0.2

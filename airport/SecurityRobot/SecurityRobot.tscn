@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmlk1qanh1l26"]
-
-[ext_resource type="PackedScene" uid="uid://bwf7q0h41bx54" path="res://SecurityRobot/security_robot.glb" id="1_ehnpy"]
-
-[node name="security_robot" instance=ExtResource("1_ehnpy")]

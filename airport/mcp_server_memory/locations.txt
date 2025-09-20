@@ -38,3 +38,5 @@ time,visitor_id,zone_id,amenities
 2025-09-13T16:00:26,Visitor1,2F-D-9-w,kiosk
 2025-09-14T08:02:56,Visitor3,2F-D-6-w,kiosk
 2025-09-15T14:15:17,Visitor3,2F-D-6-w,kiosk
+2025-09-20T20:09:13,Visitor1,2F-L-11-w,airport entrance
+2025-09-20T20:11:09,Visitor1,2F-E-11-w,airport entrance
