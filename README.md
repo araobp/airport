@@ -161,6 +161,19 @@ To better handle complex or ambiguous user requests, the AI agent can be instruc
 
 A new security robot has been added to the airport simulation. The robot patrols the airport and can be interacted with. The robot is an example of an autonomous agent in the simulation, with its own behavior and functions. The `security_robot.gd` script defines the robot's behavior, and it can be extended with more advanced features in the future.
 
+### Autonomous Movement
+
+The security robot navigates the airport autonomously using a simple yet effective patrol mechanism. Its movement is governed by the `security_robot.gd` script and is based on a predefined path of markers.
+
+Here's how it works:
+
+1.  **Marker-Based Path**: A series of `Marker3D` nodes are placed in the `Airport.tscn` scene to define the robot's patrol route.
+2.  **Sequential Movement**: The robot moves from one marker to the next in a sequential order.
+3.  **Proximity Detection**: When the robot gets within a minimum distance of its current target marker, it switches its target to the next marker in the sequence.
+4.  **Patrol Loop**: Once the robot reaches the last marker in the path, it reverses its direction and moves back towards the first marker, creating a continuous patrol loop.
+
+This marker-based system allows for easy customization of the robot's patrol route by simply moving, adding, or removing the `Marker3D` nodes in the Godot editor.
+
 ### AI Agents and Location-Based Services
 
 AI Agents at airports offer various services that are often linked to a passenger's location. While traditional indoor positioning has relied on methods like beacons and Wi-Fi, the era of generative AI enables a new approach: determining a user's indoor location and providing location-based services (LBS) entirely through image data.
