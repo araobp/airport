@@ -40,6 +40,10 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
 *   **Support for Multiple Visitors:** Switch between different visitor perspectives and interact with the AI from each.
 *   **Dynamic Guideline Generation:** The AI can generate guidelines on how to handle complex user requests, enhancing its problem-solving capabilities.
 
+## Architecture
+
+<img src="docs/Airport Services.jpg" width="700">
+
 ## Getting Started
 
 ### Prerequisites
