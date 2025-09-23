@@ -78,6 +78,7 @@ light_color = Color(0.796078, 0.792157, 0.792157, 1)
 shadow_enabled = true
 
 [node name="LightmapGI" type="LightmapGI" parent="."]
+visible = false
 quality = 3
 supersampling = true
 generate_probes_subdiv = 4

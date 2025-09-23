@@ -34,8 +34,8 @@ states/Start/position = Vector2(209.695, 18.75)
 transitions = ["Open", "Close", SubResource("AnimationNodeStateMachineTransition_i1jse"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_6ekym"), "Close", "Idle", SubResource("AnimationNodeStateMachineTransition_7butm"), "Idle", "Open", SubResource("AnimationNodeStateMachineTransition_f0u5g")]
 graph_offset = Vector2(78.93, -84.4503)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_4s0j3"]
-height = 0.5
+[sub_resource type="BoxShape3D" id="BoxShape3D_f0u5g"]
+size = Vector3(0.31811523, 0.6954346, 1)
 
 [node name="Door" instance=ExtResource("1_d0h81")]
 script = ExtResource("2_f0u5g")
@@ -47,5 +47,9 @@ anim_player = NodePath("../AnimationPlayer")
 [node name="SensingArea" type="Area3D" parent="." index="5"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SensingArea" index="0"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.9214215, 0)
-shape = SubResource("CylinderShape3D_4s0j3")
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.57, 1.096, 0)
+shape = SubResource("BoxShape3D_f0u5g")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SensingArea" index="1"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.57, 1.096, 0)
+shape = SubResource("BoxShape3D_f0u5g")
