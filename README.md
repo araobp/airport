@@ -122,7 +122,7 @@ For a detailed explanation of the node hierarchy in the main `Airport.tscn` scen
 
 ### Prerequisites
 
-*   Godot Engine (version 4.4 or later)
+*   Godot Engine (version 4.5 or later)
 *   A Gemini API key
 *   Node.js and npm (for the viewer)
 
