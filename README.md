@@ -3,11 +3,11 @@
 [![Godot Engine](https://img.shields.io/badge/Godot-4.4-blue.svg)](https://godotengine.org)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-purple.svg)](https://ai.google.dev/)
 
-(As a MVP developer for marketing, I am learning a lot of things through this project => [Marketing Perspectives](docs/MarketingPerspectives.md))
-
 ***Work in progress***
 
 This project is a work-in-progress simulation of a "smart airport" environment, showcasing the power of AI, particularly Google's Gemini model, to create interactive and intelligent experiences. The simulation is built using the Godot Engine.
+
+## Screenshots
 
 <table>
   <tr>
@@ -28,48 +28,6 @@ This project is a work-in-progress simulation of a "smart airport" environment, 
   </tr>
 </table>
 
-## Table of Contents
-
-- [Inspiration](#inspiration)
-- [Features](#features)
-- [Core Components](#core-components)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [API Key Management](#api-key-management)
-- [AI Agent Implementation](#ai-agent-implementation)
-  - [Chat History and Multimodal Input](#chat-history-and-multimodal-input)
-  - [Function Calling](#function-calling)
-- [Model Context Protocol (MCP)](#model-context-protocol-mcp)
-- [Network Graph](#network-graph)
-  - [Generation](#generation)
-  - [Visualization](#visualization)
-- [Context Engineering](#context-engineering)
-- [Development Notes](#development-notes)
-- [MCP Limitations](#mcp-limitations)
-- [Contributing](#contributing)
-- [Future Work](#future-work)
-- [License](#license)
-
-## Inspiration
-
-The inspiration for this project comes from a past experiment with an AI Drive Recorder App on an Android smartphone. Carrying it in a chest pocket, it felt like a wearable AI, hinting at the potential for such technology. I also once developed an AR app for Android, but my stakeholders did not show interest in it. With the advent of smart glasses and advanced AI agents, the value of this concept has grown exponentially. This project explores that potential in the context of a smart airport.
-
-<table>
-  <tr>
-    <td>
-      <img src="./docs/prototype.jpg" width="600">
-    </td>
-    <td>
-      <img src="./docs/ar_app.jpg" width="600">
-    </td>
-  </tr>
-</table>
-
-## Motivation
-
-I believe the current boom in AI agents in the IT world will not last long, and its focus will be shifting to the OT (Operational Technology) world, where there is a serious labor shortage and a strong demand for increased efficiency. Originally, DX (Digital Transformation) was supposed to be focused on OT (Operational Technology) in the first place.
-
 ## Features
 
 *   **AI-Powered Chat:** Interact with the airport environment using natural language through a chat interface powered by the Gemini AI model.
@@ -81,42 +39,6 @@ I believe the current boom in AI agents in the IT world will not last long, and 
 *   **Web-Based Visualization:** View the generated network graph in an interactive web-based viewer built with SvelteKit.
 *   **Support for Multiple Visitors:** Switch between different visitor perspectives and interact with the AI from each.
 *   **Dynamic Guideline Generation:** The AI can generate guidelines on how to handle complex user requests, enhancing its problem-solving capabilities.
-
-## Architecture
-
-<img src="docs/Airport Services.jpg" width="700">
-
-## Core Components
-
-*   **Godot Simulation (`airport/`):** The main airport simulation built with the Godot Engine.
-    *   **`Airport.tscn`:** The main scene of the simulation.
-    *   **`McpClient` & `McpServer`:** Manages the AI interaction, including communication with the Gemini AI, and in-environment actions. `McpClient` also simulates a wearable device with a camera, microphone, and speaker.
-    *   **`visitors.gd`:** Manages multiple visitor instances and their interactions with the simulation.
-    *   **`security_robot.gd`:** Defines the behavior of the security robot.
-    *   **`locations.txt`:** Stores the data collected by the AI agent about the locations of amenities in CSV format.
-*   **Network Graph Viewer (`viewer/`):** A SvelteKit application to visualize the network graph data.
-*   **Blender Models (`blender/`):** The source `.blend` files for the 3D models used in the simulation.
-*   **Documentation (`docs/`):** Contains project documentation, including the MCP specification and context engineering notes.
-
-## Project Structure
-
-```
-.
-├── airport/              # Godot project
-│   ├── SecurityRobot/      # Security robot assets
-│   ├── Visitors/           # Visitor assets
-│   └── WearableDevice/     # Wearable device assets
-├── blender/              # Blender source files
-├── data/                 # Generated data (e.g., network graph)
-├── docs/                 # Project documentation
-│   ├── NODE_HIERARCHY.md # Node hierarchy of the main scene
-│   └── ...
-├── images/               # Gemini generated images
-├── viewer/               # SvelteKit network graph viewer
-└── README.md
-```
-
-For a detailed explanation of the node hierarchy in the main `Airport.tscn` scene, please see the [Node Hierarchy](docs/NODE_HIERARCHY.md) document.
 
 ## Getting Started
 
@@ -137,138 +59,56 @@ YOUR_GEMINI_API_KEY
 
 This file is listed in `.gitignore` and will not be committed to version control. The application will automatically read the key from this file.
 
-## AI Agent Implementation
+## AI-Powered Airport
 
-For a detailed explanation of the agent's architecture, including the ReAct loop and memory systems, please see the [Agentic AI Implementation](docs/AGENTIC_AI.md) document.
+This simulation showcases a variety of AI-powered features that create a dynamic and interactive airport environment.
 
-The AI agent, powered by the Gemini model, interacts with the airport environment using natural language and visual input.
+### AI Agent Implementation
 
-### Chat History and Multimodal Input
+The core of the smart airport is the AI agent, powered by the Gemini model. It interacts with the environment using natural language and visual input. For a detailed explanation of the agent's architecture, including the ReAct loop and memory systems, please see the [Agentic AI Implementation](docs/AGENTIC_AI.md) document.
 
-The agent maintains a conversation history, allowing for contextual understanding. User input can be multimodal, combining text with inline image data (Base64 encoded JPEGs) captured from the player's viewpoint. This enables the AI to "see" and understand the environment. It's important to note that while the image is sent to the AI for analysis, the Base64 encoded image data is not stored in the chat history to avoid excessive memory usage.
+### Security Robot
 
-### Function Calling
+A security robot patrols the airport, providing an additional layer of security and interaction. The `security_robot.gd` script defines the robot's behavior, which is based on a predefined path of markers. The robot moves from one marker to the next, and when it reaches the end of the path, it reverses direction, creating a continuous patrol loop.
 
-The AI uses Gemini's function calling feature to interact with the simulation. The `McpServer` and `McpClient` nodes define a set of tools (functions) that the AI can call to perform actions (e.g., opening doors) or retrieve information. When the AI decides to use a tool, it generates a `functionCall` in its response, which is then executed by the system.
+### Location-Based Services
 
-Since the Gemini API does not fully support the Model Context Protocol (MCP) at this time, this implementation relies on Gemini's function calling capability as a temporary measure. We anticipate that full MCP support will be available in the near future.
-
-### Dynamic Guideline Generation
-
-To better handle complex or ambiguous user requests, the AI agent can be instructed to generate a set of guidelines for itself. This is achieved through a `generate_guidelines` function call. When invoked, the agent formulates a plan to tackle the request, which is then stored in `airport/mcp_server_memory/guidelines.txt`. This mechanism allows the agent to break down complex problems into smaller, manageable steps, showcasing a meta-cognitive ability to reason about its own problem-solving process.
-
-## Security Robot
-
-A new security robot has been added to the airport simulation. The robot patrols the airport and can be interacted with. The robot is an example of an autonomous agent in the simulation, with its own behavior and functions. The `security_robot.gd` script defines the robot's behavior, and it can be extended with more advanced features in the future.
-
-### Autonomous Movement
-
-The security robot navigates the airport autonomously using a simple yet effective patrol mechanism. Its movement is governed by the `security_robot.gd` script and is based on a predefined path of markers.
-
-Here's how it works:
-
-1.  **Marker-Based Path**: A series of `Marker3D` nodes are placed in the `Airport.tscn` scene to define the robot's patrol route.
-2.  **Sequential Movement**: The robot moves from one marker to the next in a sequential order.
-3.  **Proximity Detection**: When the robot gets within a minimum distance of its current target marker, it switches its target to the next marker in the sequence.
-4.  **Patrol Loop**: Once the robot reaches the last marker in the path, it reverses its direction and moves back towards the first marker, creating a continuous patrol loop.
-
-This marker-based system allows for easy customization of the robot's patrol route by simply moving, adding, or removing the `Marker3D` nodes in the Godot editor.
-
-### AI Agents and Location-Based Services
-
-AI Agents at airports offer various services that are often linked to a passenger's location. While traditional indoor positioning has relied on methods like beacons and Wi-Fi, the era of generative AI enables a new approach: determining a user's indoor location and providing location-based services (LBS) entirely through image data.
-
-This process works as follows: the AI Agent, operating on a passenger's wearable device, uses the camera to learn the positions of different amenities throughout the terminal. The **AI Agent** then accurately pinpoints its location by recognizing and processing **Zone IDs** posted within the airport environment. This innovative method eliminates the need for conventional indoor positioning infrastructure, leveraging the visual information available to the user's device.
-
-<img src="./docs/ZoneIDs.jpg" width=600>
-
-### How the Simulator Learns Amenity Locations
-
-The simulation employs a unique process for dynamically learning and recording the locations of various amenities within the airport. This is achieved through the visitor's wearable device and the power of generative AI, without relying on pre-existing maps or location data.
-
-Here's a step-by-step breakdown of how it works:
-
-1.  **Visual-Based Interaction**: The process begins when a visitor, equipped with a wearable device (simulated as the first-person view), looks at an amenity (e.g., a vending machine, a check-in counter).
-
-2.  **Image Capture**: When the visitor interacts with the AI assistant (e.g., by asking a question), the wearable device captures an image of their current view.
-
-3.  **AI Analysis**: This image is sent to the Gemini AI model for analysis. The AI is prompted to identify two key pieces of information from the image:
-    *   The **Zone ID**: A unique identifier for the specific area or zone the visitor is in. These Zone IDs are visually present in the environment.
-    *   The **Amenity**: The specific object or service the visitor is looking at.
-
-4.  **Data Logging**: Once the AI successfully identifies both the Zone ID and the amenity, it calls a specific function (`record_user_data`). This function logs the collected data—the visitor's ID, the Zone ID, and the name of the amenity—into a structured data file (`locations.json`).
-
-5.  **Building a Knowledge Base**: Over time, as the visitor explores the airport and interacts with various amenities, this process builds a comprehensive knowledge base of what amenities are located in which zones. This data can then be used for various purposes, such as generating a network graph of the airport's layout or providing location-based recommendations to other visitors.
-
-This innovative approach allows the airport environment to be "self-mapping," where the locations of services are learned organically through user interaction and AI-powered environmental understanding.
-
-#### Sample Data
-
-Here is an example of what the `locations.txt` file looks like after a visitor has explored the airport and interacted with a few amenities:
-
-```csv
-time,visitor_id,zone_id,amenities
-2025-08-30T10:00:00,Visitor1,2F-D-10-w,Kiosk
-2025-08-30T10:05:00,Visitor1,2F-D-9-w,snack shop
-2025-08-30T10:10:00,Visitor2,2F-E-1,self-checkout
-```
-
-## Model Context Protocol (MCP)
-
-The underlying specification for the AI's interaction with the airport environment is based on the Model Context Protocol (MCP). This specification, generated by Gemini, outlines a framework for a smart airport's AI initiatives. For more details, please see the [MCP Specification](./docs/MCP_SPEC.md).
-
-**Note:** The current implementation is conceptually aligned with MCP but does not follow the specification literally. Instead of a network protocol like STDIO or HTTP for in-game communication, it uses direct Godot function calls (via `Callable`) between the "MCP Client" (`gemini.gd`) and "MCP Server" nodes.
+The AI agent can determine a user's indoor location and provide location-based services (LBS) entirely through image data. The agent learns the positions of different amenities throughout the terminal by recognizing and processing **Zone IDs** posted within the airport environment. This innovative method eliminates the need for conventional indoor positioning infrastructure.
 
 ## Network Graph
 
-### Generation
-
 A network graph generation feature has been added to visualize the relationships between amenities in the airport. It makes use of Gemini for network graph generation from a log file. This feature outputs the generated graph in the `data` folder.
-
-To initiate the management function, you can use the chat UI and ask something like "initiate management function".
-
-### Visualization
-
-The generated network graph data can be visualized using a SvelteKit application in the `viewer` directory. This provides a visual representation of the connections between visitors, zones, and amenities.
 
 <img src="./docs/network_graph.jpg" width=600>
 
-#### Running the Viewer
+To run the SvelteKit application for visualizing the network graph:
 
-To run the SvelteKit application:
+1.  Navigate to the `viewer` directory: `cd viewer`
+2.  Install the dependencies: `npm install`
+3.  Start the development server: `npm run dev`
 
-1.  Navigate to the `viewer` directory:
-    ```bash
-    cd viewer
-    ```
+## Development
 
-2.  Install the dependencies:
-    ```bash
-    npm install
-    ```
+### Project Structure
 
-3.  Start the development server:
-    ```bash
-    npm run dev
-    ```
+```
+.
+├── airport/              # Godot project
+├── blender/              # Blender source files
+├── data/                 # Generated data (e.g., network graph)
+├── docs/                 # Project documentation
+├── images/               # Gemini generated images
+├── viewer/               # SvelteKit network graph viewer
+└── README.md
+```
 
-This will start the SvelteKit development server, and you can view the network graph in your browser at the address provided.
-
-## Context Engineering
+### Context Engineering
 
 This project is a practical example of context engineering, demonstrating how to build a complex AI agent that interacts with its environment. For more information on the concept of context engineering, please see the [CONTEXT_ENGINEERING.md](docs/CONTEXT_ENGINEERING.md) file.
 
-Refer also this YouTube video: https://youtu.be/ugc1lBBgqwI
+### Model Context Protocol (MCP)
 
-Context engineering is required to improve the performance of Large Language Models (LLMs) by providing them with relevant information in a structured way. This is especially important for applications like AI assistants, as it enhances the model's reasoning and accuracy without the need for fine-tuning.
-
-## MCP Limitations
-
-For a summary of the limitations on MCP through this project, please see the [document](docs/MCP_Limitations.md).
-
-## Development Notes
-
-This project leverages the Gemini CLI for various development tasks, including code review and updating markdown documentation files like this README. The AI is also used to generate commit messages and to help with the overall development process.
+The underlying specification for the AI's interaction with the airport environment is based on the Model Context Protocol (MCP). For more details, please see the [MCP Specification](./docs/MCP_SPEC.md).
 
 ## Future Work
 
