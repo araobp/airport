@@ -984,7 +984,37 @@ mesh = SubResource("SphereMesh_4dk7p")
 surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
 
 [node name="Marker2" type="MeshInstance3D" parent="Airport/Markers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, 55.2984)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, 51.93811)
+mesh = SubResource("SphereMesh_4dk7p")
+surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
+
+[node name="Marker3" type="MeshInstance3D" parent="Airport/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, 25.85482)
+mesh = SubResource("SphereMesh_4dk7p")
+surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
+
+[node name="Marker8" type="MeshInstance3D" parent="Airport/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2323, 5.03618, 16.514732)
+mesh = SubResource("SphereMesh_4dk7p")
+surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
+
+[node name="Marker4" type="MeshInstance3D" parent="Airport/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, -0.15090942)
+mesh = SubResource("SphereMesh_4dk7p")
+surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
+
+[node name="Marker5" type="MeshInstance3D" parent="Airport/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, -26.594933)
+mesh = SubResource("SphereMesh_4dk7p")
+surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
+
+[node name="Marker6" type="MeshInstance3D" parent="Airport/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, -52.746857)
+mesh = SubResource("SphereMesh_4dk7p")
+surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
+
+[node name="Marker7" type="MeshInstance3D" parent="Airport/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56179, 5.03618, -79.483086)
 mesh = SubResource("SphereMesh_4dk7p")
 surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
 
@@ -1503,7 +1533,7 @@ transform = Transform3D(0.054873787, -0.2489012, -1.1492871, 0.054069936, 1.1498
 transform = Transform3D(0.054873787, -0.2489012, -1.1492871, 0.054069936, 1.1498554, -0.2464427, 1.1746874, -0.04129985, 0.065030836, 0.14298666, 1.1395957, 0.14910182)
 
 [node name="Admin" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") groups=["Visitors"] instance=ExtResource("15_2bi0w")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14.7127, 4.83846, 74.567)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.7127, 4.83846, 74.567)
 mcp_server = NodePath("../../../..")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Admin" index="1" node_paths=PackedStringArray("chat_window")]
