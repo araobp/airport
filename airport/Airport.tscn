@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://d0gpwnkq5rhna"]
+[gd_scene load_steps=33 format=3 uid="uid://d0gpwnkq5rhna"]
 
 [ext_resource type="Script" uid="uid://blguk8ox5b1it" path="res://scripts/mcp_server.gd" id="1_fgr6k"]
 [ext_resource type="LightmapGIData" uid="uid://bk0jew8eckr6q" path="res://Airport.lmbake" id="2_oh4gc"]
@@ -56,6 +56,9 @@ roughness = 0.3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6tdw3"]
 size = Vector3(0.45, 1.4, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5w2cq"]
+size = Vector3(0.3, 1.2, 0.8)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3stw"]
 content_margin_left = 10.0
@@ -120,7 +123,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 transform = Transform3D(0.999975, 0, -0.00710343, 0, 1, 0, 0.00710343, 0, 0.999975, -22.7123, 0.18877, 19.5121)
 
 [node name="1F-E-5-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
-transform = Transform3D(1, 0, 0.000366519, 0, 1, 0, -0.000366519, 0, 1, -22.6891, 0.189, 6.516)
+transform = Transform3D(1, 0, 0.000366519, 0, 1, 0, -0.000366519, 0, 1, -22.6891, 0.20034681, 6.5175686)
 
 [node name="2F-E-11-2" parent="Airport/Doors" instance=ExtResource("8_2bi0w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7813, 5.04467, -72.819)
@@ -980,7 +983,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3s6kk")
 [node name="Markers" type="Node3D" parent="Airport"]
 
 [node name="Marker1" type="MeshInstance3D" parent="Airport/Markers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.415, 5.03618, 76.1857)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.415, 5.03618, 74.7729)
 mesh = SubResource("SphereMesh_4dk7p")
 surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
 
@@ -1020,7 +1023,7 @@ mesh = SubResource("SphereMesh_4dk7p")
 surface_material_override/0 = SubResource("StandardMaterial3D_oh4gc")
 
 [node name="SecurityRobot" type="CharacterBody3D" parent="Airport" node_paths=PackedStringArray("markers")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3992, 5.03409, 76.7723)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3992, 5.03409, 76.13925)
 axis_lock_linear_y = true
 script = ExtResource("15_oh4gc")
 markers = NodePath("../Markers")
@@ -1030,6 +1033,16 @@ markers = NodePath("../Markers")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Airport/SecurityRobot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.710621, 0)
 shape = SubResource("BoxShape3D_6tdw3")
+
+[node name="SensingArea" type="Area3D" parent="Airport/SecurityRobot"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Airport/SecurityRobot/SensingArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.044, 0.648, -0.75)
+shape = SubResource("BoxShape3D_5w2cq")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Airport/SecurityRobot/SensingArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.044, 0.648, 0.75)
+shape = SubResource("BoxShape3D_5w2cq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -1534,7 +1547,7 @@ transform = Transform3D(0.054873787, -0.2489012, -1.1492871, 0.054069936, 1.1498
 transform = Transform3D(0.054873787, -0.2489012, -1.1492871, 0.054069936, 1.1498554, -0.2464427, 1.1746874, -0.04129985, 0.065030836, 0.14298666, 1.1395957, 0.14910182)
 
 [node name="Admin" parent="SubViewportContainer/SubViewport/Visitors" node_paths=PackedStringArray("mcp_server") groups=["Visitors"] instance=ExtResource("15_2bi0w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.7127, 4.83846, 74.567)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.4534645, 4.83846, 48.998627)
 mcp_server = NodePath("../../../..")
 
 [node name="AiAgent" parent="SubViewportContainer/SubViewport/Visitors/Admin" index="1" node_paths=PackedStringArray("chat_window")]
@@ -1549,6 +1562,7 @@ occluder = ExtResource("22_6tdw3")
 [editable path="Airport/Doors/2F-E-5-1"]
 [editable path="Airport/Doors/2F-E-5-2"]
 [editable path="Airport/Doors/1F-E-5-1"]
+[editable path="Airport/Doors/2F-E-11-1"]
 [editable path="Airport/FlightInfo/Display1"]
 [editable path="Airport/FlightInfo/Display2"]
 [editable path="Airport/FlightInfo/Display3"]

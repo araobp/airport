@@ -30,28 +30,33 @@ func _forward():
 	return f.normalized()
 
 func _physics_process(delta: float) -> void:
+	
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	var f = _forward() * SPEED
+	var f = null	
+	if len($SensingArea.get_overlapping_bodies()) == 0:
+		f = _forward() * SPEED
+
 	if f:
 		velocity.x = move_toward(velocity.x, f.x, delta*SPEED*0.3)
 		velocity.z = move_toward(velocity.z, f.z, delta*SPEED*0.3)
 		rotation.y = move_toward(rotation.y,  f.angle_to(Vector3.FORWARD), delta*SPEED*0.3)
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
 
-	### Smooth rotaion on y axis ###
-	# Create a target basis and convert it to a quaternion
-	var target_basis = Basis.looking_at(f, Vector3.UP)
-	var target_quat = target_basis.get_rotation_quaternion()
-	# Get the character's current rotation as a quaternion
-	var current_quat = transform.basis.get_rotation_quaternion()
-	# Spherical linear interpolate from the current rotation to the target
-	var interpolated_quat = current_quat.slerp(target_quat, delta * ROTATION_SPEED)
-	# Apply the new rotation back to the character's transform
-	transform.basis = Basis(interpolated_quat)
+		### Smooth rotaion on y axis ###
+		# Create a target basis and convert it to a quaternion
+		var target_basis = Basis.looking_at(f, Vector3.UP)
+		var target_quat = target_basis.get_rotation_quaternion()
+		# Get the character's current rotation as a quaternion
+		var current_quat = transform.basis.get_rotation_quaternion()
+		# Spherical linear interpolate from the current rotation to the target
+		var interpolated_quat = current_quat.slerp(target_quat, delta * ROTATION_SPEED)
+		# Apply the new rotation back to the character's transform
+		transform.basis = Basis(interpolated_quat)
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED*0.03)
+		velocity.z = move_toward(velocity.z, 0, SPEED*0.03)
 
 	move_and_slide()
