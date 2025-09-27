@@ -114,6 +114,10 @@ This project is a practical example of context engineering, demonstrating how to
 
 The underlying specification for the AI's interaction with the airport environment is based on the Model Context Protocol (MCP). For more details, please see the [MCP Specification](./docs/MCP_SPEC.md).
 
+## Wearable App
+
+I have started developing a real wearable app in the `android` folder. This is a work in progress.
+
 ## Future Work
 
 *   Expand the set of tools and resources available to the AI agent.
