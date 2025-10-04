@@ -103,7 +103,6 @@ To run the SvelteKit application for visualizing the network graph:
 ├── docs/                 # Project documentation
 ├── images/               # Gemini generated images
 ├── viewer/               # SvelteKit network graph viewer
-├── webar/                # WebAR version of the airport
 └── README.md
 ```
 
@@ -121,10 +120,6 @@ The underlying specification for the AI's interaction with the airport environme
 *   Implement more complex scenarios and interactions in the simulation.
 *   Enhance the network graph visualization with more features and data.
 *   Integrate with other AI services and APIs.
-
-## WebAR
-
-I am developing a web app version of the airport in the `webar` folder.
 
 ## License
 
